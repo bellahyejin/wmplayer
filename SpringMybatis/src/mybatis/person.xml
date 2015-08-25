@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="person">
+	<insert id="addperson" parameterType="person.beans.Person">
+		insert into person values(#{name},#{age},#{job})
+	</insert>
+	<select id="selectAll" resultType="person.beans.Person">
+		select * from person
+	</select>
+	<update id="editperson" parameterType="person.beans.Person">
+		update person set name=#{name} and age=#{age} and job=#{job}
+		where name=#{name}
+	</update>	
+	<select id="selectPerson" parameterType="String" resultType="person.beans.Person">
+		select * from person where name=#{name}
+	</select>
+	<delete id="delete" parameterType="String">
+		delete from person where name=#{name}
+	</delete>
+	<select id="search" parameterType="Map" resultType="person.beans.Person">
+		select * from person 
+		<choose>
+			<when test="name != null and age == null">
+				where name like '%'||#{name}||'%'
+			</when>
+			<when test="name == null and age != null">
+				where age = #{age}
+			</when>
+		</choose>
+	</select>
+</mapper>
