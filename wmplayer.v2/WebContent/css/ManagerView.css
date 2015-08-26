@@ -30,20 +30,25 @@ a:ACTIVE{
 	font-weight: bolder;
 	text-align: center;
 }
-.member-table, .drop-reason-table, .pager-container {
+.drop-etc-table
+{
+	position : absolute;
+	top : 275px;
+}
+.member-table, .drop-reason-table, .drop-etc-table, .pager-container {
 		position: absolute;
 		text-align: center;
-		width: 670px;
+		width: 680px;
 }
 
-.member-table{
+.member-table, .drop-reason-table, .drop-etc-table{
 	border-spacing: 0;
 	border-collapse: collapse;
 }
-.member-table tr{
+.member-table tr, .drop-reason-table tr, .drop-etc-table tr{
 	font-size: 10pt;
 }
-.member-table tr:HOVER{
+.member-table tr:HOVER, .drop-reason-table tr:hover, .drop-etc-table tr:hover{
 	background-color: #f6f6f6;
 }
 
@@ -73,9 +78,7 @@ table td{
 	float: left;
 }
 
-.drop-reason-table{ margin-top: 200px;}
-
-.member-table { height: 275px; }
+.member-table, .drop-reason-table, .drop-etc-table { height: 50px; }
 
 /*paging position*/
 
@@ -85,7 +88,6 @@ table td{
 	padding:490px 0 0 50px;
 }
 /* Ż������ */
-.drop-reason-table { top: 275px; height: 275px; }
 
 .search-button {
 	background: #fff;
