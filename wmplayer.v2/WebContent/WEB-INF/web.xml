@@ -3,7 +3,7 @@
   <display-name>wmplyer.v2</display-name>
   <context-param>
     <param-name>root</param-name>
-    <param-value>/wmplyer.v2</param-value>
+    <param-value>/SpringWeb</param-value>
   </context-param>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
@@ -11,8 +11,8 @@
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>
-  	  		classpath:spring/wmplayer-beans.xml 
-  	  		classpath:spring/wmplayer-config.xml 
+  	  		classpath:spring/wmplayer-beans.xml
+  	  		classpath:spring/wmplayer-config.xml
   	  </param-value>
     </init-param>
   </servlet>

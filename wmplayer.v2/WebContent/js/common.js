@@ -1,4 +1,11 @@
-function setLink(form_name, url, action)
+function setLink(form_name, url, action, params)
 {
-	$(form_name == null ? "<form></form>" : form_name).attr("action", "${ initParam.root }/" + url).attr("method", "post").append($("<input></input>").attr("name", "action").attr("type", "hidden").attr("value", action)).submit();
+	var form;
+	if (form_name == null) form = $("<form></form>");
+	else form = $(form_name);
+
+	form.attr("action", "/SpringWeb/" + url).attr("method", "post").append($("<input></input>").attr("type", "hidden").attr("name", "action").attr("value", action));
+	if (params != null) for (var key in params) form.append($("<input></input>").attr("type", "hidden").attr("name", key).attr("value", params[key]));
+	alert(form.attr("action"))
+	form.submit();
 }

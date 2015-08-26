@@ -11,8 +11,9 @@
 	rel="stylesheet" />
 <link type="text/css"
 	href="${ initParam.root }/css/ManagerChartView.css" rel="stylesheet" />
-<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="../../js/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="${initParam.root}/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/jquery.canvasjs.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 		{
@@ -78,10 +79,9 @@
 <body>
 	<div class="manager-view">
 		<div class="manager-menu">
-			<a href="${ initParam.root }/wmplayer/manager.do">회원 목록</a> | <a
-				href="${ initParam.root }/wmplayer/manager/dropreason.do">탈퇴 이유</a>
-			| 통계 현황[ <a href="${ initParam.root }/wmplayer/manager/chartLogin.do">로그인</a>
-			| 회원가입 ]
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">회원 목록</a> |
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">탈퇴 이유</a> |
+			 통계 현황[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">로그인</a> | 회원가입 ]
 		</div>
 		<div id="chart1"></div>
 		<div id="chart2"></div>

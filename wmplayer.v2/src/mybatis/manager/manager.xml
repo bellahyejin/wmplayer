@@ -24,7 +24,7 @@
 				and <include refid="gender_list" />
 			</if>
 			<if test="compare_column != null and value != null">
-				and ${compare_column} = #{value}
+				and ${compare_column} like '%' || #{value} || '%'
 			</if>
 		</trim>
 		order by userid desc
@@ -41,10 +41,16 @@
 	</select>
 
 	<!-- 여기서 부터는 탈퇴 이유 -->
-	<select id="reasonSelect" parameterType="int" resultType="int" flushCache="true">
-		select count_reason
-		from DropReason
-		where drop_seq = #{drop_seq}
+	<select id="reasonSelect" parameterType="util.ListMap" resultType="kr.co.wmplayer.sinmina.model.dto.manager.DropReasonDTO" flushCache="true">
+		select reason, count_reason
+		from dropreason
+		<trim prefix="where">
+			drop_seq
+			<if test="drop_seq == 5"><![CDATA[<]]></if>
+			<if test="drop_seq == 6"><![CDATA[>]]></if>
+			= #{drop_seq}
+		</trim>
+		<if test="drop_seq == 6">order by reason</if>
 	</select>
 
 	<!-- 통계 관련 query -->
@@ -53,9 +59,9 @@
 		from ${table} right outer join dual
 		<trim prefix="on">
 			${compare_column}
-			<if test="action == joinCountAge">
-				<if test="compare_data == 50"><![CDATA[>]]></if>
-				<if test="compare_data == 10"><![CDATA[<]]></if>
+			<if test="action == 'joinCountAge'">
+				<if test="compare_data == '50'"><![CDATA[>]]></if>
+				<if test="compare_data == '10'"><![CDATA[<]]></if>
 			</if>
 			= #{compare_data}
 		</trim>
