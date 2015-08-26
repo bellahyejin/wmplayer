@@ -51,7 +51,7 @@ public class ManagerController
 
 		if (userid != null)
 		{
-			if ("admin".equals(userid))
+			if (userid.equals("admin"))
 			{
 				map = new ListMap<String, Object>();
 				String action = request.getParameter("action");
