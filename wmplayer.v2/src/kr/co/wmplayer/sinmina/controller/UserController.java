@@ -32,9 +32,9 @@ public class UserController {
 			if (dao.loginproccess(user) != 0) {
 				session.setAttribute("success", userID);
 				dao.loginLogInsert(userID);
-				return "main";
+				return "redirect:main";
 			} else {
-				return "intro";
+				return "redirect:intro";
 			}
 		}
 		else

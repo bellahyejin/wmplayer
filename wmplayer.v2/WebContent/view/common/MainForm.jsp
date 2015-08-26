@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="UTF-8"%>
+   pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +11,10 @@
    <body style="overflow-y: hidden;">
       <div id="wrap">
       <div id="nav">
-      	 <iframe name="nav" src="${initParam.root }/view/common/MusicPlayer.jsp" width="300px" height="677px" style="border: 0px"></iframe>
+      	 <iframe name="nav" src="musicplayer" width="300px" height="677px" style="border: 0px"></iframe>
 	  </div>
 	  <div id="content">
-	       <iframe name="section" src="${initParam.root }/contents.do" width="900px" height="677px" style="border: 0; overflow-x: hidden; overflow-y:auto;" scrolling="yes">
+	       <iframe name="section" src="content" width="900px" height="677px" style="border: 0; overflow-x: hidden; overflow-y:auto;" scrolling="yes">
 	       </iframe>
          	</div>
       	</div>

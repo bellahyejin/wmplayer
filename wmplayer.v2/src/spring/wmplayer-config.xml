@@ -21,15 +21,23 @@
 	</mvc:annotation-driven>
 	
 	<mvc:default-servlet-handler />
-
-	<mvc:view-resolvers>
-		<mvc:jsp prefix="/view/"/>
-	</mvc:view-resolvers>
-
+	
+	<bean id="viewResolverTiles"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<property name="order" value="1" />
+	</bean>
 	<!-- controller scan -->
 	<context:component-scan base-package="kr.co.wmplayer.sinmina.controller" />
 
 	<!-- 타일즈 설정, 뷰 리졸버 설정 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/view/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>	
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
@@ -39,10 +47,5 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.tiles3.TilesView" />
-		<property name="order" value="1" />
-	</bean>
+	
 </beans>

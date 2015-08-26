@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/HomeForm.css" rel="stylesheet" />
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -32,7 +32,7 @@
 			artistArr[i] = today_artist.item(i).firstChild.nodeValue;
 			imgArr[i] = today_image.item(i).firstChild.nodeValue;
 
-			//dl¸¸µé±â
+			//dlë§Œë“¤ê¸°
 			var dlDiv = document.createElement('dl');
 			//dt
 			var imgDt = document.createElement('dt');
@@ -41,14 +41,14 @@
 
 			img_cover[i] = document.createElement('img');
 
-			//img_cover ¼Ó¼º
+			//img_cover ì†ì„±
 			img_cover[i].setAttribute("class", "jacket");
 			dlDiv.setAttribute("class", "list");
 			imgDt.setAttribute("id", "image");
 			titleDd.setAttribute("id", "title");
 			artistDd.setAttribute("id", "artist");
-			//divAll ¼Ó¼º 
-			//divScroll ¼Ó¼º
+			//divAll ì†ì„± 
+			//divScroll ì†ì„±
 			//dl, dt 
 			dlDiv.appendChild(imgDt);
 			dlDiv.appendChild(titleDd);
@@ -56,7 +56,7 @@
 
 			imgDt.appendChild(img_cover[i]);
 
-			//µ¥ÀÌÅÍ ÀÔ·Â 
+			//ë°ì´í„° ìž…ë ¥ 
 			img_cover[i].src = imgArr[i];
 			titleDd.innerHTML = titleArr[i].length > 10 ? titleArr[i]
 					.substring(0, 10)

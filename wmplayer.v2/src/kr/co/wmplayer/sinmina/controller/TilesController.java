@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TilesController {
 	
-	@RequestMapping("/main")
-	public String mainform(){
+	@RequestMapping("/content")
+	public String contentform(){
 		return "tiles.main";
 	}
 	

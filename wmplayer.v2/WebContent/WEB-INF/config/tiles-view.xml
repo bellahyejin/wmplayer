@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC  
  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
@@ -34,7 +34,6 @@
 	<definition name="noticewrite" extends="tiles.main">
 		<put-attribute name="section" value="/view/manager/NoticeWriteForm.jsp"/>
 	</definition>
-
 	<definition name="noticedetail" extends="tiles.main">
 		<put-attribute name="section" value="/view/common/NoticeDetail.jsp"/>
 	</definition>
