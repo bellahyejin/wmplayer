@@ -200,7 +200,7 @@ public class ManagerController
 	}
 
 	@ResponseBody @RequestMapping(value = "/manager/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String userInfo(HttpServletRequest request, @RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value)
+	public String userInfo(HttpServletRequest request, @RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value, @RequestParam(value = "page") Integer page)
 	{
 		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
 		value = value == null || value.equals("") ? null : value;
@@ -218,12 +218,12 @@ public class ManagerController
 		map.put("compare_column", search);
 		map.put("value", value);
 
+		pres_page = page.intValue();
 		int member_num = managerDAO.membercount(map);
-		pres_page = Integer.parseInt(request.getParameter("page"));
 		int max_page = ((int) member_num / max_element) + (member_num % max_element == 0 ? 0 : 1);
 		int begin_page = (pres_page <= 1 + page_div || 1 + page_div * 2 >= max_page ? 1 : (pres_page + page_div >= max_page ? max_page - page_div * 2 : pres_page - page_div));
 		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
-		int rownum_start_idx = max_element * (pres_page - 1), count = 0;
+		int rownum_start_idx = max_element * (pres_page - 1);
 		boolean flag;
 
 		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, rownum_start_idx, max_element);
@@ -240,12 +240,13 @@ public class ManagerController
 
 		if (list.size() > 0)
 		{
-			for (UserInfoDTO data : list)
+			for (int i = 0; i < list.size(); i++)
 			{
+				UserInfoDTO data = list.get(i);
 				status = data.getStatus();
 
 				sb = sb.append("<tr align=\"center\">")
-								.append("<td>".concat(Integer.toString((member_num - (rownum_start_idx + count++)))).concat("</td>"))
+								.append("<td>".concat(Integer.toString((member_num - (rownum_start_idx + i)))).concat("</td>"))
 								.append("<td>".concat(data.getUserID()).concat("</td>"))
 								.append("<td>".concat(data.getName()).concat("</td>"))
 								.append("<td>".concat(data.getBirth()).concat("</td>"))

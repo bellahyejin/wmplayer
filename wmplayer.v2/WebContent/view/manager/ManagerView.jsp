@@ -3,18 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<link type="text/css" href="${initParam.root}/css/global.css"
-	rel="stylesheet" />
-<link type="text/css" href="${initParam.root}/css/ManagerView.css"
-	rel="stylesheet" />
-<script type="text/javascript"
-	src="${ initParam.root }/js/jquery-2.1.4.js"></script>
-<script type="text/javascript"
-src="${ initParam.root }/js/StringConstructor.js"></script>
-<script type="text/javascript"
-	src="${ initParam.root }/js/common.js"></script>
-<script type="text/javascript"
-	src="${ initParam.root }/js/JSONDataCompare.js"></script>
+<link type="text/css" href="${ initParam.root }/css/global.css" rel="stylesheet" />
+<link type="text/css" href="${ initParam.root }/css/ManagerView.css" rel="stylesheet" />
+<script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/StringConstructor.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script type="text/javascript">
 	this.pres_page = ${ pres_page };
 
@@ -33,21 +27,21 @@ src="${ initParam.root }/js/StringConstructor.js"></script>
 			this.prev_data = this.data;
 
 			$.ajax({
-			type : "post",
-			async : true,
-			url : "${ initParam.root }/manager/userinfo.ajax",
-			dataType : "html", // xml, json, html, script, jsonp, text
-			data : this.data,
-			success : function(data, status, xhr)
-			{
-				var temp = data.split("|");
-				$("#member_table").html(temp[0]);
-				$(".pager-container-manager").html(temp[1]);
-			},
-			error : function(xhr, status, error)
-			{
-				alert("error");
-			}});
+				type : "post",
+				async : true,
+				url : "${ initParam.root }/manager/userinfo.ajax",
+				dataType : "html", // xml, json, html, script, jsonp, text
+				data : this.data,
+				success : function(data, status, xhr)
+				{
+					var temp = data.split("|");
+					$("#member_table").html(temp[0]);
+					$(".pager-container-manager").html(temp[1]);
+				},
+				error : function(xhr, status, error)
+				{
+					alert("error");
+				}});
 		}
 	}
 
@@ -89,6 +83,7 @@ src="${ initParam.root }/js/StringConstructor.js"></script>
 						{
 							ajaxStart();
 						});
+
 					$("#member_table tr").hover(function()
 						{
 							$(this).find(".button").css("background-color", "#f6f6f6");
