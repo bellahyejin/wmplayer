@@ -118,7 +118,7 @@ public class JSONFileParser
 
 	public List<HashMap<String, Object>> parser(String root_key, Map<String, Boolean> key_name)
 	{
-		return processNode(Json.createParser(is), root_key, key_name);
+		return processNode(Json.createParser(is), "/root"+(root_key == null ? "" : root_key)  , key_name);
 	}
 
 	private String location_check(String key_location, List<String> array_key)

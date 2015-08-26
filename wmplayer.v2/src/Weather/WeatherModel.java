@@ -87,7 +87,7 @@ public class WeatherModel
 		Map<String, Boolean> top_key_name = new HashMap<String, Boolean> ();
 		top_key_name.put("/code", false);
 		top_key_name.put("/value", false);
-
+		
 		jfp.setUrl("http://www.kma.go.kr/DFSROOT/POINT/DATA/top.json.txt");
 		List<HashMap<String, Object>> top_list = jfp.parser(null, top_key_name);
 

@@ -11,21 +11,6 @@ public class TilesController {
 		return "tiles.main";
 	}
 	
-	@RequestMapping("/noticelist")
-	public String noticelist(){
-		return "noticelist";
-	}
-	
-	@RequestMapping("/sharelist")
-	public String sharelist(){
-		return "sharelist";
-	}
-	
-	@RequestMapping("/columnlist")
-	public String columnlist(){
-		return "columnlist";
-	}
-	
 	@RequestMapping("/userinfo")
 	public String userinfo(){
 		return "userinfo";
