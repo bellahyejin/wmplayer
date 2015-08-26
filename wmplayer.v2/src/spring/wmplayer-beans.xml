@@ -18,11 +18,11 @@
 		  		<value>classpath:mybatis/board/column.xml</value>
 		        <value>classpath:mybatis/board/notice.xml</value>
 		        <value>classpath:mybatis/board/share.xml</value>
-		        <value>classpath:mybatis/board/videoUploaded.xml</value>
 		        <value>classpath:mybatis/manager/manager.xml</value>
 		        <value>classpath:mybatis/music/musicLiked.xml</value>
 		        <value>classpath:mybatis/music/Music.xml</value>
 		        <value>classpath:mybatis/user/UserInfo.xml</value>
+		        <value>classpath:mybatis/board/videoUploaded.xml</value>
 		    </list>
 		</property>
 	</bean>

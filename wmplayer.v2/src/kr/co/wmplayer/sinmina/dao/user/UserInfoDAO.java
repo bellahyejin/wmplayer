@@ -72,9 +72,7 @@ public class UserInfoDAO {
 	}
 	
 	public String findid(UserInfoDTO user){
-		System.out.println(user.getName());
 		String id = session.selectOne("user.findid",user);
-		System.out.println(id);
 		return id;
 	}
 	

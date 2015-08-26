@@ -34,7 +34,7 @@
 <todaymusic>
 <currentLocation>${current_addr}</currentLocation>
 <currentTemper>${wm.weatherData.temp }</currentTemper>
-<currentWeather>${wm.eatherData.weather}</currentWeather>
+<currentWeather>${wm.weatherData.weather}</currentWeather>
 <c:forEach items="${lists }" var="todaylist" >
 	<music>
 		<musicID><![CDATA[${todaylist.musicID}]]></musicID>

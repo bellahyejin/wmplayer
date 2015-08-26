@@ -41,7 +41,7 @@ function showPosition(position)
    	var cur_Longitude = Math.floor(position.coords.longitude*100)/100; //°æµµ
 	params  += 'cur_Latitude='+cur_Latitude+'&cur_Longitude='+cur_Longitude;
 	$.ajax({
-		url: '${initParam.root}/ajax/receiveData.jsp',
+		url: '${initParam.root}/ajax/receiveData',
    		type: 'POST',
    		data : params,
    		cache: false,

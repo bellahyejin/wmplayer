@@ -22,7 +22,7 @@
 	
 	<mvc:default-servlet-handler />
 	
-	<bean id="viewResolverTiles"
+	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
@@ -32,7 +32,7 @@
 	<context:component-scan base-package="kr.co.wmplayer.sinmina.controller" />
 
 	<!-- 타일즈 설정, 뷰 리졸버 설정 -->
-	<bean id="viewResolver"
+	<bean id="viewResolver2"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/view/" />
 		<property name="suffix" value=".jsp" />
