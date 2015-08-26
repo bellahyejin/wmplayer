@@ -10,12 +10,12 @@
 	double current_latitude = Double.valueOf(request.getParameter("cur_Latitude")).doubleValue();
 	double current_longitude = Double.valueOf(request.getParameter("cur_Longitude")).doubleValue();
 	
-	System.out.print("la : "+current_latitude+", long : "+current_longitude);
 	
 	MusicDAO dao = new MusicDAO();
 	
 	AddressChangeModel addr = new AddressChangeModel();
 	addr.setGrid(current_longitude, current_latitude, false, true, 2);
+	System.out.print("la : "+current_latitude+", long : "+current_longitude);
 	
 	String current_addr = addr.getAddr();
 	WeatherModel wm = new WeatherModel();
@@ -25,7 +25,9 @@
 	double current_temper = wm.getWeatherData().getTemp();
 	String current_weather = wm.getWeatherData().getWeather();
 	List<MusicInfoDTO> lists = dao.selectTodayList(current_temper);
-
+	
+	System.out.println("addr : "+ current_addr+", temper:" +current_temper+", lists: "+lists.get(1).getTitle());
+	
 	StringBuffer str = new StringBuffer();
 	
 	//str.append("<?xml version='1.0' encoding='euc-kr'?>");

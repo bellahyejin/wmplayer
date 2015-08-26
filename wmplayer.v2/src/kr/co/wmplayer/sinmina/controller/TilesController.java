@@ -11,11 +11,6 @@ public class TilesController {
 		return "tiles.main";
 	}
 	
-	@RequestMapping("/home")
-	public String homeform(){
-		return "home";
-	}
-	
 	@RequestMapping("/noticelist")
 	public String noticelist(){
 		return "noticelist";
