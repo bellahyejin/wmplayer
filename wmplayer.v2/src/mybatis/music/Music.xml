@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:29 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="music">
+	<select id="share" parameterType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO" resultType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
+		select musicID, image, style from musicinfo where title=#{title} and artist=#{artist}
+	</select>
+	
+	<select id="todaylist" parameterType="double" resultType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
+		SELECT *
+  		FROM MUSICINFO A, BPMINFO B
+ 		WHERE A.BPM BETWEEN B.MIN_BPM AND B.MAX_BPM-01
+   				AND #{value} BETWEEN B.MIN_TEMP AND B.MAX_TEMP-0.001			   
+	</select>
+	
+	<insert id="addmusic" parameterType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
+		insert into musicinfo values(#{musicID},#{title},#{artist},#{image},#{bpm},#{location})	    
+	</insert>
+</mapper>

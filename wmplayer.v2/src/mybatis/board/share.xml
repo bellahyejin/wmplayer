@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:32 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="share">
+	<insert id="input" parameterType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		insert into board_user values (board_seq.nextval,#{userID},#{board_title},#{board_artist},#{videoID},
+		#{albumcover},#{weather_custom},SYSDATE,#{board_desc},0)
+	</insert>
+	
+	<select id="selectCard" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		select board_seq,board_title,board_artist,userID,albumcover,weather_custom,regi_day
+		from(select board_seq,board_title,board_artist,userID,albumcover,weather_custom,regi_day, rownum as rn
+		from (select board_seq,board_title,board_artist,userID,albumcover,weather_custom,regi_day from board_user order by board_seq desc))
+		where rn between 9*#{start}-8 and 9*#{start}
+	</select>
+
+	<select id="selectSortCard" parameterType="String" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		select board_seq,board_title,board_artist,userID,albumcover,weather_custom,regi_day 
+		from board_user where weather_custom in (${weather_custom}) order by board_seq desc
+	</select>
+	
+	<select id="selectSize" parameterType="String" resultType="int">
+		select count(*) from board_user where weather_custom in (${weather_custom})
+	</select>
+	
+	<select id="detail" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		select * from board_user where board_seq = #{board_seq}
+	</select>
+	
+	<update id="updatecnt" parameterType="int">
+		update board_user set check_cnt = check_cnt+1 where board_seq=#{board_seq}
+	</update>
+	
+	<select id="selectSeq" resultType="String">
+		select board_seq from board_user order by board_seq desc
+	</select>
+	
+	<select id="selectPop" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		select board_seq, board_title, board_artist, userID, albumcover 
+		from board_user
+		where rownum between 1 and 10
+		order by check_cnt desc
+	</select>
+	
+	<select id="myboard" parameterType="String" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+		select board_seq, board_title, board_artist from board_user where userID=#{userID}
+	</select>
+	
+	
+<!-- 리플관련 -->	
+	
+	
+	
+<select id="countReple" parameterType="int" resultType="String">
+select count(*) from columnReple where column_seq=#{column_seq}
+</select>
+
+<update id="updateColumn" parameterType="java.util.HashMap">
+update columnReple set contents=#{updatedContents} where columnReple_seq=#{upNum}
+</update>
+
+<delete id="deleteReple" parameterType="int">
+delete from columnReple where columnReple_seq=#{delNum}
+</delete>
+
+
+<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
+   insert into shareReple values (shareReple_seq.nextval, #{share_seq}, #{userID}, #{contents}, SYSDATE )   
+</insert>
+
+<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
+select * from columnReple where column_seq=#{column_seq} order by submit_date desc
+</select>
+	
+</mapper>

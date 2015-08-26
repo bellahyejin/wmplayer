@@ -1,0 +1,19 @@
+
+.sharewrite-form{
+	width: 520px; 
+	height: 100%;
+	padding: 40px 90px; 
+}
+.sharewrite-header{
+	font-size: 20pt; 
+	font-style: bold; 
+	padding: 0 0 20px 22px;
+}
+.sharewrite-contents input{width: 315px}
+.sharewrite-contents table{ width: 100%;}
+.sharewrite-contents td { padding: 5px 0 5px;}
+
+.sharewrite-contents #title{ font: 10pt �����ٸ����; width: 140px; padding-left: 30px}
+.sharewrite-contents #con{ width: 358px;}
+
+.sharewrite-contents textarea{ margin-left: 30px; width: 450px}

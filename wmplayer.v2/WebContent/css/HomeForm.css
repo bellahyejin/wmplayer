@@ -1,0 +1,41 @@
+@CHARSET "EUC-KR";
+.home-menu {width : 700px; height: 100%; padding-top: 5px;}
+.notice-list-subject { width: 100%; height: 22px; }
+.must-list-subject { top: 0px; left: 57px; position: relation; margin: 15px 0 10px 8px ;}
+.music-rank-list-subject .board-rank-list-subject { margin: 0; padding: 0;}
+.notice-subject, .attribute { width: 100%; font-size: 10pt; margin-left: 10px; font-weight: bold; }
+.attribute { color: #ed5454; }
+.notice-subject { color: #757575; }
+
+#notice-list, #must-list, #music-rank-list, #board-rank-list { position: relative; text-align: center; width: 576px; }
+
+#notice-list { top: 0px; left: 65px; height: 50px; }
+#must-list { border-color: #ab00ab; top: 0px; left: 65px; height: 180px; overflow: auto; }
+
+#music-rank-list, #board-rank-list{ top: 0px; left: 65px; width: 268px; height: 250px; margin-top: 20px;}
+
+.notice { text-align: left; position: relative; height: 20px; overflow: hidden }
+.notice a, a:LINK, a:HOVER, a:VISITED{color: #757575}
+.notice span { display: inline; }
+.notice span + span { display: inline; }
+.notice #attribute { color: #ff0000; font-weight: bold; }
+.notice-list #subject { margin: 0 5px 0 5px; }
+.notice-list #attribute, .notice-list #subject { font-size: 16px }
+
+.music-jacket-list { margin: 0; padding: 0; }
+.music-jacket-list td + td { margin: 0 5px; }
+
+.board-rank-subject { width: 195px;}
+
+.jacket { width: 100px; height: 100px; }
+.must-music-subject { font-size: 11pt; font-style: #424242; text-align: center;}
+.must-music-artist { font-size: 9pt; font-style: #757575; text-align: center;}
+
+.music-rank { width: 20px;}
+#music-rank-list, #board-rank-list { float: left;}
+#music-rank-list .music-rank-object, #board-rank-list .board-rank-subject{ text-align:left; padding-left: 10px; }
+
+.board-rank-writer{text-align: left;}
+.list+.list {margin-left: 20px}
+
+.music-rank,.music-rank-writer, .music-rank-object, .board-rank, .board-rank-subject, .board-rank-writer{ border-bottom: 1px solid #eee;}

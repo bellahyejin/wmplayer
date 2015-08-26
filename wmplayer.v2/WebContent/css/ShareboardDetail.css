@@ -1,0 +1,114 @@
+.share-detail{
+	width: 540px; 
+	height: 100%;
+	padding: 20px 80px; 
+}
+
+.share-detail-header{
+	font-size: 20pt; 
+	font-style: bold; 
+	padding: 0 0 10px 22px;
+	border-bottom: 1px solid #d5d5d5;	
+}
+.share-detail-info{ 
+	height: 100px;
+	background: #f6f6f6; 
+	padding: 9px 0 9px; 
+	border-top: 1px solid #d5d5d5; 
+	border-bottom: 1px solid #d5d5d5;
+	border-left: 2px solid #fff;
+	border-right: 2px solid #fff;
+}
+
+
+/* position */
+.share-detail-mv{
+	margin: 15px 0 15px 50px ;
+}
+.share-detail-header #select-info{float: right; margin: 15px 10px 0 0;}
+.share-button{
+	padding-top: 10px;
+	clear:both;
+}
+/* table */
+.share-detail-info table{ margin-left: 20px; font-size: 9pt; }
+.share-detail-info #desc{ padding-top: 10px;}
+.share-detail-info #title{ font-weight: bold;}
+
+/* ��� */
+.share-detail-reply { padding-top: 10px; margin-left: 25px;} 
+#reply_write #reply{ float: right; margin-right: 30px;}
+#reply-cnt{ margin-left: 5px; font-size: 8pt; color: #ffa851;}
+
+#reply-plus{ display: none;}
+
+/* reply plus style*/
+.reply-plus-table{
+	width: 480px;
+	margin-bottom: 10px;
+}
+.reply-plus-table th {
+	background-color:#ededed;
+	color:#757575;
+	font-size: 10pt;
+}
+.reply-plus-table, .reply-plus-table td {
+	font-size:0.95em;
+	text-align:center;
+	padding:4px;
+	border-collapse:collapse;
+}
+.reply-plus-table #contents{ text-align: left;}
+.reply-plus-table #date{ text-align: right; padding-right: 20px;}
+
+.reply-plus-table th,.reply-plus-table td {
+	border: 1px solid #ffffff;
+	border-width:1px;
+	padding: 10px 0 10px;
+}
+.reply-plus-table th {
+	border: 1px solid #757575;
+	border-width:1px 0 1px 0
+}
+.reply-plus-table td {
+	border: 1px solid #eee;
+	border-width:1px 0 0 0;
+	font-size: 8pt;
+}
+.reply-plus-table tr {
+	border: 1px solid #ffffff;
+}
+	
+/* paging reply*/
+#reply-plus #pager-container-reply{
+	width: 450px;
+
+}
+.share-button{ margin-top: 15px;}
+.share-button #list { float: right;}
+#reply-plus .page-list{
+	padding-left: 20px;
+}
+
+.column-reply{ 
+	width: 510; 
+	height: 50px; 
+	padding: 8px 0 0 30px;
+	border-top: 2px solid #dedede;
+	margin-top: 60px;
+}
+#reply_title{
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#reply_write{
+	margin-top: 5px;
+}
+.column-redetail{
+	font-size: 9pt;
+	text-align: right;
+	width: 485px; 
+	height: 20px; 
+	padding: 5px 10px 0 0 ;
+}

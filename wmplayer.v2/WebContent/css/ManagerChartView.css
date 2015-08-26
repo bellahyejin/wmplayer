@@ -1,0 +1,35 @@
+#chart1 {
+	position : absolute;
+	width : 300px;
+	height : 250px;
+}
+
+#chart2 {
+	position : absolute;
+	width : 300px;
+	height : 250px;
+	left : 350px;
+}
+
+#chart3 {
+	position : absolute;
+	width : 600px;
+	height : 250px;
+	top : 360px;
+	left : 25px;
+}
+
+#chart4 {
+	position : absolute;
+	width : 600px;
+	height : 250px;
+	left : 25px;
+}
+
+#chart5 {
+	position : absolute;
+	width : 600px;
+	height : 250px;
+	top : 360px;
+	left : 25px;
+}

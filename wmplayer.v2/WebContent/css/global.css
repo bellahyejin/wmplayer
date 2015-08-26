@@ -1,0 +1,346 @@
+@CHARSET "EUC-KR";
+@IMPORT url("MainForm.css");
+@IMPORT url("HomeForm.css");
+@IMPORT url("MusicPlayer.css");
+@IMPORT url("JoinForm.css");
+@IMPORT url("LoginForm.css");
+@IMPORT url("UserUpdate.css");
+@IMPORT url("UserDrop.css");
+@IMPORT url("UserAnalysis.css");
+@IMPORT url("ManagerView.css");
+@IMPORT url("ColumnDetail.css");
+@IMPORT url("ColumnForm.css");
+@IMPORT url("ColumnList.css");
+@IMPORT url("NoticeDetail.css");
+@IMPORT url("NoticeWriteForm.css");
+@IMPORT url("ShareCard.css");
+@IMPORT url("ShareboardList.css");
+@IMPORT url("ShareboardDetail.css");
+@IMPORT url("ShareboardForm.css");
+
+/* css 파일 import 방법
+<link type="text/css" href="현재 파일에서 상대경로" rel="stylesheet" />
+*/
+
+/* 나중에 지울 예정(사이즈 쉽게 표시 위해 지정) */
+/* div, table, span { border: 1px solid; }
+div { border-color: #ff5b5b; }
+table { border-color: #0000ff; }
+span { border-color: #00ff00; } */
+
+
+/* body 초기화 */
+body { padding: 0; margin: 0;  left:0 ; top: 0;}
+
+textarea, input[type=text]{ font-family: 나눔바른고딕; border: 1px solid #b0b0b0;}
+/* scroll 비표시 */
+
+/* font */
+#korean { font-family: regular, 나눔바른고딕; }
+.english { font-family: bebas, regular; }
+.font { font-family: bebas, 나눔바른고딕; }
+.regular { font-family: regular; }
+
+/* table 속성 */
+.list, .board { width: 660px; margin: 0; border-spacing: 0; }
+/* tr에 마우스 올렸을 때 그 줄 전체의 스타일 변경 */
+.board tr:hover td { background-color: #f6f6f6; }
+/* board, list table 제목 부분 */
+.board th, .list th { text-align: center; background-color: #bfe3f2; border-bottom: 2px solid #dedede; border-collapse: collapse; }
+.board th { padding: 5px; font-size: 10pt; }
+/* board, list table 내용 부분 */
+.board td, .list td { font-size: 9pt;}
+.board td{padding-top: 4px; }
+/* board, list table 제목, 내용 부분에 점선 추가 */
+.bottom_border {border-bottom: 1px solid #757575; padding-bottom: 5px;}
+.bottom_border_tr {border-bottom: 1px solid #eee;}
+
+.boardpadding td{padding-top: 4px;}
+/* 제목 부분 */
+.subject { text-align: left; position: relative; font-size: 11pt; }
+.top-margin-subject, .left-margin-subject { text-align: left; position: relative; font-size: 11pt; }
+.top-margin-subject { margin-top: 30px;}
+.left-margin-subject { margin-left: 10px; }
+
+/* 링크 기본 스타일 및 밑줄 표시는 마우스 올렸을 때만 */
+
+/* 게시글(또는 매니저 페이지) 페이지 숫자 스타일 변경 */
+/* 쓰는 방법
+
+begin_page : forEach의 begin 속성
+end_page : forEach의 end 속성
+pres_page : 현재 페이지
+max_page : 전체 페이지 수
+
+<div class="pager-container">
+	<ul class="page-list">
+	<c:choose>
+		<c:when test="${ pres_page == 1 || begin_page == 1 }"></c:when>
+		<c:otherwise><a href="?page=1">첫 페이지</a></c:otherwise>
+	</c:choose>
+	<c:forEach begin="${ begin_page }" end="${ end_page }" var="page" >
+		<c:choose>
+			<c:when test="${ pres_page != page }"><li><a href="?page=${ page }">${ page }</a></li></c:when>
+			<c:otherwise><li>${ page }</li></c:otherwise>
+		</c:choose>
+	</c:forEach>
+	<c:choose>
+		<c:when test="${ pres_page == max_page || end_page == max_page }"></c:when>
+		<c:otherwise><a href="?page=${ max_page }">마지막 페이지</a></c:otherwise>
+	</c:choose>
+	</ul>
+</div>
+ */
+
+/* 페이지 소스*/
+.page-list {
+	margin:0;
+	position: static;
+	text-align: center;
+}
+.page-list li { 
+	display: inline-block;
+	padding: 0 6px; 
+	clear: both;
+}
+.page-list li + li {
+	display: inline-block;
+	padding: 0 6px; 
+	border-left: 1px solid #aaaaaa; 		
+	}
+
+#first, #middle{ float:left;}
+#first, #end{ font-size:8pt; width: 40px; height: 20px; margin-top: 5px;}
+#first{margin-left: 20px;}
+#middle{
+	width:330px;
+}
+#end{ float: left;}
+
+.none_a{ font-size: 10pt; color: #575757}
+
+.page a, .page a:link, .page a:hover{
+	color: #757575;
+	font-size: 8pt; 
+	text-decoration: none;
+}
+
+
+/* write 버튼 */
+/* nomal*/
+.styled-button-12 {
+	-webkit-box-shadow: #FEFFFF 0px 1px 1px ;
+	-moz-box-shadow: #FEFFFF 0px 1px 1px ; 
+	box-shadow: #FEFFFF 0px 1px 1px ; 
+	background-color: #F7F5F6; 
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F7F5F6), to(#DDDDDD));
+ 	background-image: -webkit-linear-gradient(top, #F7F5F6, #DDDDDD);
+ 	background-image: -moz-linear-gradient(top, #F7F5F6, #DDDDDD);
+ 	background-image: -ms-linear-gradient(top, #F7F5F6, #DDDDDD);
+ 	background-image: -o-linear-gradient(top, #F7F5F6, #DDDDDD);
+ 	background-image: linear-gradient(to bottom, #F7F5F6, #DDDDDD);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F7F5F6, endColorstr=#DDDDDD);
+	padding:4px 8px;
+	color:#757575;
+	font-family:'Helvetica',sans-serif;
+	font-size:13px;
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	border:1px solid #ccc;
+	float: right;
+
+}
+
+/* button hover*/
+
+.styled-button-12:HOVER{
+	border:1px solid #ADADAD;
+	background-color: #E0E0E0; 
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#E0E0E0), to(#BDBBBC));
+ 	background-image: -webkit-linear-gradient(top, #E0E0E0, #BDBBBC);
+ 	background-image: -moz-linear-gradient(top, #E0E0E0, #BDBBBC);
+ 	background-image: -ms-linear-gradient(top, #E0E0E0, #BDBBBC);
+	background-image: -o-linear-gradient(top, #E0E0E0, #BDBBBC);
+ 	background-image: linear-gradient(to bottom, #E0E0E0, #BDBBBC);
+ 	filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E0E0E0, endColorstr=#BDBBBC);
+
+}
+
+/* 클릭시 */
+.styled-button-12:ACTIVE {
+	-webkit-box-shadow: #757575 0px 1px 1px inset;
+	-moz-box-shadow: #757575 0px 1px 1px inset; 
+	box-shadow: #757575 0px 1px 1px inset; 
+}
+
+/* 로그인 시 버튼 */
+.styled-button-login {
+	background: #fff;
+	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff), color-stop(100%,#fff));
+	background: -webkit-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -o-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -ms-linear-gradient(top,#fff 0%,#fff 100%);
+	background: linear-gradient(top,#fff 0%,#fff 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fff',endColorstr='#fff',GradientType=0);
+	padding:5px 15px;
+	color:#757575;
+	font-family:'Helvetica',sans-serif;
+	font-size:12px;
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border:1px solid #cacaca;
+}
+
+/* hover */
+.styled-button-login:HOVER{
+	border: 1px solid #03a9f4;
+	background: #b3e5fc;
+	background: -moz-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#b3e5fc), color-stop(100%,#b3e5fc));
+	background: -webkit-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -o-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -ms-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#b3e5fc',endColorstr='#b3e5fc',GradientType=0);
+}
+
+/* active */
+
+.styled-button-login:ACTIVE{
+
+	-webkit-box-shadow: #039be5 0px 1px 1px inset;
+	-moz-box-shadow: #039be5 0px 1px 1px inset; 
+	box-shadow: #039be5 0px 1px 1px inset; 
+}
+
+/* detail 시 버튼 */
+.styled-button-detail {
+	background: #fff;
+	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff), color-stop(100%,#fff));
+	background: -webkit-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -o-linear-gradient(top,#fff 0%,#fff 100%);
+	background: -ms-linear-gradient(top,#fff 0%,#fff 100%);
+	background: linear-gradient(top,#fff 0%,#fff 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fff',endColorstr='#fff',GradientType=0);
+	padding:5px 15px;
+	color:#757575;
+	font-family:'Helvetica',sans-serif;
+	font-size:12px;
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border:1px solid #cacaca;
+}
+
+/* hover */
+.styled-button-detail:HOVER{
+	border: 1px solid #cacaca;
+	background: #eee;
+	background: -moz-linear-gradient(top,#eee 0%,#eee 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#eee), color-stop(100%,#eee));
+	background: -webkit-linear-gradient(top,#eee 0%,#eee 100%);
+	background: -o-linear-gradient(top,#eee 0%,#eee 100%);
+	background: -ms-linear-gradient(top,#eee 0%,#eee 100%);
+	background: linear-gradient(top,#eee 0%,#eee 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#eee',endColorstr='#eee',GradientType=0);
+}
+
+/* active */
+
+.styled-button-detail:ACTIVE{
+
+	-webkit-box-shadow: #c8c8c8 0px 1px 1px inset;
+	-moz-box-shadow: #c8c8c8 0px 1px 1px inset; 
+	box-shadow: #c8c8c8 0px 1px 1px inset; 
+}
+
+
+/* 목록 보기*/
+.styled-button-list {
+	background: #81d4fa;
+	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#81d4fa), color-stop(100%,#81d4fa));
+	background: -webkit-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -o-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -ms-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#81d4fa',endColorstr='#81d4fa',GradientType=0);
+	padding:5px 15px;
+	color:#fff;
+	font-family:'Helvetica',sans-serif;
+	font-size:12px;
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border:1px solid #4fc3f7;
+}
+
+/* hover */
+.styled-button-list:HOVER{
+	border: 1px solid #03a9f4;
+	background: #b3e5fc;
+	background: -moz-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#b3e5fc), color-stop(100%,#b3e5fc));
+	background: -webkit-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -o-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -ms-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#b3e5fc',endColorstr='#b3e5fc',GradientType=0);
+}
+
+/* active */
+
+.styled-button-list:ACTIVE{
+
+	-webkit-box-shadow: #03a9f4 0px 1px 1px inset;
+	-moz-box-shadow: #03a9f4 0px 1px 1px inset; 
+	box-shadow: #03a9f4 0px 1px 1px inset; 
+}
+
+
+/* 댓글 입력*/
+.styled-button-reply {
+	background: #81d4fa;
+	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#81d4fa), color-stop(100%,#81d4fa));
+	background: -webkit-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -o-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: -ms-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	background: linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#81d4fa',endColorstr='#81d4fa',GradientType=0);
+	padding:3px 7px;
+	color:#fff;
+	font-family:'Helvetica',sans-serif;
+	font-size:12px;
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border:1px solid #4fc3f7;
+}
+
+/* hover */
+.styled-button-reply:HOVER{
+	border: 1px solid #03a9f4;
+	background: #b3e5fc;
+	background: -moz-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#b3e5fc), color-stop(100%,#b3e5fc));
+	background: -webkit-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -o-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: -ms-linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	background: linear-gradient(top,#b3e5fc 0%,#b3e5fc 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#b3e5fc',endColorstr='#b3e5fc',GradientType=0);
+}
+
+/* active */
+
+.styled-button-reply:ACTIVE{
+
+	-webkit-box-shadow: #03a9f4 0px 1px 1px inset;
+	-moz-box-shadow: #03a9f4 0px 1px 1px inset; 
+	box-shadow: #03a9f4 0px 1px 1px inset; 
+}
+
+

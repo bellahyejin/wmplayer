@@ -1,0 +1,67 @@
+/* ��ü ������ */
+.column-list-form{
+	width: 600px;
+	height: 100%;
+	padding: 50px 50px;
+}
+
+/* header ��Ÿ�� */
+.column-list-header span{ font-size: 20pt; font-weight: bold;}
+
+/*div position*/
+.column-list-header { margin-bottom: 25px;}
+
+/* table ��Ÿ�� */
+.column-list-table{
+	width: 600px;
+	margin-bottom: 10px;
+}
+.column-list-table th {
+	background-color:#ededed;
+	color:#757575;
+	font-size: 10pt;
+}
+.column-list-table,.column-list-table th,.column-list-table td {
+	font-size:0.95em;
+	text-align:center;
+	padding:4px;
+	border-collapse:collapse;
+}
+.column-list-table th,.column-list-table td {
+	border: 1px solid #ffffff;
+	border-width:1px;
+	padding: 10px 0 10px;
+}
+.column-list-table th {
+	border: 1px solid #757575;
+	border-width:1px 0 1px 0
+}
+.column-list-table td {
+	border: 1px solid #eee;
+	border-width:1px 0 1px 0;
+	font-size: 8pt;
+}
+.column-list-table tr {
+	border: 1px solid #ffffff;
+}
+
+/* ��ũ */
+.column-list-table tr td a, 
+.column-list-table tr td a:link,
+.column-list-talbe tr td a:HOVER{ 
+	text-decoration: none;
+	color: #757575;
+	font-size: 9pt;
+}
+
+.column-list-table tr:hover td { background-color: #fbfbfb; }
+
+/* paging ��� */
+.pager-container-column{  
+	width: 550px;
+	height: 20px;
+	margin: 50px 0 0 30px;	
+}
+
+
+

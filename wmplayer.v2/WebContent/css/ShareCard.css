@@ -1,0 +1,76 @@
+@CHARSET "EUC-KR";
+
+/* css 파일 import 방법
+<link type="text/css" href="현재 파일에서 상대경로" rel="stylesheet" />
+*/
+
+.cardtotal {
+	width: 152px;
+	height: 152px;
+	float: left;
+	display: inline-block;
+	margin: 0 10px 10px 0 ;;
+	padding: 0;
+}
+
+.cardimg {
+	width: 152px;
+	height: 152px;
+}
+
+#image {
+	width: 152px;
+	height: 152px;
+}
+.left{ padding-left: 10px;}
+.up { padding-top: 12px;}
+
+.info_title { font-size: 9pt; color: #fff;}
+.back #title { font-size: 14pt; color: #fff; padding-left: 10px; font-weight: bolder;}
+.back #artist, #gerne, #writedate{font-size: 10pt; text-align: right; color: #fff; padding-right: 10px; vertical-align: bottom;}
+.writeinfo, #writedate {font-size: 9pt; color: #fff; padding-top: 25px}
+.back table {width: 100%; border: 1px sol; margin-top: 20px;}
+.cardtotal {
+	overflow: hidden;
+	position: relative;
+}
+
+.cardtotal li{ list-style: none;}
+
+.cardtotal	li a {
+	display: block;
+	width: 152px;
+	height: 152px;
+	perspective: 600px;
+	color: #fff;
+}
+
+.cardtotal	li a .cardimg {
+	background-color: #fff;
+	transform: rotateX(0deg) rotateY(0deg);
+	transition: all 0.5s ease-in-out;
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+}
+
+.cardtotal	li a .back {
+	background-color: #81CFE0;
+	height: inherit;
+	width: inherit;
+	position: absolute;
+	top: 0;
+	transform-style: preserve-3d;
+	transform: rotateX(0deg) rotateY(-180deg);
+	transition: all 0.5s ease-in-out;
+	backface-visibility: hidden;
+	z-index: -1;
+}
+
+.cardtotal	li a:hover .cardimg {
+	transform: rotateX(0deg) rotateY(180deg);
+}
+
+.cardtotal	li a:hover .back {
+	transform: rotateX(0deg) rotateY(0deg);
+	z-index: 1;
+}

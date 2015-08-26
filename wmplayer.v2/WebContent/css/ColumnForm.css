@@ -1,0 +1,23 @@
+
+#wm_btn {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.columnwrite-form{
+	width: 520px; 
+	height: 100%;
+	padding: 40px 90px; 
+}
+.columnwrite-header{
+	font-size: 20pt; 
+	font-style: bold; 
+	padding: 0 0 20px 22px;
+}
+
+.columnwrite-section{
+	padding: 0 0 0 22px;
+}
+
+.columnwrite-title{ font-size: 10pt; padding-top: 2px;}
+#wm_btn #column{margin-right: 10px;}

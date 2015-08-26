@@ -1,0 +1,57 @@
+.useranalysis-form{
+	width: 700px;
+	height: 100%;
+	padding-top: 30px;
+}
+
+/*��� ���� ����� */
+.anal-button{text-align: center;}
+.useranal-header{text-align: center; margin: 20px 0 30px;}
+/*  header */
+.useranal-header #name{ color: #6495f0}
+.useranal-header #style{ color: orange;}
+.useranal-header #name, #style{
+	font-size: 12pt;
+}
+.useranal-header span{ font-size: 9pt;}
+
+/* section table */
+.anal-left, .anal-right{float:left;}
+.anal-left table, .anal-right table	{ border-spacing:inherit;  width: 250px; height: 200px;}
+.anal-left{ margin: 0 65px 0 70px}
+.anal-right tr:HOVER td{background: #fafafa}
+
+/*table border*/
+#anal-th span{
+   font-size: 9pt;
+}
+#anal-th{ border-bottom: 1px solid #757575; text-align: center; margin-bottom: 10px;}
+
+/* title �⺻ font size */
+#anal-th #anal-cnt{margin-left: 20px; font-size: 10pt;}
+#anal-th #anal-like{margin:0 10px 0 10px; font-size: 12pt; color: #f9a7b5;}
+#anal-th #anal-board{
+   font-size: 12pt;
+   color: #81cfdf;
+} 
+
+.like-rank, .like-rank-object
+{
+   border-bottom: 1px solid;
+   border-color: #EAEAEA;
+   font-size: 9pt;
+   padding: 5px 0 5px;
+   vertical-align: middle;
+   
+}
+
+.anal-button{
+	clear: both;
+	padding-top: 40px;
+
+}
+
+.like-rank { text-align: center;}
+.like-rank-object{ padding-left: 10px; }
+
+.like-rank a, a:LINK, a:VISITED, a:HOVER { text-decoration: none;  color: #757575;}

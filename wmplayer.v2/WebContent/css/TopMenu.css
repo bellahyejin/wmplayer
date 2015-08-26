@@ -1,0 +1,14 @@
+.menu { border-color: #0000ff; text-align: center; width: 700px; height: 60px;}
+
+.menu .width { width: 18%;}
+
+#bar { position: absolute; margin-top: 57px; left: 50px;}
+#notice_top, #share_top, #column_top, #user_top { font-size: 12pt; text-align: center; width: 690px; height: 50px; }
+
+/* �α��� ��ư */
+
+#login_top, #logout_top, #join_top, #text_bar
+{
+	font-size: 11pt;
+	vertical-align: bottom;
+}

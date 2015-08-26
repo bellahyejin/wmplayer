@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:30 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="column">
+
+	<insert id="columnInsert" parameterType="java.util.Map">
+		insert into columnboard
+		values (column_seq.nextval, #{title}, #{mood},
+		#{style}, #{contents},
+		SYSDATE, 0 )
+	</insert>
+
+	<select id="countReple" parameterType="int" resultType="int">
+		select
+		count(*) from columnReple where column_seq=#{column_seq}
+	</select>
+
+	<update id="updateColumn" parameterType="java.util.HashMap">
+		update columnReple set
+		contents=#{updatedContents} where
+		columnReple_seq=#{upNum}
+	</update>
+
+	<delete id="deleteReple" parameterType="int">
+		delete from columnReple
+		where columnReple_seq=#{delNum}
+	</delete>
+
+
+	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
+		insert into columnReple
+		values (columnReple_seq.nextval, #{column_seq},
+		#{userID}, #{contents},
+		SYSDATE )
+	</insert>
+
+	<select id="columnSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+		select column_seq, title, update_day, view_cnt
+		from(select column_seq, title, update_day, view_cnt, rownum as rn
+		from
+		(select column_seq, title, update_day, view_cnt from columnboard order
+		by column_seq desc))
+		where rn between 10*#i#-9 and 10*#i#
+	</select>
+
+	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
+		select * from columnReple where column_seq=#{column_seq}
+		order by
+		submit_date desc
+	</select>
+
+	<select id="columnSize" resultType="int">
+
+		select count(*) from
+		columnboard
+	</select>
+
+
+	<select id="selectTitleAll" resultType="java.lang.String">
+		select title from
+		columnboard
+	</select>
+
+	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+		select column_seq , title,update_day,view_cnt,contents
+		from
+		columnboard
+		where column_seq=#{column_seq}
+	</select>
+
+	<update id="cntplus" parameterType="int">
+		update columnboard set
+		view_cnt =(view_cnt+1) where column_seq=#{column_seq}
+	</update>
+
+
+	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+		select column_seq , title,update_day,view_cnt,contents
+		from
+		columnboard
+		order by column_seq desc
+	</select>
+	<select id="selectSeq" resultType="String">
+		select column_seq from
+		columnboard
+		order by column_seq desc
+	</select>
+	<select id="columnHomeTitle" parameterType="int" resultType="java.lang.String">
+		select title from (select data.*, rownum as rn from (select title
+		from columnboard order by column_seq desc) data) where rn between
+		#{start} and #{start} + 4
+	</select>
+	<select id="homerank" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+		select column_seq, title, view_cnt
+		from columnboard
+		where
+		rownum between 1 and 10
+		order by view_cnt desc
+	</select>
+
+</mapper>

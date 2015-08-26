@@ -1,0 +1,21 @@
+@CHARSET "EUC-KR";
+
+/* css 파일 import 방법
+<link type="text/css" href="현재 파일에서 상대경로" rel="stylesheet" />
+*/
+body{ font-family: 나눔바른고딕}
+#edit-form{ padding: 60px 120px 0 180px;}
+legend{font: bold 20pt 나눔바른고딕; color: #757575}
+#message1 { color:red;}
+#message2 { color:green;}
+.title_edit{font-size: 10pt; color: #757575; }
+.edit_submit, .con_edit{padding: 10px 0 10px 0;}
+.con_edit{ padding-right: 10px;}
+.email_id_edit, .in_text_edit{height: 15px;}
+.email_id_edit{ width: 120px;}
+.brith_edit, .sel_email_edit, .city_edit, .bt_edit{height: 30px;}
+.brith_edit{width: 70px;}
+.in_text_edit{ width: 130px;}
+.sel_email_edit{ width: 135px;}
+.bt_edit{width: 80px;}
+.edit_submit #edit{margin-right: 15px;}

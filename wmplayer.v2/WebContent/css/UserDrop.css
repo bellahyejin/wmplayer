@@ -1,0 +1,23 @@
+#drop-form {
+	width: 490px;
+	height: 100%;
+	float: left;
+	padding: 80px 105px 0 105px;
+}
+
+.drop-header{margin-bottom: 50px;}
+.drop-header #drop-text{
+	font-size: 25pt;
+	font-weight: bold;
+	float: left;
+	margin-right: 50px;
+	margin-bottom: 30px;
+}
+
+#drop-logo{ float: left;}
+.drop-section, #drop-radio, #drop-select-cont{ font-size: 10pt;}
+.drop-section{clear: left; width: 430px; margin-bottom: 50px;}
+#drop-image{width: 60px; height: 5px; background: #81cfdf; margin-bottom: 15px;}
+#drop-radio{ float: left; margin: 20px 0 20px ;}
+input[type=radio] {margin-bottom: 10px;}
+.drop-button{clear:both; text-align: center;}

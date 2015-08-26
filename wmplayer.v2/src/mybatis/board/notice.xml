@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:31 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<!-- emp.xml -->
+
+	<insert id="noticeInsert" parameterType="java.util.Map">
+		insert into NoticeBoard values (notice_seq.nextval, #{title}, SYSDATE, 0,
+		#{contents} )
+	</insert>
+	
+	<select id="noticeSelectAll" resultType="int">
+		select count(*) from noticeboard
+	</select>
+
+	<select id="selectTitleAll" resultType="java.lang.String">
+		select title from noticeboard
+	</select>
+
+	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO">
+		select notice_seq , title,update_day,view_cnt,contents from
+		noticeboard
+		where notice_seq=#{notice_seq}
+	</select>
+
+	<update id="cntplus" parameterType="int">
+		update noticeboard set view_cnt =(view_cnt+1) where notice_seq=#{notice_seq}
+	</update>
+
+	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO">
+		select notice_seq , title,update_day,view_cnt,contents from
+		noticeboard
+		order by notice_seq desc
+	</select>
+
+	<select id="selectSeq" resultType="String">
+		select notice_seq from noticeboard
+		order by notice_seq desc
+	</select>
+	
+	<select id="noticeHomeTitle" parameterType="int" resultType="java.lang.String">
+		select title from (select data.*, rownum as rn from (select title from
+		noticeboard order by notice_seq desc) data) where rn between #{start}
+		and #{start} + 4
+	</select>
+	
+	<select id="repleSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
+		select column_seq, userID, column_comment_seq, contents from
+		CommentWrite
+		where column_seq=#{column_seq}
+	</select>
+
+</mapper>

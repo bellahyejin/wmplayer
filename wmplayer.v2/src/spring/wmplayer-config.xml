@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	
+	<mvc:annotation-driven >
+	    <mvc:message-converters>
+	      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		     <property name="supportedMediaTypes">
+		        <list>
+		           <value>text/html;charset=UTF-8</value>
+		        </list>
+		     </property>
+	      </bean>
+      </mvc:message-converters> 
+	</mvc:annotation-driven>
+	
+	<mvc:default-servlet-handler />
+
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/view/"/>
+	</mvc:view-resolvers>
+
+	<!-- controller scan -->
+	<context:component-scan base-package="kr.co.wmplayer.sinmina.controller" />
+
+	<!-- 타일즈 설정, 뷰 리졸버 설정 -->
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/config/tiles-defs.xml</value>
+				<value>/WEB-INF/config/tiles-view.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<property name="order" value="1" />
+	</bean>
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:30 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<insert id="userinfoinsert" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
+		insert into UserInfo (userID,passwd,name,birth,gender,email,status) 
+		 		      values (#{userID},#{passwd},#{name},#{birth},#{gender},#{email},#{status})
+	</insert>
+
+	<update id="userinfoupdate" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
+		update UserInfo set passwd=#{passwd}, name=#{name}, birth=#{birth}, gender=#{gender},email=#{email} where userID=#{userID}
+	</update>
+
+	<update id="userinfodrop" parameterType="String">
+		update userinfo set
+		status = 'd' where userID = #{userID}
+	</update>
+
+	<select id="userselect" parameterType="String" resultType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
+		select * from UserInfo where userID=#{userID} and status in ('a', 'c')
+	</select>
+
+	<select id="useridcheck" parameterType="String" resultType="java.lang.String">
+		select userID from UserInfo where userID=#{userID}
+	</select>
+
+	<select id="logincheck" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" resultType="int">
+		select count(*) cnt from UserInfo where userID=#{userID}
+		and passwd=#{passwd} and status in ('a', 'c')
+	</select>
+
+	<update id="dropupdate" parameterType="int">
+		update DropReason set
+		count_reason = count_reason + 1 where drop_seq = #{drop_seq}
+	</update>
+
+	<update id="reasonupdate" parameterType="java.lang.String">
+		update dropreason set
+		count_reason = count_reason + 1 where reason = #{reason}
+	</update>
+
+	<select id="reasonselect" parameterType="java.lang.String" resultType="int">
+		select count(*)
+		from dropreason
+		where reason = #{reason}
+	</select>
+
+	<insert id="dropinsert" parameterType="String">
+		insert into DropReason
+		values (drop_seq.nextval,#{reason},1)
+	</insert>
+
+	<insert id="loginloginsert" parameterType="java.lang.String">
+		insert into loginlog
+		values (#{id}, sysdate)
+	</insert>
+
+	<update id="statusupdate" parameterType="java.util.Map">
+		update userinfo set
+		status = #{status} where userid = #{userid}
+	</update>
+	
+	<select id="findid" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" resultType="String">
+	   select userid from USERINFO where name=#{name} and email=#{email}
+	</select>
+	<select id="findpass" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" resultType="String">
+	    select passwd from userinfo where userID=#{userID} and name = #{name} and email = #{email}
+	</select>
+</mapper>

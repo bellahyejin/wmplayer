@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:31 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manager">
+	<sql id="status_list">
+		<foreach collection="status" item="item" index="idx" open="status in (" separator="," close=")">
+			#{item}
+		</foreach>
+	</sql>
+
+	<sql id="gender_list">
+		<foreach collection="gender" item="item" index="idx" open="gender in (" separator="," close=")">
+			#{item}
+		</foreach>
+	</sql>
+
+	<sql id="userinfo">
+		from userinfo
+		<trim prefix="where" prefixOverrides="and">
+			<if test="status != null">
+				and <include refid="status_list" />
+			</if>
+			<if test="gender != null">
+				and <include refid="gender_list" />
+			</if>
+			<if test="compare_column != null and value != null">
+				and ${compare_column} = #{value}
+			</if>
+		</trim>
+		order by userid desc
+	</sql>
+
+	<select id="memberCount" resultType="int" flushCache="true">
+		select count(*)
+		<include refid="userinfo" />
+	</select>
+
+	<select id="memberInfo" resultType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" flushCache="true">
+		select userId, name, birth, gender, email, favor_weather, status
+		<include refid="userinfo" />
+	</select>
+
+	<!-- 여기서 부터는 탈퇴 이유 -->
+	<select id="reasonSelect" parameterType="int" resultType="int" flushCache="true">
+		select count_reason
+		from DropReason
+		where drop_seq = #{drop_seq}
+	</select>
+
+	<!-- 통계 관련 query -->
+	<select id="statCount" parameterType="util.ListMap" resultType="util.ListMap" flushCache="true">
+		select #{output_data} as "column_data", count(${count_column}) as "cnt"
+		from ${table} right outer join dual
+		<trim prefix="on">
+			${compare_column}
+			<if test="action == joinCountAge">
+				<if test="compare_data == 50"><![CDATA[>]]></if>
+				<if test="compare_data == 10"><![CDATA[<]]></if>
+			</if>
+			= #{compare_data}
+		</trim>
+	</select>
+</mapper>

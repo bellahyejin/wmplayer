@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:31 KST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="like">	
+	<insert id="add" parameterType="kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO">
+		insert into like_music values (#{musicID},#{userID},SYSDATE)
+	</insert>
+	
+	<insert id="favoradd" parameterType="kr.co.wmplayer.sinmina.model.dto.music.FavorDTO">
+		insert into favor values (#{userID},#{musicID},SYSDATE)
+	</insert>
+	
+	<delete id="deletelike" parameterType="kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO">
+		delete from like_music where musicID=#{musicID} and userID=#{userID}
+	</delete>
+	
+	<select id="selectlike" parameterType="kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO" resultType="int">
+		select count(*) from like_music where musicID=#{musicID} and userID=#{userID}
+	</select>
+</mapper>

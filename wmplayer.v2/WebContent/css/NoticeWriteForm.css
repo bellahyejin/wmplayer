@@ -1,0 +1,19 @@
+#btn_no{
+     padding-top: 15px;
+}
+.noticewrite-form{
+	width: 540px; 
+	height: 100%;
+	padding: 80px 80px; 
+}
+.noticewrite-header{
+	font-size: 20pt; 
+	font-style: bold; 
+	padding: 0 0 20px 22px;
+}
+
+.noticewrite-section{
+	padding: 0 0 0 22px;
+}
+
+.noticewrite-title{ font-size: 10pt;}
