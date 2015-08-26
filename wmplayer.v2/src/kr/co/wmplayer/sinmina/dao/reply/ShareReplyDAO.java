@@ -1,6 +1,5 @@
 package kr.co.wmplayer.sinmina.dao.reply;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 

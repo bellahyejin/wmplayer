@@ -1,6 +1,5 @@
 package kr.co.wmplayer.sinmina.dao.music;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import kr.co.wmplayer.sinmina.model.dto.music.FavorDTO;

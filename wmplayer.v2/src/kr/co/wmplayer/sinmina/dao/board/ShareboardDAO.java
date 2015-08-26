@@ -1,7 +1,6 @@
 package kr.co.wmplayer.sinmina.dao.board;
 
 import java.util.List;
-import java.util.Map;
 
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
 

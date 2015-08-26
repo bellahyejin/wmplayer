@@ -2,7 +2,6 @@ package kr.co.wmplayer.sinmina.interfaces;
 
 import java.util.List;
 
-import kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO;
 import kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO;
 
 
