@@ -1,6 +1,9 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +28,10 @@ public class ManagerController
 
 	JSONOperate jsonOperate = JSONOperate.getInstance();
 	ListAndMapOperate lamOperate = ListAndMapOperate.getInstance();
-	Map<String, String> column_name_y;
+	Map<String, Object> column_name_y, map;
 
-	int userinfo_max_element = 15, dropreason_max_element = 5, page_div = 4, pres_page = 1;
+	int max_element = 15, page_div = 4, pres_page = 1;
+	String compare_data, output_data;
 
 	@RequestMapping(value = "/manager/temp", method = RequestMethod.GET)
 	public String temp(Model model, HttpServletRequest request)
@@ -41,43 +45,166 @@ public class ManagerController
 		HttpSession session = request.getSession();
 		Object userid = session.getAttribute("success");
 
-		column_name_y = new ListMap<String, String>();
+		column_name_y = new ListMap<String, Object>();
 		column_name_y.put("column_data", "label");
 		column_name_y.put("cnt", "y");
 
-		if ("admin".equals(userid))
+		if (userid != null)
 		{
-			String action = request.getParameter("action");
-			System.out.println(action);
-			if (action == null || action.equals("userinfo")) return userInfoTable(model, request);
-			else if (action.equals("dropreason")) return userDropReasonTable(model, request);
-			else if (action.equals("chartlogin")) return chartLogin(model, request);
-			else if (action.equals("chartjoin")) return chartJoin(model, request);
-			else return null;
+			if ("admin".equals(userid))
+			{
+				map = new ListMap<String, Object>();
+				String action = request.getParameter("action");
+
+				if (action == null || action.equals("userinfo")) return userInfoTable(model, request);
+				else if (action.equals("dropreason")) return userDropReasonTable(model, request);
+				else if (action.equals("chartlogin")) return chartLogin(model, request);
+				else if (action.equals("chartjoin")) return chartJoin(model, request);
+				else return null;
+			}
+			else return "redirect:/main";
 		}
-		else return "redirect:../intro";
+		else return "redirect:/intro";
 	}
 
 	public String userInfoTable(Model model, HttpServletRequest request)
 	{
 		pres_page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
 		request.setAttribute("pres_page", pres_page);
-
 		return "manager/ManagerView";
 	}
 
 	public String userDropReasonTable(Model model, HttpServletRequest request)
 	{
+		pres_page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		map.clear();
+		map.put("drop_seq", 5);
+		request.setAttribute("drop_reason_list", managerDAO.reasonselect(map));
+		map.clear();
+		map.put("drop_seq", 6);
+		request.setAttribute("drop_etc_list", managerDAO.reasonselect(map));
 		return "manager/DropUserReason";
 	}
 
 	public String chartLogin(Model model, HttpServletRequest request)
 	{
+		map.clear();
+		map.put("count_column", "id");
+		map.put("table", "loginlog");
+		map.put("compare_column", "to_char(login_date, 'hh24')");
+		map.put("action", "loginCountHour");
+		List<Map<String, Object>> hour_login_list = new ArrayList<Map<String, Object>>();
+		for (int i = 0; i < 24; i++)
+		{
+			compare_data = (i < 10 ? "0" : "").concat(Integer.toString(i));
+			output_data = compare_data.concat("시");
+			map.put("compare_data", compare_data);
+			map.put("output_data", output_data);
+			Map<String, Object> hour_login = managerDAO.statcount(map);
+			hour_login_list.add(hour_login);
+		}
+		request.setAttribute("hour_login_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(hour_login_list, column_name_y), null, false, false, false, false, false, false, null));
+
+		map.clear();
+		map.put("count_column", "id");
+		map.put("table", "loginlog");
+		map.put("compare_column", "to_char(login_date, 'yyyy-mm-dd')");
+		map.put("action", "loginCountWeek");
+		List<Map<String, Object>> week_login_list = new ArrayList<Map<String, Object>>();
+		for (int i = -6; i <= 0; i++)
+		{
+			Calendar c = GregorianCalendar.getInstance();
+			c.add(Calendar.DAY_OF_MONTH, i);
+			SimpleDateFormat input_date = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat output_date = new SimpleDateFormat("yyyy/MM/dd");
+			compare_data = input_date.format(c.getTime());
+			output_data = output_date.format(c.getTime());
+			map.put("compare_data", compare_data);
+			map.put("output_data", output_data);
+			Map<String, Object> week_login = managerDAO.statcount(map);
+			week_login_list.add(week_login);
+		}
+		request.setAttribute("week_login_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(week_login_list, column_name_y), null, false, false, false, false, false, false, null));
+
 		return "manager/ManagerChartViewLogin";
 	}
 
 	public String chartJoin(Model model, HttpServletRequest request)
 	{
+		map.clear();
+		map.put("count_column", "userid");
+		map.put("table", "userinfo");
+		map.put("compare_column", "trunc((to_number(to_char(sysdate, 'yyyy')) - to_number(substr(birth, 0, 4))) / 10, 0) * 10");
+		map.put("action", "joinCountAge");
+		List<Map<String, Object>> age_join_list = new ArrayList<Map<String, Object>>();
+		for (int i = 1; i < 6; i++)
+		{
+			switch(i)
+			{
+				case 1 :
+					compare_data = "10";
+					output_data = compare_data.concat("대 이하");
+					break;
+				case 5 :
+					compare_data = "50";
+					output_data = compare_data.concat("대 이상");
+					break;
+				default :
+					compare_data = Integer.toString(i * 10);
+					output_data = compare_data.concat("대");
+			}
+
+			map.put("compare_data", compare_data);
+			map.put("output_data", output_data);
+
+			Map<String, Object> age_join = managerDAO.statcount(map);
+			age_join_list.add(age_join);
+		}
+		List<String> key = new ArrayList<String>();
+		key.add("type");
+		key.add("showInLegend");
+		key.add("legendText");
+		key.add("toolTipContent");
+
+		List<Object> value = new ArrayList<Object>();
+		value.add("stackedBar");
+		value.add(true);
+		value.add("{ label }");
+		value.add("{ label } : { y }명");
+
+		request.setAttribute("age_join_list", jsonOperate.generateJSONData(lamOperate.addKeyName(lamOperate.wrappingObject(lamOperate.changeType(lamOperate.wrappingObject(lamOperate.changeKeyName(age_join_list, column_name_y))), "dataPoints"), key, value, false, false, 0, 1, false), null, false, false, false, false, false, false, null));
+
+		map.clear();
+		map.put("count_column", "userid");
+		map.put("table", "userinfo");
+		map.put("compare_column", "gender");
+		map.put("action", "joinCountGender");
+		List<Map<String, Object>> gender_join_list = new ArrayList<Map<String, Object>>();
+		boolean flag = true;
+		loop : while (true)
+		{
+			if (flag)
+			{
+				compare_data = "남";
+				flag = false;
+			}
+			else
+			{
+				compare_data = "여";
+				flag = true;
+			}
+			output_data = compare_data.concat("자");
+
+			map.put("compare_data", compare_data);
+			map.put("output_data", output_data);
+
+			Map<String, Object> gender_join = managerDAO.statcount(map);
+			gender_join_list.add(gender_join);
+
+			if (flag) break loop;
+		}
+		request.setAttribute("gender_join_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(gender_join_list, column_name_y), null, false, false, false, false, false, false, null));
+
 		return "manager/ManagerChartViewJoin";
 	}
 
@@ -95,7 +222,7 @@ public class ManagerController
 		if (gender.equals("all") || gender.equals("man")) gender_list.add("남");
 		if (gender.equals("all") || gender.equals("woman")) gender_list.add("여");
 
-		ListMap<String, Object> map = new ListMap<String, Object>();
+		map.clear();
 		map.put("select_column", "userid, name, birth, gender, email, status");
 		map.put("status", status_list);
 		map.put("gender", gender_list);
@@ -103,14 +230,14 @@ public class ManagerController
 		map.put("value", value);
 
 		int member_num = managerDAO.membercount(map);
-		int pres_page = Integer.parseInt(request.getParameter("page"));
-		int max_page = ((int) member_num / userinfo_max_element) + (member_num % userinfo_max_element == 0 ? 0 : 1);
+		pres_page = Integer.parseInt(request.getParameter("page"));
+		int max_page = ((int) member_num / max_element) + (member_num % max_element == 0 ? 0 : 1);
 		int begin_page = (pres_page <= 1 + page_div || 1 + page_div * 2 >= max_page ? 1 : (pres_page + page_div >= max_page ? max_page - page_div * 2 : pres_page - page_div));
 		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
-		int rownum_start_idx = userinfo_max_element * (pres_page - 1), count = 0;
+		int rownum_start_idx = max_element * (pres_page - 1), count = 0;
 		boolean flag;
 
-		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, rownum_start_idx, userinfo_max_element);
+		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, rownum_start_idx, max_element);
 
 		sb = sb.append("<tr class=\"manager_title\">")
 				.append("<th width=\"8%\">번호</th>")
@@ -143,15 +270,15 @@ public class ManagerController
 
 			sb2 = sb2.append("<ul class=\"page-list\">")
 					.append("<div id=\"first\">")
-					.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"?page=1").append("\">start<").append(flag ? "" : "/a><").append("/li>")
+					.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
 					.append("</div>")
 					.append("<div id=\"middle\">");
 
-			for (int i = begin_page; i <= end_page; i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"?page=").append(i).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+			for (int i = begin_page; i <= end_page; i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
 
 			sb2 = sb2.append("</div>")
 						.append("<div id=\"end\">")
-						.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"?page=").append(max_page).append("\">end<").append(flag ? "" : "/a><").append("/li>")
+						.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
 						.append("</div>")
 						.append("</ul>");
 		}
