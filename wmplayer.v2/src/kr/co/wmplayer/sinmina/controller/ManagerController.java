@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import kr.co.wmplayer.sinmina.dao.manager.ManagerDAO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.JSONOperate;
 import util.ListAndMapOperate;
@@ -23,8 +23,7 @@ import util.ListMap;
 @Controller
 public class ManagerController
 {
-	@Autowired
-	ManagerDAO managerDAO;
+	@Autowired ManagerDAO managerDAO;
 
 	JSONOperate jsonOperate = JSONOperate.getInstance();
 	ListAndMapOperate lamOperate = ListAndMapOperate.getInstance();
@@ -42,8 +41,7 @@ public class ManagerController
 	@RequestMapping(value = "/manager", method = RequestMethod.POST)
 	public String main(Model model, HttpServletRequest request)
 	{
-		HttpSession session = request.getSession();
-		Object userid = session.getAttribute("success");
+		Object userid = request.getSession().getAttribute("success");
 
 		column_name_y = new ListMap<String, Object>();
 		column_name_y.put("column_data", "label");
@@ -181,18 +179,11 @@ public class ManagerController
 		map.put("action", "joinCountGender");
 		List<Map<String, Object>> gender_join_list = new ArrayList<Map<String, Object>>();
 		boolean flag = true;
-		loop : while (true)
+		gender_loop : while (true)
 		{
-			if (flag)
-			{
-				compare_data = "남";
-				flag = false;
-			}
-			else
-			{
-				compare_data = "여";
-				flag = true;
-			}
+			if (flag) compare_data = "남";
+			else compare_data = "여";
+			flag = !flag;
 			output_data = compare_data.concat("자");
 
 			map.put("compare_data", compare_data);
@@ -201,20 +192,18 @@ public class ManagerController
 			Map<String, Object> gender_join = managerDAO.statcount(map);
 			gender_join_list.add(gender_join);
 
-			if (flag) break loop;
+			if (flag) break gender_loop;
 		}
 		request.setAttribute("gender_join_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(gender_join_list, column_name_y), null, false, false, false, false, false, false, null));
 
 		return "manager/ManagerChartViewJoin";
 	}
 
-	@RequestMapping(value = "/manager/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public @ResponseBody String userInfo(HttpServletRequest request)
+	@ResponseBody @RequestMapping(value = "/manager/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String userInfo(HttpServletRequest request, @RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value)
 	{
 		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
-		String status = request.getParameter("status");
-		String gender = request.getParameter("gender");
-		String value = request.getParameter("value") == null || request.getParameter("value").equals("") ? null : request.getParameter("value");
+		value = value == null || value.equals("") ? null : value;
 		List<String> status_list = new ArrayList<String>();
 		if (status.equals("all") || status.equals("block")) status_list.add("b");
 		if (status.equals("all") || status.equals("current")) status_list.add("c");
@@ -226,7 +215,7 @@ public class ManagerController
 		map.put("select_column", "userid, name, birth, gender, email, status");
 		map.put("status", status_list);
 		map.put("gender", gender_list);
-		map.put("compare_column", request.getParameter("search"));
+		map.put("compare_column", search);
 		map.put("value", value);
 
 		int member_num = managerDAO.membercount(map);
@@ -240,14 +229,14 @@ public class ManagerController
 		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, rownum_start_idx, max_element);
 
 		sb = sb.append("<tr class=\"manager_title\">")
-				.append("<th width=\"8%\">번호</th>")
-				.append("<th width=\"12%\">아이디</th>")
-				.append("<th width=\"8%\">이 름</th>")
-				.append("<th width=\"10%\">생년월일</th>")
-				.append("<th width=\"4%\">성별</th>")
-				.append("<th width=\"28%\">이메일</th>")
-				.append("<th width=\"10%\"></th>")
-				.append("</tr>");
+						.append("<th width=\"8%\">번호</th>")
+						.append("<th width=\"12%\">아이디</th>")
+						.append("<th width=\"8%\">이 름</th>")
+						.append("<th width=\"10%\">생년월일</th>")
+						.append("<th width=\"4%\">성별</th>")
+						.append("<th width=\"28%\">이메일</th>")
+						.append("<th width=\"10%\"></th>")
+					.append("</tr>");
 
 		if (list.size() > 0)
 		{
@@ -256,44 +245,39 @@ public class ManagerController
 				status = data.getStatus();
 
 				sb = sb.append("<tr align=\"center\">")
-						.append("<td>".concat(Integer.toString((member_num - (rownum_start_idx + count++)))).concat("</td>"))
-						.append("<td>".concat(data.getUserID()).concat("</td>"))
-						.append("<td>".concat(data.getName()).concat("</td>"))
-						.append("<td>".concat(data.getBirth()).concat("</td>"))
-						.append("<td>".concat(data.getGender()).concat("</td>"))
-						.append("<td>".concat(data.getEmail()).concat("</td>"))
-						.append("<td>")
-						.append("<input type=\"button\" class=\"button\" name=".concat(status.equals("b") ? "current" : "block").concat("-").concat(data.getUserID()).concat(" style=\"font: 9pt\" value=").concat(status.equals("b") ? "활성" : "차단") + ">")
-						.append("<input type=\"button\" class=\"button\" name=\"drop-".concat(data.getUserID()).concat("\" style=\"font: 9pt\" value=\"탈퇴\">"))
-						.append("</tr>");
+								.append("<td>".concat(Integer.toString((member_num - (rownum_start_idx + count++)))).concat("</td>"))
+								.append("<td>".concat(data.getUserID()).concat("</td>"))
+								.append("<td>".concat(data.getName()).concat("</td>"))
+								.append("<td>".concat(data.getBirth()).concat("</td>"))
+								.append("<td>".concat(data.getGender()).concat("</td>"))
+								.append("<td>".concat(data.getEmail()).concat("</td>"))
+								.append("<td>")
+									.append("<input type=\"button\" class=\"button\" name=".concat(status.equals("b") ? "current" : "block").concat("-").concat(data.getUserID()).concat(" style=\"font: 9pt\" value=").concat(status.equals("b") ? "활성" : "차단") + ">")
+									.append("<input type=\"button\" class=\"button\" name=\"drop-".concat(data.getUserID()).concat("\" style=\"font: 9pt\" value=\"탈퇴\">"))
+							.append("</tr>");
 			}
 
 			sb2 = sb2.append("<ul class=\"page-list\">")
-					.append("<div id=\"first\">")
-					.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
-					.append("</div>")
-					.append("<div id=\"middle\">");
+								.append("<div id=\"first\">")
+									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
+								.append("</div>")
+							.append("<div id=\"middle\">");
 
 			for (int i = begin_page; i <= end_page; i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
 
 			sb2 = sb2.append("</div>")
-						.append("<div id=\"end\">")
-						.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
-						.append("</div>")
-						.append("</ul>");
+								.append("<div id=\"end\">")
+									.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
+								.append("</div>")
+							.append("</ul>");
 		}
 		else
 		{
 			sb = sb.append("<tr align=\"center\">")
-					.append("<td colspan=\"7\">검색 결과가 없습니다.</td>");
+							.append("<td colspan=\"7\">검색 결과가 없습니다.</td>")
+						.append("</tr>");
 		}
 
 		return sb.toString().concat("|").concat(sb2.toString());
-	}
-
-	@RequestMapping(value = "/manager/dropreason.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public void dropReason(HttpServletRequest request)
-	{
-		//
 	}
 }
