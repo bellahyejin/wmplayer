@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MusicController {
 	
 	@Autowired
-	UserInfoDAO dao = new UserInfoDAO();
+	private UserInfoDAO dao = new UserInfoDAO();
 	
 	@RequestMapping("/musicplayer")
 	public ModelAndView musicplayer(HttpSession session){

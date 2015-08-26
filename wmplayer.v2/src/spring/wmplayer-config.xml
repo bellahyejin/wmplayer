@@ -43,7 +43,6 @@
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/config/tiles-defs.xml</value>
-				<value>/WEB-INF/config/tiles-view.xml</value>
 			</list>
 		</property>
 	</bean>
