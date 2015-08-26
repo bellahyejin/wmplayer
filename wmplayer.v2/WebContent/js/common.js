@@ -6,6 +6,5 @@ function setLink(form_name, url, action, params)
 
 	form.attr("action", "/SpringWeb/" + url).attr("method", "post").append($("<input></input>").attr("type", "hidden").attr("name", "action").attr("value", action));
 	if (params != null) for (var key in params) form.append($("<input></input>").attr("type", "hidden").attr("name", key).attr("value", params[key]));
-	alert(form.attr("action"))
 	form.submit();
 }
