@@ -5,6 +5,7 @@
 <%@page import="Weather.WeatherModel"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${initParam.root }/css/style.css">
 <link type="text/css" href="${initParam.root}/css/global.css"
 	rel="stylesheet" />
@@ -13,7 +14,6 @@
  <script type="text/javascript" src="${initParam.root }/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${initParam.root }/js/jquery-latest.min.js"></script>
 <script src="${initParam.root }/js/jsapi.js" type="text/javascript"></script>
-<script src="${initParam.root }/js/ajax.js" type="text/javascript"></script>
 <script type="text/javascript">
       google.load("swfobject", "2.1");
     </script>
@@ -387,27 +387,21 @@ function likeselect(playlist){
 </script>
 
 <div id="nav">
-	<%
-	UserInfoDAO dao = new UserInfoDAO();
-	String userID = (String) session.getAttribute("success");
-	UserInfoDTO user = dao.select(userID);
-	
-	System.out.print("Name::"+user.getName());
-	%>
 	<div id="profile">
-		<%
-			if(user.getGender().equals("³²")){ %>
-		<img id="gender" src="${ initParam.root}/img/button/gender_wman.png"
-			width="35px" height="35px">
-		<%}else{ %>
-		<img id="gender" src="${ initParam.root}/img/button/gender_woman.png"
-			width="35px" height="35px">
-		<%} %>
+		<c:choose>
+			<c:when test="${user.gender == '³²'}">
+				<img id="gender" src="${ initParam.root}/img/button/gender_wman.png"
+					width="35px" height="35px">
+			</c:when>
+			<c:when test="${user.gender== '¿©' }">
+				<img id="gender" src="${ initParam.root}/img/button/gender_woman.png"
+					width="35px" height="35px">
+			</c:when>
+		</c:choose>
 		<div id="text">
 			<span id="login_id">
-			<%if(userID == null){%>°Ô½ºÆ®<%}
-			else if(userID.equals("admin")){%> °ü¸®ÀÚ <%}
-			else{%> <%=user.getName() %><%} %></span>
+				${user.name }
+			</span>
 			 <span id="fix">´Ô</span>
 		</div>
 			<button class="like"><i class="icon icon-heart icon-size-small" id="like"></i></button>
@@ -456,17 +450,6 @@ function likeselect(playlist){
 		</div>
 		<div class="weathericon">
 			<i class="" id="weathericon"></i>
-			<%-- <% if(wm.getWeatherData().getWeather().equals("¸¼À½")){ %>
-			<i class="icon-sun icon-weather"></i>
-			<%}else if(wm.getWeatherData().getWeather().equals("Èå¸²")){ %>
-			<i class="icon-cloudy2 icon-weather"></i>
-			<%}else if(wm.getWeatherData().getWeather().contains("ºñ")){ %>
-			<i class="icon-rainy2 icon-weather"></i>
-			<%}else if(wm.getWeatherData().getWeather().contains("´«")){ %>
-			<i class="icon-snowy3 icon-weather"></i>
-			<%}else if(wm.getWeatherData().getWeather().contains("±¸¸§")){ %>
-			<i class="icon-cloudy icon-weather"></i>
-			<%} %> --%>
 		</div>
 		<div id="weathertext">
 		</div>

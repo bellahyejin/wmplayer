@@ -32,7 +32,7 @@ public class UserController {
 			if (dao.loginproccess(user) != 0) {
 				session.setAttribute("success", userID);
 				dao.loginLogInsert(userID);
-				return "redirect:main";
+				return "common/MainForm";
 			} else {
 				return "redirect:intro";
 			}
@@ -86,5 +86,12 @@ public class UserController {
 		}else //정보를 입력하지 않았을 경우 
 			return "해당 정보를 입력해주세요"
 					+ "<input class='input-submit' type='submit' id='submit-pass' value='비밀번호찾기' />";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session){
+		
+		session.invalidate();
+		return "redirect:intro";
 	}
 }

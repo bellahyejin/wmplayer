@@ -15,7 +15,7 @@
 		<property name="dataSource" ref="driverManagerDataSource" />
 		<property name="mapperLocations">
 		    <list>
-		        <value>classpath:mybatis/board/column.xml</value>
+		  <!--       <value>classpath:mybatis/board/column.xml</value> -->
 		        <value>classpath:mybatis/board/notice.xml</value>
 		        <value>classpath:mybatis/board/share.xml</value>
 		        <value>classpath:mybatis/board/videoUploaded.xml</value>
