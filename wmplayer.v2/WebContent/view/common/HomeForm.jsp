@@ -16,16 +16,16 @@
 	<div class="regular" id="notice-list">
 		<div class="subject top-margin-subject notice-list-subject">공지사항▶</div>
 			<div class="notice">
-			<c:forEach items="${ notice }" var="notice">
+			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
 				<span class="attribute">알림</span>
-					<a href='${initParam.root }/wmplayer/noticedetail.do?title=${notice.get(notice.indexOf(notice))}'>${ notice }</a>
+					<a href='${initParam.root }/wmplayer/noticedetail.do?title=${list.get(list.indexOf(notice))}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
 			<span class="notice-subject">
 			<span class="attribute">알림</span>
-			<a href='${initParam.root }/wmplayer/noticedetail.do'>${ notice.get(0)}</a>
+			<a href='${initParam.root }/wmplayer/noticedetail.do'>${ list.get(0)}</a>
 			</span>
 		</div>
 	</div>

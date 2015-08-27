@@ -12,7 +12,7 @@ public class ShareBoardController {
 	@Autowired
 	private ShareboardDAO dao;
 	
-	@RequestMapping("/sharelist")
+	@RequestMapping("/share")
 	public String sharelist(){
 		return "sharelist";
 	}

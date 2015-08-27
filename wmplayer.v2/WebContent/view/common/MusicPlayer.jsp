@@ -41,7 +41,7 @@ function showPosition(position)
    	var cur_Longitude = Math.floor(position.coords.longitude*100)/100; //°æµµ
 	params  += 'cur_Latitude='+cur_Latitude+'&cur_Longitude='+cur_Longitude;
 	$.ajax({
-		url: '${initParam.root}/ajax/receiveData',
+		url: 'ajax/receiveData',
    		type: 'POST',
    		data : params,
    		cache: false,
@@ -324,7 +324,7 @@ $(document).ready(function() {
 			status = 'add';
 			var dataSend = 'musicid='+playlist[curIdx]+'&status='+status;
 			$.ajax({
-					url: '${initParam.root}/ajax/MusicLikeData.jsp',
+					url: 'ajax/MusicLikeData',
 					type: 'POST',
 					data: dataSend,
 					cache: false,
@@ -339,7 +339,7 @@ $(document).ready(function() {
 			status = 'delete';
 			var dataSend = 'musicid='+playlist[curIdx]+'&status='+status;
 			$.ajax({
-					url: '${initParam.root}/ajax/MusicLikeData.jsp',
+					url: 'ajax/MusicLikeData',
 					type: 'POST',
 					data: dataSend,
 					cache: false,
@@ -360,30 +360,28 @@ function likeselect(playlist){
 	status = 'select';
 	var dataSend = 'musicid='+playlist+'&status='+status;
 	$.ajax({
-		url: '${initParam.root}/ajax/MusicLikeData.jsp',
+		url: 'ajax/MusicLikeData',
 		type: 'POST',
 		data: dataSend,
-		dataType:'text',
 		cache: false,
 		success : function(data){
-			/* alert("select0::Data : "+data+", "+status+", "+toggle); */
-			response = data;
+			colorchange(data);
 		},
 		error: function(xhr, status, error){
-			alert("Error :: "+xhr+", Status :: "+status)
+			alert("Error :: "+xhr+", Status :: "+status + ", Error:::"+ error)
 		}
 	});
 	
-	/* alert(response); */
-	/* if(response == 'like'){
-		alert('like');
-	}else if(response == 'unlike'){
-		alert('unlike');
-	}else {
-		alert('error::::');
-	} */
 }
 
+
+function colorchange(data){
+	if(data == 'like'){
+		$("#like").css('color','#81d4fa');
+	}else if(data == 'unlike'){
+		$("#like").css('color','#ffffff');
+	}
+}
 </script>
 
 <div id="nav">
@@ -435,7 +433,7 @@ function likeselect(playlist){
 			</div>
 			<div id="time">
 				<span id="videoCurrentTime">--:--</span> <span id="playerState"
-					style="display: block">--</span> <span id="videoDuration">--:--</span>
+					style="display: none">--</span> <span id="videoDuration">--:--</span>
 			</div>
 		</div>
 	</div>

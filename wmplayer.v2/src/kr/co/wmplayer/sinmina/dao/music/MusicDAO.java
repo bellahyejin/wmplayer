@@ -15,7 +15,6 @@ public class MusicDAO {
 	private SqlSession session;
 	
 	public List<MusicInfoDTO> selectTodayList(double temperature){
-		System.out.println("selectTodayList session: "+ session);
 		List<MusicInfoDTO> list = session.selectList("music.todaylist", temperature);
 		return list;
 	}

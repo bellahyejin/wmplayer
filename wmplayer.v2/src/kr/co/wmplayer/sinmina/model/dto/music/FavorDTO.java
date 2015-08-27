@@ -6,16 +6,14 @@ public class FavorDTO implements WMPlayerDTO{
 	private String musicID;
 	private String userID;
 	private String favor_date;
-	private String location;
 	
 	public FavorDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public FavorDTO(String musicID, String userID, String location){
+	public FavorDTO(String musicID, String userID){
 		this.musicID = musicID;
 		this.userID = userID;
-		this.location = location;
 	}
 	
 	public FavorDTO(String musicID, String userID, String favor_date,
@@ -24,7 +22,6 @@ public class FavorDTO implements WMPlayerDTO{
 		this.musicID = musicID;
 		this.userID = userID;
 		this.favor_date = favor_date;
-		this.location = location;
 	}
 
 	public String getMusicID() {
@@ -51,13 +48,4 @@ public class FavorDTO implements WMPlayerDTO{
 		this.favor_date = favor_date;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	
 }

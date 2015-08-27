@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ColumnBoardController {
 	
-	@RequestMapping("/columnlist")
+	@RequestMapping("/column")
 	public String columnlist(){
 		return "columnlist";
 	}

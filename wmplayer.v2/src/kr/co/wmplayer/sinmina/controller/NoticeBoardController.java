@@ -17,12 +17,12 @@ public class NoticeBoardController {
 	@Autowired
 	NoticeboardDAO dao;
 	
-	@RequestMapping("/noticelist")
-	public String noticelist(){
-		return "noticelist";
+	@RequestMapping("/noticeform")
+	public String noticeinput(){
+		return "noticewrite";
 	}
 	
-	@RequestMapping("/notice/list")
+	@RequestMapping("/noticelist")
 	public ModelAndView listform(@RequestParam(value="i", defaultValue="0") int i ){
 		
 		ModelAndView mav = new ModelAndView();
@@ -52,14 +52,16 @@ public class NoticeBoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/notice/detail")
+	@RequestMapping("/noticedetail")
 	public ModelAndView detailform(@RequestParam(value="notice_seq") int notice_seq){
 		
 		ModelAndView mav = new ModelAndView();
 		
+		System.out.println(notice_seq);
+		
 		NoticeBoardDTO notice = dao.select(notice_seq);
 		List<String> seqList = dao.selectSeq();
-		
+		String alertMsg = null;
 		int size = seqList.size();
 		
 		int nowIndex = seqList.indexOf(""+notice_seq);
@@ -69,10 +71,11 @@ public class NoticeBoardController {
 		if (nowIndex == 0) {
 			nextsu = Integer.parseInt(seqList.get(0));
 			beforesu = Integer.parseInt(seqList.get(nowIndex + 1));
+			alertMsg = "<script>function warning(){alert('다음페이지가 없습니다');}</script>";
 		} else if (nowIndex == size - 1) {
 			nextsu = Integer.parseInt(seqList.get(nowIndex - 1));
 			beforesu = Integer.parseInt(seqList.get(size - 1));
-
+			alertMsg = "<script>function warning(){alert('이전페이지가 없습니다');}</script>";
 		} else {
 			nextsu = Integer.parseInt(seqList.get(nowIndex - 1));
 			System.out.println("다음 인덱스" + nextsu);
@@ -82,13 +85,14 @@ public class NoticeBoardController {
 		
 		dao.updateView(notice_seq);
 		
-		mav.addObject("notice", notice);
+		mav.addObject("noticedetail", notice);
 		mav.addObject("nextsu", nextsu);
 		mav.addObject("beforesu", beforesu);
+		mav.addObject("alertMsg", alertMsg);
 		
 		mav.setViewName("noticedetail");
 		
-		return null;
+		return mav;
 	}
 	
 }

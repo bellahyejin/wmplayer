@@ -3,7 +3,7 @@
   <display-name>wmplyer.v2</display-name>
   <context-param>
     <param-name>root</param-name>
-    <param-value>/SpringWeb</param-value>
+    <param-value>/wmplyer.v2</param-value>
   </context-param>
   <servlet>
     <servlet-name>dispatcher</servlet-name>

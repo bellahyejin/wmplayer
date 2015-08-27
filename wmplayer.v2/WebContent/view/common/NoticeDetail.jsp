@@ -4,12 +4,13 @@
 <%@page import="org.w3c.dom.Document"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+${alertMsg }
 <script>
 function before(){
-	location.href="notice/detail?notice_seq=${beforesu}";
+	location.href="noticedetail?notice_seq=${beforesu}";
 }
 function next(){
-	location.href="notice/detail?notice_seq=${nextsu}";
+	location.href="noticedetail?notice_seq=${nextsu}";
 }
 </script>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
@@ -19,21 +20,21 @@ function next(){
       Notice Detail
    </div>
    <div class="notice-title">
-      <span id="not-select-title">${notice.title }</span>
+      <span id="not-select-title">${noticedetail.title }</span>
       <div id="not-select-info">
          <div id="not-date">
             <span class="notice-infotitle">일자</span>
-            <span id="notice-date">${notice.update_day }</span>
+            <span id="notice-date">${noticedetail.update_day }</span>
          </div>
          <div id="not-view">
             <span class="notice-infotitle">조회수</span>
-            <span id="notice-view">${notice.view_cnt }</span>
+            <span id="notice-view">${noticedetail.view_cnt }</span>
          </div>
       </div>
    </div>
    <div class="notice-contents">
 <pre>
-${notice.contents }
+${noticedetail.contents }
 </pre>
    </div>
 
@@ -44,7 +45,7 @@ ${notice.contents }
     
       </div>
       <div class="list-notice">
-         <input type="button" class="styled-button-list" id="list" value="목록" onclick="location.href='notice/list'"/>
+         <input type="button" class="styled-button-list" id="list" value="목록" onclick="location.href='noticelist'"/>
       </div>
    </div>
 </div>
