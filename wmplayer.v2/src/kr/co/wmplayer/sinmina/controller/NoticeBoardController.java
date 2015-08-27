@@ -1,12 +1,18 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import kr.co.wmplayer.sinmina.dao.board.NoticeboardDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +28,30 @@ public class NoticeBoardController {
 		return "noticewrite";
 	}
 	
-	@RequestMapping("/noticelist")
+	@RequestMapping("/noticeadd")
+	public String noticeadd(@RequestParam(value="title") String title,
+							@RequestParam(value="contents") String contents,
+							Model model, HttpServletRequest req){
+		try {
+			req.setCharacterEncoding("EUC-KR");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (title != null && contents != null) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("title", title);
+			map.put("contents", contents);
+
+			dao.insert(map);
+			return "noticelist";
+		}else{
+			model.addAttribute("msg","<script>alert('제목이나 내용을 입력해주세요')</script>");
+			return "noticewrite";
+		}
+	}
+	
+	@RequestMapping("/notice")
 	public ModelAndView listform(@RequestParam(value="i", defaultValue="0") int i ){
 		
 		ModelAndView mav = new ModelAndView();

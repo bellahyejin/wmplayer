@@ -45,7 +45,7 @@ ${noticedetail.contents }
     
       </div>
       <div class="list-notice">
-         <input type="button" class="styled-button-list" id="list" value="목록" onclick="location.href='noticelist'"/>
+         <input type="button" class="styled-button-list" id="list" value="목록" onclick="location.href='notice'"/>
       </div>
    </div>
 </div>

@@ -32,7 +32,7 @@
 			</c:forEach>
 		</table>
 		<c:if test="${success == 'admin' }">
-			<input type="submit" class="styled-button-12" id="notice" value="Write" onclick="location.href='noticewrite'" />
+			<input type="submit" class="styled-button-12" id="notice" value="Write" onclick="location.href='noticeform'" />
 		</c:if>
 	</div>
 	<div class="pager-container-column">
