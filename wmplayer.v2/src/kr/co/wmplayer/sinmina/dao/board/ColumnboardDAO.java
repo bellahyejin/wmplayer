@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +27,7 @@ public class ColumnboardDAO {
 	}
 	
 	public List<ColumnBoardDTO> columnSelectAll(int start){
-		List<ColumnBoardDTO> columnDTO = session.selectList("column.columnSelectAll", start);
+		List<ColumnBoardDTO> columnDTO = session.selectList("column.columnSelectAll", null, new RowBounds(start, 10));
 		return columnDTO;
 	}
 	

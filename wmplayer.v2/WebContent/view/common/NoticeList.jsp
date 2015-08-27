@@ -48,7 +48,7 @@
 				</c:choose>
 			</div>
 			<div id="middle">
-				<c:forEach begin="${beginPage }" end="${endPage }" var="page">
+				<c:forEach begin="1" end="${endPage }" var="page">
 					<c:choose>
 						<c:when test="${ i != page }">
 							<li class="page"><a href="?i=${ page }">${ page }</a></li>

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.co.wmplayer.sinmina.dao.board.NoticeboardDAO;
+import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
 import kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class NoticeBoardController {
 			map.put("contents", contents);
 
 			dao.insert(map);
-			return "noticelist";
+			return "redirect:notice";
 		}else{
 			model.addAttribute("msg","<script>alert('제목이나 내용을 입력해주세요')</script>");
 			return "noticewrite";
@@ -52,41 +53,40 @@ public class NoticeBoardController {
 	}
 	
 	@RequestMapping("/notice")
-	public ModelAndView listform(@RequestParam(value="i", defaultValue="0") int i ){
-		
-		ModelAndView mav = new ModelAndView();
+	public String listform(@RequestParam(value="i", defaultValue="1") int i, Model model  ){
 		
 		int totalNumber = dao.dataSize();
 		int page_max = 10;
 		int endPage = totalNumber / page_max;
-		int beginPage = 0;
 		
-		mav.addObject("totalNumber", totalNumber);
-		mav.addObject("page_max", page_max);
-		mav.addObject("endPage", endPage);
-		mav.addObject("beginPage", beginPage);
+		model.addAttribute("endPage", endPage);
 
 		if (i == 0 ) 
 		{
 			List<NoticeBoardDTO> list = dao.selectAll((page_max) * i,page_max);
-			mav.addObject("noticelist", list);
+			for(int idx = 0 ; idx < list.size(); idx++){
+				NoticeBoardDTO board = list.get(idx);
+				String date = board.getUpdate_day().substring(0, 10).replace("-", "/");
+				board.setUpdate_day(date);
+			}
+			model.addAttribute("noticelist", list);
 		} 
 		else 
 		{
 			List<NoticeBoardDTO> list = dao.selectAll((page_max) * i,page_max);
-			mav.addObject("noticelist", list);
+			for(int idx = 0 ; idx < list.size(); idx++){
+				NoticeBoardDTO board = list.get(idx);
+				String date = board.getUpdate_day().substring(0, 10).replace("-", "/");
+				board.setUpdate_day(date);
+			}
+			model.addAttribute("noticelist", list);
 		}
 			
-			mav.setViewName("noticelist");
-		return mav;
+		return "noticelist";
 	}
 	
 	@RequestMapping("/noticedetail")
-	public ModelAndView detailform(@RequestParam(value="notice_seq") int notice_seq){
-		
-		ModelAndView mav = new ModelAndView();
-		
-		System.out.println(notice_seq);
+	public String detailform(@RequestParam(value="notice_seq") int notice_seq, Model model){
 		
 		NoticeBoardDTO notice = dao.select(notice_seq);
 		List<String> seqList = dao.selectSeq();
@@ -114,14 +114,12 @@ public class NoticeBoardController {
 		
 		dao.updateView(notice_seq);
 		
-		mav.addObject("noticedetail", notice);
-		mav.addObject("nextsu", nextsu);
-		mav.addObject("beforesu", beforesu);
-		mav.addObject("alertMsg", alertMsg);
+		model.addAttribute("noticedetail", notice);
+		model.addAttribute("nextsu", nextsu);
+		model.addAttribute("beforesu", beforesu);
+		model.addAttribute("alertMsg", alertMsg);
 		
-		mav.setViewName("noticedetail");
-		
-		return mav;
+		return "noticedetail";
 	}
 	
 }

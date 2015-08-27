@@ -5,7 +5,8 @@
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <script type="text/javascript" src="${initParam.root }/js/ajax.js"></script>
 <script type="text/javascript" src="${initParam.root }/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<form action="${initParam.root }/wmplayer/columnform/add.do" method="POST" name="frm">
+${alertMsg }
+<form action="columnadd" method="POST" name="frm">
 <div class="columnwrite-form">
 	<div class="columnwrite-header">
 		Column Editor
@@ -52,7 +53,7 @@
 		<input type="submit" class="styled-button-login" id="column"
 		 value="작 성" onclick="submitContents(this)"/>
 		<input type="button" class="styled-button-login" id="column"
-		 value="취 소" onclick="location.href='${initParam.root}/wmplayer/columnlist.do'"/>
+		 value="취 소" onclick="location.href='columnlist'"/>
 	</div>
 </div>
 <script type="text/javascript">

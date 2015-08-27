@@ -13,16 +13,11 @@
 	<select id="columnSize" resultType="int">
 	    select count(*) from columnboard
 	</select>
-	<select id="columnSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
-		select column_seq, title, update_day, view_cnt
-		from(select column_seq, title, update_day, view_cnt, rownum as rn
-		from
-		(select column_seq, title, update_day, view_cnt from columnboard order
-		by column_seq desc))
-		where rn between 10*#i#-9 and 10*#i#
+	<select id="columnSelectAll" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+		select * from columnboard order by column_seq desc
 	</select>
 	
-	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
+	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
 		select column_seq , title,update_day,view_cnt,contents
 		from
 		columnboard
@@ -34,7 +29,7 @@
 		view_cnt =(view_cnt+1) where column_seq=#{column_seq}
 	</update>
 
-	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
+	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
 		select column_seq , title,update_day,view_cnt,contents
 		from
 		columnboard
@@ -50,7 +45,7 @@
 		from columnboard order by column_seq desc) data) where rn between
 		#{start} and #{start} + 4
 	</select>
-	<select id="homerank" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
+	<select id="homerank" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
 		select column_seq, title, view_cnt
 		from columnboard
 		where
@@ -60,7 +55,7 @@
 
 	
 <!-- 여기서부터 리플 관련 -->	
-	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.data.CommentDTO">
+	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
 		insert into columnReple
 		values (columnReple_seq.nextval, #{column_seq},
 		#{userID}, #{contents},
@@ -82,7 +77,7 @@
 		columnReple_seq=#{upNum}
 	</update>
 
-	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.CommentDTO">
+	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
 		select * from columnReple where column_seq=#{column_seq}
 		order by
 		submit_date desc
