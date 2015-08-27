@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:30 KST 2015-->
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Aug 27 14:22:47 KST 2015-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="column">
@@ -9,32 +9,11 @@
 		#{style}, #{contents},
 		SYSDATE, 0 )
 	</insert>
-
-	<select id="countReple" parameterType="int" resultType="int">
-		select
-		count(*) from columnReple where column_seq=#{column_seq}
+		
+	<select id="columnSize" resultType="int">
+	    select count(*) from columnboard
 	</select>
-
-	<update id="updateColumn" parameterType="java.util.HashMap">
-		update columnReple set
-		contents=#{updatedContents} where
-		columnReple_seq=#{upNum}
-	</update>
-
-	<delete id="deleteReple" parameterType="int">
-		delete from columnReple
-		where columnReple_seq=#{delNum}
-	</delete>
-
-
-	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
-		insert into columnReple
-		values (columnReple_seq.nextval, #{column_seq},
-		#{userID}, #{contents},
-		SYSDATE )
-	</insert>
-
-	<select id="columnSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+	<select id="columnSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
 		select column_seq, title, update_day, view_cnt
 		from(select column_seq, title, update_day, view_cnt, rownum as rn
 		from
@@ -42,26 +21,8 @@
 		by column_seq desc))
 		where rn between 10*#i#-9 and 10*#i#
 	</select>
-
-	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
-		select * from columnReple where column_seq=#{column_seq}
-		order by
-		submit_date desc
-	</select>
-
-	<select id="columnSize" resultType="int">
-
-		select count(*) from
-		columnboard
-	</select>
-
-
-	<select id="selectTitleAll" resultType="java.lang.String">
-		select title from
-		columnboard
-	</select>
-
-	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+	
+	<select id="boardSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
 		select column_seq , title,update_day,view_cnt,contents
 		from
 		columnboard
@@ -73,8 +34,7 @@
 		view_cnt =(view_cnt+1) where column_seq=#{column_seq}
 	</update>
 
-
-	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+	<select id="boardList" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
 		select column_seq , title,update_day,view_cnt,contents
 		from
 		columnboard
@@ -90,7 +50,7 @@
 		from columnboard order by column_seq desc) data) where rn between
 		#{start} and #{start} + 4
 	</select>
-	<select id="homerank" resultType="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO">
+	<select id="homerank" resultType="kr.co.wmplayer.sinmina.model.dto.data.ColumnBoardDTO">
 		select column_seq, title, view_cnt
 		from columnboard
 		where
@@ -98,4 +58,35 @@
 		order by view_cnt desc
 	</select>
 
+	
+<!-- 여기서부터 리플 관련 -->	
+	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.data.CommentDTO">
+		insert into columnReple
+		values (columnReple_seq.nextval, #{column_seq},
+		#{userID}, #{contents},
+		SYSDATE )
+	</insert>
+
+	<select id="countReple" parameterType="int" resultType="String">
+		select
+		count(*) from columnReple where column_seq=#{column_seq}
+	</select>
+		<delete id="deleteReple" parameterType="int">
+		delete from columnReple
+		where columnReple_seq=#{delNum}
+	</delete>
+	
+	<update id="updateReple" parameterType="java.util.HashMap">
+		update columnReple set
+		contents=#{updatedContents} where
+		columnReple_seq=#{upNum}
+	</update>
+
+	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.data.CommentDTO">
+		select * from columnReple where column_seq=#{column_seq}
+		order by
+		submit_date desc
+	</select>
+	
+	
 </mapper>
