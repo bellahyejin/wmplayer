@@ -1,11 +1,20 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
+import kr.co.wmplayer.sinmina.dao.music.MusicDAO;
 import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
+import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
+import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +24,10 @@ public class UserController {
 
 	@Autowired
 	private UserInfoDAO dao;
+	@Autowired
+	private ShareboardDAO sharedao;
+	@Autowired
+	private MusicDAO musicdao;
 
 	@RequestMapping("/intro")
 	public String intro(){
@@ -94,4 +107,19 @@ public class UserController {
 		session.invalidate();
 		return "redirect:intro";
 	}
+	
+	@RequestMapping("/userinfo")
+	public String userinfoform(HttpSession session, Model model){
+		
+		String userid = (String)session.getAttribute("success");
+
+		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid); 
+		List<MusicInfoDTO> list = musicdao;
+		
+		model.addAttribute("share", model);
+		model.addAttribute("listsize", list2.size());
+		
+		return "userinfo";
+	}
+	
 }

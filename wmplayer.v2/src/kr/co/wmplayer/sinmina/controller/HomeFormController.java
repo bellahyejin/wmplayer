@@ -32,11 +32,15 @@ public class HomeFormController {
 
 		List<BoardUserDTO> board_rank = sharedao.selectPop();
 		
+		
+		System.out.println(title.size());
+		System.out.println(column_rank.size());
+		System.out.println(board_rank.size());
 		model.addAttribute("notice", title);
 		model.addAttribute("column", column_rank);
 		model.addAttribute("share", board_rank);
 		
-		return "home";
+		return "redirect:homeform";
 	}
 	
 	

@@ -19,13 +19,13 @@
 			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
 				<span class="attribute">알림</span>
-					<a href='${initParam.root }/wmplayer/noticedetail.do?title=${list.get(list.indexOf(notice))}'>${ list }</a>
+					<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
 			<span class="notice-subject">
 			<span class="attribute">알림</span>
-			<a href='${initParam.root }/wmplayer/noticedetail.do'>${ list.get(0)}</a>
+			<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list.get(0)}</a>
 			</span>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 			<td class="music-rank">
 			</td>
 			<td class="music-rank-object">
-				<a href="${initParam.root }/wmplayer/columndetail.do?column_seq=${list.column_seq}">${list.title }</a>
+				<a href="columndetail?column_seq=${list.column_seq}">${list.title }</a>
 			</td>
 			<td class="music-rank-writer">${list.view_cnts }
 			</td>
@@ -55,14 +55,14 @@
 			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">인기 공유 게시글</div>
 			</td>
 		</tr>
-		<c:forEach items="${share }" var="board">
+		<c:forEach items="${share }" var="list">
 		<tr>
 			<td class="board-rank">
 			</td>
 			<td class="board-rank-subject">
-			<a href="${initParam.root }/wmplayer/sharedetail/view.do?board_seq=${board.board_seq}">${board.board_title }-${board.board_artist }</a>
+			<a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a>
 			</td>
-			<td class="board-rank-writer">${board.userID }
+			<td class="board-rank-writer">${list.userID }
 			</td>
 		</tr>
 		</c:forEach>		
