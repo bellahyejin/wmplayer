@@ -1,5 +1,6 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
 import kr.co.wmplayer.sinmina.dao.music.MusicDAO;
 import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
+import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 
@@ -114,10 +116,19 @@ public class UserController {
 		String userid = (String)session.getAttribute("success");
 
 		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid); 
-		List<MusicInfoDTO> list = musicdao;
+		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
+		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
 		
-		model.addAttribute("share", model);
+		for(int i = 0 ; i < list.size() ; i++){
+			MusicInfoDTO music = musicdao.likemusic(list.get(i).getMusicID());
+			if(music != null){
+				musiclist.add(music);
+			}
+		}
+		model.addAttribute("share", list2);
+		model.addAttribute("music", musiclist);
 		model.addAttribute("listsize", list2.size());
+		model.addAttribute("musicsize", musiclist.size());
 		
 		return "userinfo";
 	}

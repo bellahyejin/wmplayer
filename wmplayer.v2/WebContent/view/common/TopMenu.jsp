@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/TopMenu.css" rel="stylesheet" />
+<script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
 <table class="menu english">
 	<tr>
 		<td class="width top"><a href="homelist" target="section">
@@ -14,7 +16,7 @@
 			<span id="user_top">
 				<c:choose>
 					<c:when test="${success=='admin' }">
-						<a id="join_top" href="manager" >관리자 정보</a>
+						<a id="join_top" href="#" onclick="setLink(null, 'manager')" >관리자 정보</a>
 					</c:when>
 					<c:otherwise>
 						<a id="join_top" href="userinfo" >내 정보</a>

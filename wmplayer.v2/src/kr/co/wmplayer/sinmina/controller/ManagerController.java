@@ -32,12 +32,6 @@ public class ManagerController
 	int max_element = 15, page_div = 4, pres_page = 1;
 	String compare_data, output_data;
 
-	@RequestMapping(value = "/manager/temp", method = RequestMethod.GET)
-	public String temp(Model model, HttpServletRequest request)
-	{
-		return main(model, request);
-	}
-
 	@RequestMapping(value = "/manager", method = RequestMethod.POST)
 	public String main(Model model, HttpServletRequest request)
 	{
@@ -69,7 +63,7 @@ public class ManagerController
 	{
 		pres_page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
 		request.setAttribute("pres_page", pres_page);
-		return "manager/ManagerView";
+		return "manager";
 	}
 
 	public String userDropReasonTable(Model model, HttpServletRequest request)
@@ -81,7 +75,7 @@ public class ManagerController
 		map.clear();
 		map.put("drop_seq", 6);
 		request.setAttribute("drop_etc_list", managerDAO.reasonselect(map));
-		return "manager/DropUserReason";
+		return "dropReason";
 	}
 
 	public String chartLogin(Model model, HttpServletRequest request)
@@ -124,7 +118,7 @@ public class ManagerController
 		}
 		request.setAttribute("week_login_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(week_login_list, column_name_y), null, false, false, false, false, false, false, null));
 
-		return "manager/ManagerChartViewLogin";
+		return "managerChartLogin";
 	}
 
 	public String chartJoin(Model model, HttpServletRequest request)
@@ -196,7 +190,7 @@ public class ManagerController
 		}
 		request.setAttribute("gender_join_list", jsonOperate.generateJSONData(lamOperate.changeKeyName(gender_join_list, column_name_y), null, false, false, false, false, false, false, null));
 
-		return "manager/ManagerChartViewJoin";
+		return "managerChartJoin";
 	}
 
 	@ResponseBody @RequestMapping(value = "/manager/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")

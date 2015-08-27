@@ -51,4 +51,14 @@ public class MusicDAO {
 		if(t == 1)	return true;
 		else return false;
 	}
+	
+	public List<LikeMusicDTO> selectLikeMusic(String userid){
+		List<LikeMusicDTO> like = session.selectList("like.selectLikeMusic", userid);
+		return like;
+	}
+	
+	public MusicInfoDTO likemusic(String musicid){
+		MusicInfoDTO like = session.selectOne("music.likemusic", musicid);
+		return like;
+	}
 }

@@ -18,14 +18,14 @@
 						<span>¥ÁΩ≈¿« </span>
 						<span id="anal-like">¡¡æ∆ø‰</span>
 						<span>∞Ó ∏Ò∑œ</span>
-						<span id="anal-cnt">${listsize }</span>
+						<span id="anal-cnt">${musicsize }</span>
 						<span>∞«</span>
 					</td>
 				</tr>
-				<c:forEach items="${share }" var="list" varStatus="status">
+				<c:forEach items="${music }" var="list" varStatus="status">
 				<tr>
 					<td class="like-rank">${status.count }</td>
-					<td class="like-rank-object"><a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a></td>
+					<td class="like-rank-object">${list.title }-${list.artist }</td>
 				</tr>
 			</c:forEach>
 			</table>
@@ -51,6 +51,6 @@
 	</div>
 	<div class="anal-button">
 		<input type="button" class="styled-button-login" id="edit" value="»∏ø¯ ºˆ¡§" onclick="location.href='${initParam.root}/wmplayer/update/edit.do?action=select&id=${success }'"/>
-		&nbsp;<input type="button" class="styled-button-login" id="drop" value="»∏ø¯ ≈ª≈" onclick="location.href='${initParam.root}/wmplayer/drop.do'"/>
+		&nbsp;<input type="button" class="styled-button-login" id="drop" value="»∏ø¯ ≈ª≈" onclick="location.href='drop'"/>
 	</div>
 </div>
