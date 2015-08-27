@@ -9,27 +9,27 @@
  function noticeInput(){
     var title = document.frm.title.value;
     var contents = document.frm.contents.value;
-      
+
    var params = '';
    params += 'title='+title;
    params += '&contents='+contents;
    alert(params);
    sendRequest('../view/manager/Notice.jsp', params, callback, 'POST')
  }
- 
+
  function callback(){
       if (xhr.readyState == 4) {
          if (xhr.status == 200) {
          }
       }
  }
-</script>   
+</script>
 
          <form method="POST" name="frm">
 <div class="noticewrite-form">
    <div class="noticewrite-header">Notice Editor</div>
    <div class="noticewrite-section">
-         <table width="70%">
+         <table>
             <tr>
                <td width="30%"><span class="noticewrite-title">제목</span></td>
                <td align="right"><input type="text" size="60%" name='title'>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
                <td colspan="2" align="center" id="btn_no">
-               <input type="submit" class="styled-button-login" id="column" value="제출" onclick="noticeInput()"/> 
+               <input type="submit" class="styled-button-login" id="column" value="제출" onclick="noticeInput()"/>
                   <input type="button" class="styled-button-login" id="column" value="수정" onclick="location.href='noticelist.do'"/></td>
             </tr>
          </table>
