@@ -53,35 +53,21 @@ public class NoticeBoardController {
 	}
 	
 	@RequestMapping("/notice")
-	public String listform(@RequestParam(value="i", defaultValue="1") int i, Model model  ){
-		
+	public String listform(
+			@RequestParam(value = "i", defaultValue = "1") int i, Model model) {
+
 		int totalNumber = dao.dataSize();
-		int page_max = 10;
-		int endPage = totalNumber / page_max;
-		
+		int endPage = totalNumber / 10;
+
 		model.addAttribute("endPage", endPage);
 
-		if (i == 0 ) 
-		{
-			List<NoticeBoardDTO> list = dao.selectAll((page_max) * i,page_max);
-			for(int idx = 0 ; idx < list.size(); idx++){
-				NoticeBoardDTO board = list.get(idx);
-				String date = board.getUpdate_day().substring(0, 10).replace("-", "/");
-				board.setUpdate_day(date);
-			}
-			model.addAttribute("noticelist", list);
-		} 
-		else 
-		{
-			List<NoticeBoardDTO> list = dao.selectAll((page_max) * i,page_max);
-			for(int idx = 0 ; idx < list.size(); idx++){
-				NoticeBoardDTO board = list.get(idx);
-				String date = board.getUpdate_day().substring(0, 10).replace("-", "/");
-				board.setUpdate_day(date);
-			}
-			model.addAttribute("noticelist", list);
+		List<NoticeBoardDTO> list = dao.selectAll((10) * i-1, 10);
+		for (int idx = 0; idx < list.size(); idx++) {
+			NoticeBoardDTO board = list.get(idx);
+			String date = board.getUpdate_day().substring(0, 10).replace("-", "/");
+			board.setUpdate_day(date);
 		}
-			
+		model.addAttribute("noticelist", list);
 		return "noticelist";
 	}
 	

@@ -52,8 +52,10 @@
 		rownum between 1 and 10
 		order by view_cnt desc
 	</select>
-
-	
+	<delete id="coldelete" parameterType="int">
+       delete from columnboard 
+       where column_seq=#{column_seq} 
+   </delete>
 <!-- 여기서부터 리플 관련 -->	
 	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">
 		insert into columnReple

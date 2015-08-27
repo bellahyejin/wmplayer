@@ -74,10 +74,65 @@ public class ColumnBoardController {
 	}
 	
 	@RequestMapping("/columndetail")
-	public String columndetail(){
+	public String columndetail(@RequestParam(value="column_seq") int column_seq,
+								Model model) {
+
+		String varColumn_seq = "<script>var column_seq=" + column_seq+ ";</script>";// column_seq 스크립트 var 설정
+		model.addAttribute("varColumn_seq", varColumn_seq);
+		ColumnBoardDTO column = columndao.select(column_seq);
+		columndao.updatecnt(column_seq);
+		model.addAttribute("column",column);
+
+		// 여기부터는 다음과 이전 버튼 설정
+		List<String> seqList = columndao.selectSeq();
+		int size = seqList.size();
+		int nowIndex = seqList.indexOf("" + column_seq);
+		int nextsu = 0;
+		int beforesu = 0;
+
+		if (nowIndex == 0) {
+			nextsu = Integer.parseInt(seqList.get(0));
+			beforesu = Integer.parseInt(seqList.get(nowIndex + 1));
+			String functionWarning = "<script>function warning(){alert('다음페이지가 없습니다');}</script>";
+			model.addAttribute("alertMsg", functionWarning);
+		} else if (nowIndex == size - 1) {
+			nextsu = Integer.parseInt(seqList.get(nowIndex - 1));
+			beforesu = Integer.parseInt(seqList.get(size - 1));
+			String functionWarning2 = "<script>function warning2(){alert('이전페이지가 없습니다');}</script>";
+			model.addAttribute("alertMsg", functionWarning2);
+		} else {
+			nextsu = Integer.parseInt(seqList.get(nowIndex - 1));
+			beforesu = Integer.parseInt(seqList.get(nowIndex + 1));
+		}
 		
-		
-		
+		model.addAttribute("beforesu", beforesu);
+		model.addAttribute("nextsu", nextsu);
+
+
+		// 리플 페이징처리
+
+		Object totalPage = columndao.countReply(column_seq);
+		int totaPagel = Integer.parseInt((String) totalPage);
+
+		model.addAttribute("repleTotal", totalPage);
+
+		String varTotalPage = "<script>var totalPage=" + totalPage
+				+ "</script>";
+		model.addAttribute("varTotalPage", varTotalPage);
+		model.addAttribute("column_seq", column_seq);
+
 		return "columndetail";
+	}
+	
+	@RequestMapping("/columndelete")
+	public String columndelete(@RequestParam(value="column_seq") int column_seq, Model model){
+		
+		if(columndao.delete(column_seq)){
+			return "redirect:columnlist";
+	    }else{
+	    	String alertMsg = "<script>alert('삭제에 실패하였습니다')</script>" ; 
+	    	model.addAttribute("alertMsg", alertMsg);
+	    	return "redirect:columndetail";
+	    }
 	}
 }

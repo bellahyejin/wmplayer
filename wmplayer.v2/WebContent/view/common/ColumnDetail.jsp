@@ -58,14 +58,14 @@ $(document).ready(function(){
 <script>
 function before(){
 	
-	location.href="${initParam.root }/wmplayer/columndetail.do?column_seq=${beforesu }";
+	location.href="columndetail?column_seq=${beforesu }";
 }
 function next(){
 	
-	location.href="${initParam.root }/wmplayer/columndetail.do?column_seq=${nextsu }";
+	location.href="columndetail?column_seq=${nextsu }";
 }
 function coldelete(column_seq) {
-	location.href="${initParam.root }/wmplayer/delete.do?column_seq=${column_seq}";
+	location.href="columndelete?column_seq=${column_seq}";
 }
 
 </script>
