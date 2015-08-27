@@ -133,4 +133,39 @@ public class UserController {
 		return "userinfo";
 	}
 	
+	@RequestMapping("/join")
+	public String userjoin(@RequestParam(value="userID", required=false) String userID,
+						   @RequestParam(value="passwd", required=false ) String passwd,
+						   @RequestParam(value="name", required=false) String name,
+						   @RequestParam(value="year", required=false) String year,
+						   @RequestParam(value="month", required=false) String month,
+						   @RequestParam(value="date", required=false) String date,
+						   @RequestParam(value="gender", required=false) String gender,
+						   @RequestParam(value="email_id", required=false) String email_id,
+						   @RequestParam(value="email_addr", required=false) String addr,
+						   Model model){
+		
+		if(userID != null && passwd != null && gender != null && email_id != null && year != null && month != null
+				&& date != null){
+			
+			String birth = year + "/"+month+"/"+date;
+			String email = email_id+"@"+addr;
+			
+			UserInfoDTO user = new UserInfoDTO(userID,passwd,name,birth,gender, email);
+			if(dao.infoInsert(user)){
+				return "redirect:intro";
+			}else{
+				model.addAttribute("alertMsg", "<script>alert('가입에 실패 하였습니다. 다시 시도 해주세요')</script>");
+				return "redirect:intro";
+			}
+			
+		}else{
+			model.addAttribute("alertMsg", "<script>alert('회원 정보를 입력해주세요')</script>");
+			return "redirect:intro";
+		}
+	}
+	
+	//유효성 검사 중복확인과 pass워드 
+	
+	
 }

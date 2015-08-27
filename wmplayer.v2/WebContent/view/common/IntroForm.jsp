@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,8 +10,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${initParam.root }/css/intro.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script> 
+${alertMsg }
 <script>
 $(document).ready(function(){
 	$('#loginforom').css("display","none");
@@ -134,6 +136,8 @@ $(document).ready(function(){
 		});
 	});
 	
+	$('input[type="text"]').tooltip();
+	
 });
 
 function findid(){
@@ -219,7 +223,7 @@ function moveback(){
 			</div>
 		</div>
 	</div>
-	<form id="joinform" name="frmjoin" action="" method="get">
+	<form id="joinform" name="frmjoin" action="join" method="POST">
 		<div class="modal-overlay modal-join-o"></div>
 		<div class="modal modal-join">
 			<a class="close-modal modal-join-b">×</a>
@@ -227,42 +231,51 @@ function moveback(){
 				<i class="fa fa-plus-square-o"></i>
 			</div>
 			<h1>JOIN</h1>
-			<input class="input-text-join" type="text" placeholder="ID" /> <input
-				class="input-text-join" type="password" placeholder="Password" /> <input
-				class="input-text-join" type="password" placeholder="Password Check" />
-			<div class="birth">
-				<span>생년월일</span> <select class="birth" name="year">
-					<%
-						for (int i = 20; i <= 115; i++) {
-							int year = 1900 + i;
-							out.print("<option>" + year + "</option>");
-						}
-					%>
-				</select> <select class="birth" name="month">
-					<%
-						for (int i = 1; i <= 12; i++) {
-							String month = (i < 10 ? "0" : "") + i;
-							out.print("<option value=" + month + ">" + (i < 10 ? "0" : "")
-									+ i + "</option>");
-						}
-					%>
-				</select> <select class="birth" name="date">
-					<%
-						for (int i = 1; i <= 31; i++) {
-							String date = (i < 10 ? "0" : "") + i;
-							out.print("<option value=" + date + ">" + (i < 10 ? "0" : "")
-									+ i + "</option>");
-						}
-					%>
-				</select> <input class="input-submit" type="submit" id="submit-join"
-					value="Plus you" />
+			<input class="input-text-join tooltip" name="userID" type="text" title="아이디는 영문, 숫자 및 8자이상 16자이하만 입력가능합니다" placeholder="ID" />
+			<input class="input-text-join tooltip" name="passwd" type="password" title="비밀번호는 영문 대소문자와 숫자,특수문자를 포함 10자 이상이여야 합니다." placeholder="Password" /> 
+			<input class="input-text-join" name="passwdcheck" type="password" placeholder="Password Check" />
+			<input class="input-text-join" name="name" type="text" placeholder="Name" />
+			<div class="birth-div">
+				<span>생년월일</span><br> 
+				<select class="birth" name="year">
+				<c:forEach var="i" begin="20" end="115" step="1">
+					<option value="${i+1900 }">${ i+1900 }</option>
+				</c:forEach>
+				</select> 
+				<select class="birth" name="month">
+				<c:forEach var="i" begin="1" end="12" step="1">
+					<c:choose>
+						<c:when test="${i <10 }">
+							<option value="${i }">0${i }</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${ i}">${i }</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				</select> 
+				<select class="birth" name="date">
+				<c:forEach var="i" begin="1" end="31" step="1">
+					<c:choose>
+						<c:when test="${i <10 }">
+							<option value="${i }">0${i }</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${ i}">${i }</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				</select> 
 			</div>
-			<div class="gender">
-				<span>성 별</span> <input type="radio" name="gender" value="남">&nbsp;남&nbsp;
-				<input type="radio" name="gender" value="여">&nbsp;여
+			<div class="gender-div">
+				<span>성 별</span><br> 
+				<input type="radio" name="gender" value="남"><span>남</span>
+				<input type="radio" name="gender" value="여"><span>여</span>
 			</div>
-			<div class="email">
-				<span>이메일</span> <input class="email_id" type="text" name="email_id"> @ <select class="sel_email" name="email_addr">
+			<div class="email-div">
+				<span>이메일</span><br> 
+				<input class="input-text" type="text" name="email_id"><span>@</span>
+				<select class="sel_email" name="email_addr">
 					<option>naver.com</option>
 					<option>freechal.com</option>
 					<option>dreamwiz.com</option>
@@ -277,6 +290,7 @@ function moveback(){
 					<option>직접입력</option>
 				</select>
 			</div>
+			<input class="input-submit" type="submit" id="submit-join" value="Plus you" />
 		</div>
 	</form>
 	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="filters">
