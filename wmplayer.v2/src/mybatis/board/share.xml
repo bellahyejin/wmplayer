@@ -17,17 +17,17 @@
 	</insert>
 
 	<update id="update" parameterType="hashmap">
-		update share
+		update board_user
 		<trim prefix="set" suffixOverrides=",">
 			<choose>
-				<when test="action == 'count'">view_cnt = view_cnt + 1</when>
+				<when test="action == 'count'">check_cnt = check_cnt + 1</when>
 				<when test="action == 'update'"></when>
 			</choose>
 		</trim>
-		where share_seq = #{share_seq}
+		where board_seq = #{share_seq}
 	</update>
 
-	<select id="select" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+	<select id="select" parameterType="map" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
 		select ${select_column}
 		from board_user
 		<trim prefix="where">

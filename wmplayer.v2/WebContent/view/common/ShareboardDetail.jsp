@@ -10,13 +10,12 @@
 		alert(str + "페이지가 없습니다");
 	}
 
-	this.totalPage = ${ total_page };
-	this.board_seq = ${ board_seq };
+	this.board_seq = ${ data.board_seq };
 
 	function getData(page)
 	{
 		this.data = {
-				board_seq : ${ detail.board_seq },
+				board_seq : ${ data.board_seq },
 				page_no : page
 			};
 
@@ -34,7 +33,7 @@
 				},
 				error : function(xhr, status, error)
 				{
-					alert("getdata error");
+					alert("reple getdata error");
 				}});
 		}
 	}
@@ -46,7 +45,7 @@
 			url : "${ initParam.root }/share/reple",
 			dataType : "html",
 			data : {
-				board_seq : ${ detail.board_seq },
+				board_seq : ${ data.board_seq },
 				content : $("reple_content").val()
 			},
 			success : function(data, status, xhr)
@@ -55,13 +54,13 @@
 			},
 			error : function(xhr, status, error)
 			{
-				alert("insert error");
+				alert("reple insert error");
 			}});
 	}
 
 	$(document).ready(function()
 		{
-			$("#repleinput").click(function()
+			$("#reple_input").click(function()
 				{
 					insertData();
 				});
@@ -70,30 +69,41 @@
 <div class="share-detail">
 	<div class="share-detail-header">
 		<span>
-			<marquee scrollamount="5" behavior="scroll" width="300">${ detail.board_title } - ${ detail.board_artist }</marquee></span>
+			<marquee scrollamount="5" behavior="scroll" width="300">${ data.board_title } - ${ data.board_artist }</marquee></span>
 		<div id="select-info">
 			<div id="col-date"><span class="column-infotitle">등록일</span><span id="column-date">${ regi_day }</span></div>
-			<div id="col-view"><span class="column-infotitle">조회수</span><span id="column-view">${ detail.check_cnt }</span></div>
+			<div id="col-view"><span class="column-infotitle">조회수</span><span id="column-view">${ data.check_cnt }</span></div>
 		</div>
 	</div>
 </div>
 <div class="share-detail-section">
 	<div class="share-detail-mv">
-		<embed src="//www.youtube.com/embed/${  }?autoplay=1&controls=0&showinfo=0&rel=0&wmode='transparent'&allowfullscreen='false'" type="" width="400" height="300" />
+		<embed src="//www.youtube.com/embed/${ data.videoID }?autoplay=1&controls=0&showinfo=0&rel=0&wmode='transparent'&allowfullscreen='false'" type="" width="400" height="300" />
 	</div>
 	<div class="share-detail-info">
 		<table class="share-table">
 			<tr>
 				<td class="title"><pre>날   짜</pre></td>
-				<td>${ detail.weather_custom }</td>
+				<td>${ data.weather_custom }</td>
 			</tr>
 			<tr>
 				<td class="title">작성자</td>
-				<td>${ detail.userid }</td>
+				<td>${ data.userID }</td>
 			</tr>
 			<tr>
-				<td id="desc" colspan="2">${ detail.board_desc }</td>
+				<td id="desc" colspan="2">${ data.board_desc }</td>
 			</tr>
 		</table>
 	</div>
 </div>
+<div class="share-button">
+	<div class="paging-column">
+		<input type="button" class="styled-button-detail" id="detail" value="이 전" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ prev_content } })" />
+		<input type="button" class="styled-button-detail" id="detail" value="다 음" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ next_content } })" />
+	</div>
+</div>
+<div id="reple_form">
+	<input type="text" name="" id="reple_txt" size="68" />
+	<input type="button" value="확인" id="reple_input" />
+</div>
+<div id="reple_list" style="size : 800px;"></div>

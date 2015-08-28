@@ -3,8 +3,10 @@ package kr.co.wmplayer.sinmina.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
@@ -25,6 +27,7 @@ public class ShareBoardController
 {
 	@Autowired ShareboardDAO shareboardDAO;
 
+	List<String> seq_list;
 	StringOperate so = StringOperate.getInstance();
 	Map<String, Object> map;
 
@@ -40,6 +43,7 @@ public class ShareBoardController
 	public String main(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
 		Object userid = request.getSession().getAttribute("success");
+		map = new HashMap<String, Object>();
 
 		if (userid != null)
 		{
@@ -63,13 +67,48 @@ public class ShareBoardController
 
 	public String shareContent(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
-		System.out.println(bean.getBoard_seq());
+		int content_idx = 0;
 
+		List<String> weather_list = getWeather("all");
+
+		map.clear();
+		map.put("select_column", "board_seq");
+		map.put("get", "all");
+		map.put("weather_custom", weather_list);
+		List<BoardUserDTO> seq_list = shareboardDAO.select(map, 0, 0);
+
+		map.clear();
+		map.put("action", "count");
+		map.put("share_seq", bean.getBoard_seq());
+		shareboardDAO.update(map);
+
+		map.clear();
+		map.put("select_column", "*");
+		map.put("get", "one");
+		map.put("compare_column", "board_seq");
+		map.put("value", bean.getBoard_seq());
+		List<BoardUserDTO> list = shareboardDAO.select(map, 0, 0);
+
+		for (BoardUserDTO temp : seq_list)
+		{
+			if (temp.getBoard_seq() == bean.getBoard_seq())
+			{
+				content_idx = seq_list.indexOf(temp);
+				break;
+			}
+		}
+
+		if (content_idx == 0){}
+
+		request.setAttribute("data", list.get(0));
+		/*request.setAttribute("prev_content", seq_list);
+		request.setAttribute("next_content", arg1);*/
 		return "sharedetail";
 	}
 
 	public String shareWrite(Model model, HttpServletRequest request)
 	{
+
 		return "sharewrite";
 	}
 
@@ -130,37 +169,7 @@ public class ShareBoardController
 		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
 		boolean flag;
 
-		weather : for (int i = 0; i < weather.length; i++)
-		{
-			String temp = weather[i];
-			String kor_weather;
-
-			switch (temp)
-			{
-				case "all" :
-				case "sun" :
-					kor_weather = "맑음";
-					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
-					if (!temp.equals("all")) break;
-				case "rain" :
-					kor_weather = "비";
-					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
-					if (!temp.equals("all")) break;
-				case "snow" :
-					kor_weather = "눈";
-					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
-					if (!temp.equals("all")) break;
-				case "cloud" :
-					kor_weather = "흐림";
-					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
-					if (!temp.equals("all")) break;
-				case "lowcloudy" :
-					kor_weather = "바람";
-					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
-			}
-
-			if (temp.equals("all")) break weather;
-		}
+		weather_list = getWeather(weather_custom);
 
 		map.put("select_column", "*");
 		map.put("get", "all");
@@ -230,6 +239,46 @@ public class ShareBoardController
 					.append("</ul>")
 				.append("</div>");
 		return sb.toString();
+	}
+
+	public List<String> getWeather(CharSequence weather_custom)
+	{
+		List<String> weather_list = new ArrayList<String>();
+		StringTokenizer weather = new StringTokenizer(weather_custom.toString(), ",");
+
+		weather : while (weather.hasMoreTokens())
+		{
+			String temp = weather.nextToken();
+			String kor_weather;
+
+			switch (temp)
+			{
+				case "all" :
+				case "sun" :
+					kor_weather = "맑음";
+					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
+					if (!temp.equals("all")) break;
+				case "rain" :
+					kor_weather = "비";
+					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
+					if (!temp.equals("all")) break;
+				case "snow" :
+					kor_weather = "눈";
+					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
+					if (!temp.equals("all")) break;
+				case "cloud" :
+					kor_weather = "흐림";
+					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
+					if (!temp.equals("all")) break;
+				case "lowcloudy" :
+					kor_weather = "바람";
+					if (weather_list.indexOf(kor_weather) == -1) weather_list.add(kor_weather);
+			}
+
+			if (temp.equals("all")) break weather;
+		}
+
+		return weather_list;
 	}
 
 	@ResponseBody @RequestMapping(value = "/reple", method = RequestMethod.POST, produces = "text/html; charset=utf-8")

@@ -18,6 +18,12 @@ public class BoardUserDTO implements WMPlayerDTO{
 
 	}
 
+	@Override
+	public String toString()
+	{
+		return "BoardUserDTO [board_seq=" + board_seq + ", userID=" + userID + ", board_title=" + board_title + ", board_artist=" + board_artist + ", videoID=" + videoID + ", albumcover=" + albumcover + ", weather_custom=" + weather_custom + ", regi_day=" + regi_day + ", board_desc=" + board_desc + ", check_cnt=" + check_cnt + "]";
+	}
+
 	public BoardUserDTO(int board_seq, String board_title, String board_artist){
 		this.board_seq = board_seq;
 		this.board_title = board_title;
