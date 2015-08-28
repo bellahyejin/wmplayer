@@ -38,9 +38,9 @@
 			<td colspan="3" class="bottom_border"><div class="music-rank-list-subject left-margin-subject">인기 칼럼</div>
 			</td>
 		</tr>
-		<c:forEach items="${column }" var="list">
+		<c:forEach items="${column }" var="list" varStatus="status">
 		<tr class="bottom_border_td">
-			<td class="music-rank">
+			<td class="music-rank">${status.count }
 			</td>
 			<td class="music-rank-object">
 				<a href="columndetail?column_seq=${list.column_seq}">${list.title }</a>
@@ -50,14 +50,14 @@
 		</tr>
 		</c:forEach>
 	</table>
-	<table class="board list" id="board-rank-list">
+	<table class="board list" id="board-rank-list" >
 		<tr>
 			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">인기 공유 게시글</div>
 			</td>
 		</tr>
-		<c:forEach items="${share }" var="list">
+		<c:forEach items="${share }" var="list" var="list" varStatus="status">
 		<tr>
-			<td class="board-rank">
+			<td class="board-rank">${status.count }
 			</td>
 			<td class="board-rank-subject">
 			<a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a>
