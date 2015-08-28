@@ -23,11 +23,6 @@ public class HomeFormController {
 	@Autowired
 	private NoticeboardDAO noticedao;
 	
-	@RequestMapping("/home")
-	public String homeform(){
-		return "common/HomeForm";
-	}
-	
 	@RequestMapping("/homeform")
 	public String homelist(Model model){
 		

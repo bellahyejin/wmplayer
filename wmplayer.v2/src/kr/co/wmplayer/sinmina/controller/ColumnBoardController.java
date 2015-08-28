@@ -56,7 +56,7 @@ public class ColumnBoardController {
 	@RequestMapping("/column")
 	public String columnlist(@RequestParam(value="i", defaultValue="1") int i, Model model){
 		
-		int totalNumber =columndao.dataSize(); 
+		int totalNumber = columndao.dataSize(); 
 		int page_max = 10;
 		int endPage = totalNumber / page_max;
 		
@@ -111,12 +111,11 @@ public class ColumnBoardController {
 
 		// 리플 페이징처리
 
-		Object totalPage = columndao.countReply(column_seq);
-		int totaPagel = Integer.parseInt((String) totalPage);
+		int totaPagel = columndao.countReply(column_seq);
 
-		model.addAttribute("repleTotal", totalPage);
+		model.addAttribute("repleTotal", totaPagel);
 
-		String varTotalPage = "<script>var totalPage=" + totalPage
+		String varTotalPage = "<script>var totalPage=" + totaPagel
 				+ "</script>";
 		model.addAttribute("varTotalPage", varTotalPage);
 		model.addAttribute("column_seq", column_seq);
@@ -128,7 +127,7 @@ public class ColumnBoardController {
 	public String columndelete(@RequestParam(value="column_seq") int column_seq, Model model){
 		
 		if(columndao.delete(column_seq)){
-			return "redirect:columnlist";
+			return "redirect:column";
 	    }else{
 	    	String alertMsg = "<script>alert('삭제에 실패하였습니다')</script>" ; 
 	    	model.addAttribute("alertMsg", alertMsg);

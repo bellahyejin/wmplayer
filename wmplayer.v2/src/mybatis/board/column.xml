@@ -64,7 +64,7 @@
 		SYSDATE )
 	</insert>
 
-	<select id="countReple" parameterType="int" resultType="String">
+	<select id="countReple" parameterType="int" resultType="int">
 		select
 		count(*) from columnReple where column_seq=#{column_seq}
 	</select>

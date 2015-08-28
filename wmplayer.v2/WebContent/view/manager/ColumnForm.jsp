@@ -52,7 +52,7 @@ ${alertMsg }
 		<input type="submit" class="styled-button-login" id="column"
 		 value="작 성" onclick="submitContents(this)"/>
 		<input type="button" class="styled-button-login" id="column"
-		 value="취 소" onclick="location.href='columnlist'"/>
+		 value="취 소" onclick="location.href='column'"/>
 	</div>
 </div>
 <script type="text/javascript">
