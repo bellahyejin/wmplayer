@@ -7,6 +7,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/UserAnalysis.css" rel="stylesheet" />
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <div class="useranalysis-form">
 	<div class="useranal-header">
 	</div>
@@ -43,7 +45,7 @@
 			<c:forEach items="${share }" var="list" varStatus="status">
 				<tr>
 					<td class="like-rank">${status.count }</td>
-					<td class="like-rank-object"><a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a></td>
+					<td class="like-rank-object"><a href="#" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${list.board_seq}})">${list.board_title }-${list.board_artist }</a></td>
 				</tr>
 			</c:forEach>
 		</table>

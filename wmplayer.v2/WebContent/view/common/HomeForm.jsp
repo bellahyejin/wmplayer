@@ -11,6 +11,8 @@
 <link type="text/css" href="${initParam.root}/css/HomeForm.css" rel="stylesheet" />
 <script src="${initParam.root }/js/jquery-2.1.4.js"></script>
 <script src="${initParam.root }/js/HomeForm.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script src="${initParam.root }/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <div class="home-menu">
 	<div class="regular" id="notice-list">
@@ -60,7 +62,7 @@
 			<td class="board-rank">${status.count }
 			</td>
 			<td class="board-rank-subject">
-			<a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a>
+			<a href="#"  onclick="setLink(null, 'share', 'content', { 'board_seq' : ${list.board_seq}})">${list.board_title }-${list.board_artist }</a>
 			</td>
 			<td class="board-rank-writer">${list.userID }
 			</td>
