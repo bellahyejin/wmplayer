@@ -55,7 +55,7 @@
 			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">인기 공유 게시글</div>
 			</td>
 		</tr>
-		<c:forEach items="${share }" var="list" var="list" varStatus="status">
+		<c:forEach items="${share }" var="list" varStatus="status">
 		<tr>
 			<td class="board-rank">${status.count }
 			</td>
