@@ -39,7 +39,7 @@ public class ManagerController
 		return main(model, request);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String main(Model model, HttpServletRequest request)
 	{
 		Object userid = request.getSession().getAttribute("success");
