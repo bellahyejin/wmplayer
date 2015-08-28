@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:32
-	KST 2015 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Mon Aug 24 10:49:32 KST 2015 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="share">
 	<sql id="weather">
-		<foreach collection="weather_custom" item="item" open="("
-			separator="," close=")">
+		<foreach collection="weather_custom" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>
 	</sql>
@@ -13,7 +10,7 @@
 	<insert id="insert" parameterType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
 		insert into board_user
 		values (share_seq.nextval, #{userid}, #{board_title}, #{board_artist}, #{videoid},
-			#{albumcover}, #{weather_custom}, sysdate, #{board_desc}, 0)
+		#{albumcover}, #{weather_custom}, sysdate, #{board_desc}, 0)
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -44,9 +41,7 @@
 	</select>
 
 	<update id="updatecnt" parameterType="int">
-		update board_user
-		set check_cnt = check_cnt + 1
-		where board_seq=#{board_seq}
+		update board_user set check_cnt = check_cnt + 1 where board_seq=#{board_seq}
 	</update>
 
 	<select id="selectPop" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">

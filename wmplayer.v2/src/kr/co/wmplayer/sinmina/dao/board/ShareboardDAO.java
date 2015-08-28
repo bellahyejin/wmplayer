@@ -24,7 +24,7 @@ public class ShareboardDAO
 	 */
 	public boolean update(Map<String, Object> map)
 	{
-		return session.update("share.update", map) > 1;
+		return session.update("share.update", map) > 0;
 	}
 
 	/**
