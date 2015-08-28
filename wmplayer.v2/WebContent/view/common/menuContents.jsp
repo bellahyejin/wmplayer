@@ -4,5 +4,5 @@
 <link type="text/css" href="${initParam.root}/css/MainForm.css" rel="stylesheet" />  
 <tiles:insertAttribute name="header"/>
 <div id="section">
-<tiles:insertAttribute name="section" defaultValue="homelist"/>
+<tiles:insertAttribute name="section" />
 </div>

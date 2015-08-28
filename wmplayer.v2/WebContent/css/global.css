@@ -2,8 +2,6 @@
 @IMPORT url("MainForm.css");
 @IMPORT url("HomeForm.css");
 @IMPORT url("MusicPlayer.css");
-@IMPORT url("JoinForm.css");
-@IMPORT url("LoginForm.css");
 @IMPORT url("UserUpdate.css");
 @IMPORT url("UserDrop.css");
 @IMPORT url("UserAnalysis.css");
@@ -18,65 +16,65 @@
 @IMPORT url("ShareboardDetail.css");
 @IMPORT url("ShareboardForm.css");
 
-/* css ���� import ���
-<link type="text/css" href="���� ���Ͽ��� �����" rel="stylesheet" />
+/* css 占쏙옙占쏙옙 import 占쏙옙占�
+<link type="text/css" href="占쏙옙占쏙옙 占쏙옙占싹울옙占쏙옙 占쏙옙占쏙옙占�" rel="stylesheet" />
 */
 
-/* ���߿� ���� ����(������ ���� ǥ�� ���� ����) */
+/* 占쏙옙占쌩울옙 占쏙옙占쏙옙 占쏙옙占쏙옙(占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 표占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙) */
 /* div, table, span { border: 1px solid; }
 div { border-color: #ff5b5b; }
 table { border-color: #0000ff; }
 span { border-color: #00ff00; } */
 
 
-/* body �ʱ�ȭ */
+/* body 占십깍옙화 */
 body { padding: 0; margin: 0;  left:0 ; top: 0;}
 
-textarea, input[type=text]{ font-family: �����ٸ����; border: 1px solid #b0b0b0;}
-/* scroll ��ǥ�� */
+textarea, input[type=text]{ font-family: 占쏙옙占쏙옙占쌕몌옙占쏙옙占�; border: 1px solid #b0b0b0;}
+/* scroll 占쏙옙표占쏙옙 */
 
 /* font */
-#korean { font-family: regular, �����ٸ����; }
+#korean { font-family: regular, 占쏙옙占쏙옙占쌕몌옙占쏙옙占�; }
 .english { font-family: bebas, regular; }
-.font { font-family: bebas, �����ٸ����; }
+.font { font-family: bebas, 占쏙옙占쏙옙占쌕몌옙占쏙옙占�; }
 .regular { font-family: regular; }
 
-/* table �Ӽ� */
+/* table 占쌈쇽옙 */
 .list, .board { width: 660px; margin: 0; border-spacing: 0; }
-/* tr�� ���콺 �÷��� �� �� �� ��ü�� ��Ÿ�� ���� */
+/* tr占쏙옙 占쏙옙占쎌스 占시뤄옙占쏙옙 占쏙옙 占쏙옙 占쏙옙 占쏙옙체占쏙옙 占쏙옙타占쏙옙 占쏙옙占쏙옙 */
 .board tr:hover td { background-color: #f6f6f6; }
-/* board, list table ���� �κ� */
+/* board, list table 占쏙옙占쏙옙 占싸븝옙 */
 .board th, .list th { text-align: center; background-color: #bfe3f2; border-bottom: 2px solid #dedede; border-collapse: collapse; }
 .board th { padding: 5px; font-size: 10pt; }
-/* board, list table ���� �κ� */
+/* board, list table 占쏙옙占쏙옙 占싸븝옙 */
 .board td, .list td { font-size: 9pt;}
 .board td{padding-top: 4px; }
-/* board, list table ����, ���� �κп� ���� �߰� */
+/* board, list table 占쏙옙占쏙옙, 占쏙옙占쏙옙 占싸분울옙 占쏙옙占쏙옙 占쌩곤옙 */
 .bottom_border {border-bottom: 1px solid #757575; padding-bottom: 5px;}
 .bottom_border_tr {border-bottom: 1px solid #eee;}
 
 .boardpadding td{padding-top: 4px;}
-/* ���� �κ� */
+/* 占쏙옙占쏙옙 占싸븝옙 */
 .subject { text-align: left; position: relative; font-size: 11pt; }
 .top-margin-subject, .left-margin-subject { text-align: left; position: relative; font-size: 11pt; }
 .top-margin-subject { margin-top: 30px;}
 .left-margin-subject { margin-left: 10px; }
 
-/* ��ũ �⺻ ��Ÿ�� �� ���� ǥ�ô� ���콺 �÷��� ���� */
+/* 占쏙옙크 占썩본 占쏙옙타占쏙옙 占쏙옙 占쏙옙占쏙옙 표占시댐옙 占쏙옙占쎌스 占시뤄옙占쏙옙 占쏙옙占쏙옙 */
 
-/* �Խñ�(�Ǵ� �Ŵ��� ������) ������ ���� ��Ÿ�� ���� */
-/* ���� ���
+/* 占쌉시깍옙(占실댐옙 占신댐옙占쏙옙 占쏙옙占쏙옙占쏙옙) 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙타占쏙옙 占쏙옙占쏙옙 */
+/* 占쏙옙占쏙옙 占쏙옙占�
 
-begin_page : forEach�� begin �Ӽ�
-end_page : forEach�� end �Ӽ�
-pres_page : ���� ������
-max_page : ��ü ������ ��
+begin_page : forEach占쏙옙 begin 占쌈쇽옙
+end_page : forEach占쏙옙 end 占쌈쇽옙
+pres_page : 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
+max_page : 占쏙옙체 占쏙옙占쏙옙占쏙옙 占쏙옙
 
 <div class="pager-container">
 	<ul class="page-list">
 	<c:choose>
 		<c:when test="${ pres_page == 1 || begin_page == 1 }"></c:when>
-		<c:otherwise><a href="?page=1">ù ������</a></c:otherwise>
+		<c:otherwise><a href="?page=1">첫 占쏙옙占쏙옙占쏙옙</a></c:otherwise>
 	</c:choose>
 	<c:forEach begin="${ begin_page }" end="${ end_page }" var="page" >
 		<c:choose>
@@ -86,13 +84,13 @@ max_page : ��ü ������ ��
 	</c:forEach>
 	<c:choose>
 		<c:when test="${ pres_page == max_page || end_page == max_page }"></c:when>
-		<c:otherwise><a href="?page=${ max_page }">������ ������</a></c:otherwise>
+		<c:otherwise><a href="?page=${ max_page }">占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙</a></c:otherwise>
 	</c:choose>
 	</ul>
 </div>
  */
 
-/* ������ �ҽ�*/
+/* 占쏙옙占쏙옙占쏙옙 占쌀쏙옙*/
 .page-list {
 	margin:0;
 	position: static;
@@ -126,7 +124,7 @@ max_page : ��ü ������ ��
 }
 
 
-/* write ��ư */
+/* write 占쏙옙튼 */
 /* nomal*/
 .styled-button-12 {
 	-webkit-box-shadow: #FEFFFF 0px 1px 1px ;
@@ -166,14 +164,14 @@ max_page : ��ü ������ ��
 
 }
 
-/* Ŭ���� */
+/* 클占쏙옙占쏙옙 */
 .styled-button-12:ACTIVE {
 	-webkit-box-shadow: #757575 0px 1px 1px inset;
 	-moz-box-shadow: #757575 0px 1px 1px inset; 
 	box-shadow: #757575 0px 1px 1px inset; 
 }
 
-/* �α��� �� ��ư */
+/* 占싸깍옙占쏙옙 占쏙옙 占쏙옙튼 */
 .styled-button-login {
 	background: #fff;
 	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
@@ -215,7 +213,7 @@ max_page : ��ü ������ ��
 	box-shadow: #039be5 0px 1px 1px inset; 
 }
 
-/* detail �� ��ư */
+/* detail 占쏙옙 占쏙옙튼 */
 .styled-button-detail {
 	background: #fff;
 	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
@@ -258,7 +256,7 @@ max_page : ��ü ������ ��
 }
 
 
-/* ��� ����*/
+/* 占쏙옙占� 占쏙옙占쏙옙*/
 .styled-button-list {
 	background: #81d4fa;
 	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
@@ -301,7 +299,7 @@ max_page : ��ü ������ ��
 }
 
 
-/* ��� �Է�*/
+/* 占쏙옙占� 占쌉뤄옙*/
 .styled-button-reply {
 	background: #81d4fa;
 	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);

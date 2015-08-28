@@ -107,7 +107,7 @@ ${column.contents }
 						onclick="coldelete('${ column_seq }')">
 				</c:if>
 				<input type="button" class="styled-button-list" id="list" value="목록"
-					onclick="location.href='${initParam.root}/wmplayer/columnlist/list.do'" />
+					onclick="location.href='column'" />
 			</div>
 		</div>
 		<br>
