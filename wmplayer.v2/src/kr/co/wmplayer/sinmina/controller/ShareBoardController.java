@@ -2,6 +2,7 @@ package kr.co.wmplayer.sinmina.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,27 +27,29 @@ public class ShareBoardController
 	@Autowired ShareboardDAO shareboardDAO;
 
 	StringOperate so = StringOperate.getInstance();
-	String action;
+	Map<String, Object> map;
 
 	int max_element = 9, page_div = 4;
 
 	@RequestMapping(value = "/temp", method = RequestMethod.GET)
 	public String temp(Model model, HttpServletRequest request)
 	{
-		return main(model, request);
+		return main(model, request, null);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String main(Model model, HttpServletRequest request)
+	public String main(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
 		Object userid = request.getSession().getAttribute("success");
 
 		if (userid != null)
 		{
-			String action = request.getParameter("action") == null ? this.action : request.getParameter("action");
+			String action = request.getParameter("action");
+
 			if (action == null || action.equals("list")) return shareList(model, request);
-			else if (action.equals("content")) return shareContent(model, request);
+			else if (action.equals("content")) return shareContent(model, request, bean);
 			else if (action.equals("write")) return shareWrite(model, request);
+			else if (action.equals("data_insert")) return shareInsert(model, request, bean);
 			else return null;
 		}
 		else return "redirect:/intro";
@@ -59,8 +62,10 @@ public class ShareBoardController
 		return "sharelist";
 	}
 
-	public String shareContent(Model model, HttpServletRequest request)
+	public String shareContent(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
+		System.out.println(bean.getBoard_seq());
+
 		return "sharedetail";
 	}
 
@@ -69,12 +74,10 @@ public class ShareBoardController
 		return "sharewrite";
 	}
 
-	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String shareInsert(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
 		YoutubeSearch youtubeSearch = YoutubeSearch.getInstance();
 
-		System.out.println(request.getParameter("board_title"));
 		String id = (String) request.getSession().getAttribute("success");
 		bean.setBoard_title(so.toUpperCase(bean.getBoard_title(), 0));
 		bean.setBoard_artist(so.toUpperCase(bean.getBoard_artist(), 0));
@@ -83,8 +86,6 @@ public class ShareBoardController
 			String videoID = youtubeSearch.getYoutubeId(bean.getBoard_title(), bean.getBoard_artist());
 			String albumcover = youtubeSearch.getThumnailAddr(bean.getBoard_title(), bean.getBoard_artist());
 
-			System.out.println(bean.getBoard_title() + " " + bean.getBoard_artist());
-			System.out.println(videoID + " " + albumcover);
 			if (videoID == null || albumcover == null)
 			{
 				request.setAttribute("fail", "fail");
@@ -95,7 +96,9 @@ public class ShareBoardController
 				bean.setUserID(id);
 				bean.setVideoID(videoID);
 				bean.setAlbumcover(albumcover);
-				return "redirect:/share";
+
+				if (shareboardDAO.insert(bean)) return shareList(model, request);
+				else return shareWrite(model, request);
 			}
 		}
 		catch (IOException | InterruptedException e)
@@ -112,7 +115,7 @@ public class ShareBoardController
 		StringBuffer sb = new StringBuffer();
 		String[] weather = (weather_custom == null ? "all" : weather_custom).split(",");
 		List<String> weather_list = new ArrayList<String>();
-		Map<String, Object> map = new ListMap<String, Object>();
+		map = new ListMap<String, Object>();
 		map.put("select_column", "*");
 		map.put("group_column", null);
 		map.put("table", "board_user");
@@ -170,7 +173,7 @@ public class ShareBoardController
 		{
 			sb = sb.append("<div class=\"cardtotal\">")
 							.append("<li>")
-								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : " + bean.getBoard_seq() + " }\">")
+								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : " + bean.getBoard_seq() + " })\">")
 									.append("<div class=\"cardimg\">")
 										.append("<img id=\"image\" src=\"" + bean.getAlbumcover() + "\" />")
 									.append("</div>")

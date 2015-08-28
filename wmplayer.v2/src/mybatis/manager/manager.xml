@@ -36,7 +36,7 @@
 	</select>
 
 	<select id="memberInfo" resultType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" flushCache="true">
-		select userId, name, birth, gender, email, favor_weather, status
+		select userId, name, birth, gender, email, status
 		<include refid="userinfo" />
 	</select>
 

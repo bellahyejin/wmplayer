@@ -25,7 +25,7 @@ public class YoutubeSearch
 		ArrayList<HashMap<String, Object>> temp = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> data_list;
 		JSONFileParser jfp = new JSONFileParser();
-		String youtube_music_url_root_key = "/root/items";
+		String youtube_music_url_root_key = "/items";
 
 		Map<String, Boolean> youtube_music_url_key_name_list = new HashMap<String, Boolean>();
 		youtube_music_url_key_name_list.put("/id/videoId", false); // url

@@ -71,7 +71,7 @@ public class ListAndMapOperate
 						Map<String, String> insert = new ListMap<String, String>();
 						String temp =  (value.toString() + (index ? ((i + (count ? 1 : 0) * (multiple_where ? multiple : 1)) + increment) * (multiple_where ? 1 : multiple) : ""));
 						insert.put("temp", temp);
-						map.put(key, (V) instance.newInstance(value.getClass().getName(), insert));
+						map.put(key, (V) instance.newInstance(value.getClass(), insert));
 					}
 					else map.put(key, value);
 				}

@@ -32,8 +32,7 @@ a:ACTIVE{
 }
 .drop-etc-table
 {
-	position : absolute;
-	top : 275px;
+	top : 325px;
 }
 .member-table, .drop-reason-table, .drop-etc-table, .pager-container {
 		position: absolute;

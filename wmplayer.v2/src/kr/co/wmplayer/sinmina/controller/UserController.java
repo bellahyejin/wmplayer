@@ -12,7 +12,6 @@ import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController
 {
-
 	@Autowired
 	private UserInfoDAO dao;
 	@Autowired
@@ -85,8 +83,8 @@ public class UserController
 	@ResponseBody
 	public String findpass(UserInfoDTO user)
 	{
-
 		String result;
+
 		if (user.getUserID() != null && user.getName() != null && user.getEmail() != null)
 		{ // 파라미터가 있을경우
 			String userpass = dao.findpass(user); // 아이디, 이름, 이메일 검사
@@ -100,7 +98,6 @@ public class UserController
 				}
 
 				result = "고객님의 아이디는 <span id='userid'>" + responsepass + "</span> 입니다" + "<input class='input-submit' type='button' id='submit-back' value='뒤로가기' onclick='moveback()'/>";
-				;
 				return result;
 			}
 			else // 해당정보가 없을 경우
@@ -113,7 +110,6 @@ public class UserController
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)
 	{
-
 		session.invalidate();
 		return "redirect:intro";
 	}

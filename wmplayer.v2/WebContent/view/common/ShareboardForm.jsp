@@ -45,7 +45,7 @@
 			</table>
 		</div>
 		<div id="wm_btn">
-			<input type="button" value="작 성" id="column" class="styled-button-login" onclick="setLink('#writeform', 'share/insert')" />
+			<input type="button" value="작 성" id="column" class="styled-button-login" onclick="setLink('#writeform', 'share', 'data_insert')" />
 			<input type="button" value="취 소" id="column" class="styled-button-login" onclick="setLink(null, 'share', 'list')" />
 		</div>
 	</div>

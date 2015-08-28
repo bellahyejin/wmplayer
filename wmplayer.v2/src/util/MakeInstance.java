@@ -14,7 +14,7 @@ public class MakeInstance
 		return instance == null ? instance = new MakeInstance() : instance;
 	}
 
-	private Class<?> getNonPrimitiveClass(Class<?> c)
+	public Class<?> getNonPrimitiveClass(Class<?> c)
 	{
 		switch (c.getName())
 		{
@@ -47,13 +47,12 @@ public class MakeInstance
 		return c;
 	}
 
-	@SuppressWarnings("finally")
-	public Object newInstance(String className, Map<String, ? extends Object> args)
+	@SuppressWarnings({ "finally", "unchecked" })
+	public<E> E newInstance(Class<E> c, Map<String, ? extends Object> args)
 	{
 		Class<?>[] classes = null;
-		Class<?> c = null;
 		Object[] arguments = null;
-		Object instance = null;
+		E instance = null;
 
 		if (args != null && args.size() > 0)
 		{
@@ -71,31 +70,34 @@ public class MakeInstance
 
 		try
 		{
-			c = Class.forName(className);
-
 			String findMethod = "getInstance";
 			Method m = c.getMethod(findMethod, classes);
-			instance = m.invoke(findMethod, arguments);
+			instance = (E) m.invoke(instance, arguments);
 		}
 		catch (NoSuchMethodException e)
 		{
 			try
 			{
-				Constructor<?> constr = c.getConstructor(classes);
-				instance = constr.newInstance(arguments);
+			String findMethod = "newInstance";
+			Method m = c.getMethod(findMethod, classes);
+			instance = (E) m.invoke(instance, arguments);
 			}
-			catch (InstantiationException e1)
+			catch (NoSuchMethodException e1)
 			{
-				throw new ConstructorException("this class is abstract class or interface", e1);
+				try
+				{
+					Constructor<?> constr = c.getConstructor(classes);
+					instance = (E) constr.newInstance(arguments);
+				}
+				catch (InstantiationException e2)
+				{
+					throw new ConstructorException("this class is abstract class or interface", e2);
+				}
 			}
 		}
 		catch (IllegalArgumentException e)
 		{
 			throw new ConstructorException("parameter type or number of the parameter error", e);
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new ConstructorException("not found class", e);
 		}
 		catch (SecurityException | IllegalAccessException | InvocationTargetException e)
 		{
