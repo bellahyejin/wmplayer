@@ -51,6 +51,6 @@
 	</div>
 	<div class="anal-button">
 		<input type="button" class="styled-button-login" id="edit" value="회원 수정" onclick="location.href='${initParam.root}/wmplayer/update/edit.do?action=select&id=${success }'"/>
-		&nbsp;<input type="button" class="styled-button-login" id="drop" value="회원 탈퇴" onclick="location.href='drop'"/>
+		&nbsp;<input type="button" class="styled-button-login" id="drop" value="회원 탈퇴" onclick="location.href='dropform'"/>
 	</div>
 </div>

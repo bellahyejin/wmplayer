@@ -15,6 +15,7 @@ import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -168,5 +169,34 @@ public class UserController {
 	
 	//유효성 검사 중복확인과 pass워드 
 	
+	
+	//drop
+	@RequestMapping("/dropform")
+	public String dropform(){
+		return "drop";
+	}
+	
+	@RequestMapping("/userdrop")
+	public String userdrop(@RequestParam(value="dropreason", required=false,defaultValue="5") int dropreason,
+						   @RequestParam(value="etctext") String etctext,
+						   HttpSession session,
+						   @RequestParam(value="action",required=false) String action,
+						   @RequestParam(value="userid", required=false) String userid){
+		
+		String user = null;
+		if(action == null){
+			user = (String) session.getAttribute("success");
+			session.invalidate();
+		}else if(action.equals("manager_drop")){
+			etctext="운영자의 의한 탈퇴";
+			user = userid;
+			return "manager";
+		}
+		dao.dropupdate(dropreason);
+		if(dropreason == 5) dao.dropReason(etctext);
+		dao.delete(user);
+		
+		return "redirect:intro";
+	}
 	
 }

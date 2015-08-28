@@ -19,7 +19,7 @@
     	var text = document.frm.etctext.value;
 		var id = document.frm.id.value;
     	alert(id+'님이 탈퇴되었습니다.');
-    	location.replace("http://localhost:2539/WMPlayer_Pro/wmplayer/drop/retire.do?dropreason="+dd+'&etctext='+text);
+    	location.replace("userdrop?dropreason="+dd+'&etctext='+text);
 
     	if(dd==''){
     	alert("회원님의 탈퇴할 이유를 선택해주세요.");
@@ -30,7 +30,7 @@
 </script>
 <form name="frm" method="POST">
 <div id="drop-form">
-    <input type="hidden" value="<%=session.getAttribute("success")%>" name="id">
+    <input type="hidden" value="${success }" name="id">
 	<div class="drop-header">
 		<div id="drop-text">WMPlayer를 <br>이용해 주셔서 감사합니다</div>
 		<div id="drop-logo"><img src="${initParam.root }/img/button/logo.png"></div>
