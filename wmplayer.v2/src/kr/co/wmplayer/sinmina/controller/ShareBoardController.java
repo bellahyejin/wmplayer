@@ -2,7 +2,6 @@ package kr.co.wmplayer.sinmina.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -231,5 +230,11 @@ public class ShareBoardController
 					.append("</ul>")
 				.append("</div>");
 		return sb.toString();
+	}
+
+	@ResponseBody @RequestMapping(value = "/reple", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String reple()
+	{
+		return "";
 	}
 }
