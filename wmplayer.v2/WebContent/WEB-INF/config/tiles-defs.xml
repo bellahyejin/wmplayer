@@ -5,10 +5,7 @@
 <tiles-definitions>
 	<definition name="tiles.main" template="/view/common/menuContents.jsp">
 		<put-attribute name="header" value="/view/common/TopMenu.jsp"/>
-		<put-attribute name="section" value=""/>
-	</definition>
-	<definition name="homeform" extends="tiles.main">
-		<put-attribute name="section" value="/view/common/HomeForm.jsp"/>
+		<put-attribute name="section" value="homeform"/>
 	</definition>
 	<definition name="noticelist" extends="tiles.main">
 		<put-attribute name="section" value="/view/common/NoticeList.jsp"/>
