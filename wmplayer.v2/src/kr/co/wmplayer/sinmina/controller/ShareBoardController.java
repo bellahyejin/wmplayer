@@ -67,7 +67,7 @@ public class ShareBoardController
 
 	public String shareContent(Model model, HttpServletRequest request, BoardUserDTO bean)
 	{
-		int content_idx = 0;
+		int content_idx = 0, prev_content = 0, next_content = 0;
 
 		List<String> weather_list = getWeather("all");
 
@@ -98,11 +98,12 @@ public class ShareBoardController
 			}
 		}
 
-		if (content_idx == 0){}
+		if (content_idx != 0) prev_content = seq_list.get(content_idx - 1).getBoard_seq();
+		if (content_idx != seq_list.size() - 1) next_content = seq_list.get(content_idx + 1).getBoard_seq();
 
 		request.setAttribute("data", list.get(0));
-		/*request.setAttribute("prev_content", seq_list);
-		request.setAttribute("next_content", arg1);*/
+		request.setAttribute("prev_content", prev_content);
+		request.setAttribute("next_content", next_content);
 		return "sharedetail";
 	}
 

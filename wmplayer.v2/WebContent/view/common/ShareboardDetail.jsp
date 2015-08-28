@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link type="text/css" href="${ initParam.root }/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${ initParam.root }/css/ShareboardDetail.css" rel="stylesheet" />
 <script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
@@ -98,8 +99,9 @@
 </div>
 <div class="share-button">
 	<div class="paging-column">
-		<input type="button" class="styled-button-detail" id="detail" value="이 전" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ prev_content } })" />
-		<input type="button" class="styled-button-detail" id="detail" value="다 음" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ next_content } })" />
+		<c:if test="${ prev_content != 0 }"><input type="button" class="styled-button-detail" id="detail" value="이 전" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ prev_content } })" /></c:if>
+		<c:if test="${ next_content != 0 }"><input type="button" class="styled-button-detail" id="detail" value="다 음" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${ next_content } })" /></c:if>
+		<input type="button" value="목록" class="styled-button-list" id="list" onclick="setLink(null, 'share', 'list')" />
 	</div>
 </div>
 <div id="reple_form">
