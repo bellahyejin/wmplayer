@@ -24,7 +24,7 @@
 				<tr align="center">
 					<td>${ notice.notice_seq }</td>
 					<td><a
-						href="detail?notice_seq=${ notice.notice_seq }">${ notice.title }</a></td>
+						href="noticedetail?notice_seq=${ notice.notice_seq }">${ notice.title }</a></td>
 					<td>${ notice.update_day }</td>
 					<td>${ notice.view_cnt }</td>
 
@@ -32,7 +32,7 @@
 			</c:forEach>
 		</table>
 		<c:if test="${success == 'admin' }">
-			<input type="submit" class="styled-button-12" id="notice" value="Write" onclick="location.href='${initParam.root}/noticewrite" />
+			<input type="submit" class="styled-button-12" id="notice" value="Write" onclick="location.href='noticeform'" />
 		</c:if>
 	</div>
 	<div class="pager-container-column">
@@ -48,7 +48,7 @@
 				</c:choose>
 			</div>
 			<div id="middle">
-				<c:forEach begin="${beginPage }" end="${endPage }" var="page">
+				<c:forEach begin="1" end="${endPage }" var="page">
 					<c:choose>
 						<c:when test="${ i != page }">
 							<li class="page"><a href="?i=${ page }">${ page }</a></li>

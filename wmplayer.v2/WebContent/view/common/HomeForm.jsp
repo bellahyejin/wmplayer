@@ -4,8 +4,8 @@
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-     pageEncoding="EUC-KR" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/HomeForm.css" rel="stylesheet" />
@@ -14,28 +14,28 @@
 <script src="${initParam.root }/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <div class="home-menu">
 	<div class="regular" id="notice-list">
-		<div class="subject top-margin-subject notice-list-subject">°øÁö»çÇ×¢º</div>
+		<div class="subject top-margin-subject notice-list-subject">ê³µì§€ì‚¬í•­â–¶</div>
 			<div class="notice">
-			<c:forEach items="${ notice }" var="notice">
+			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
-				<span class="attribute">¾Ë¸²</span>
-					<a href='${initParam.root }/wmplayer/noticedetail.do?title=${notice.get(notice.indexOf(notice))}'>${ notice }</a>
+				<span class="attribute">ì•Œë¦¼</span>
+					<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
 			<span class="notice-subject">
-			<span class="attribute">¾Ë¸²</span>
-			<a href='${initParam.root }/wmplayer/noticedetail.do'>${ notice.get(0)}</a>
+			<span class="attribute">ì•Œë¦¼</span>
+			<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list.get(0)}</a>
 			</span>
 		</div>
 	</div>
-	<div class="subject must-list-subject">¿À´ÃÀÇ ÃßÃµ ¸®½ºÆ®</div>
+	<div class="subject must-list-subject">ì˜¤ëŠ˜ì˜ ì¶”ì²œ ë¦¬ìŠ¤íŠ¸</div>
 	<div id="must-list">
 		<jsp:include page="HomeFormCard.jsp"/>
 	</div>
 	<table class="boardpadding list left-margin-subject" id="music-rank-list">
 		<tr id="title">
-			<td colspan="3" class="bottom_border"><div class="music-rank-list-subject left-margin-subject">ÀÎ±â Ä®·³</div>
+			<td colspan="3" class="bottom_border"><div class="music-rank-list-subject left-margin-subject">ì¸ê¸° ì¹¼ëŸ¼</div>
 			</td>
 		</tr>
 		<c:forEach items="${column }" var="list">
@@ -43,7 +43,7 @@
 			<td class="music-rank">
 			</td>
 			<td class="music-rank-object">
-				<a href="${initParam.root }/wmplayer/columndetail.do?column_seq=${list.column_seq}">${list.title }</a>
+				<a href="columndetail?column_seq=${list.column_seq}">${list.title }</a>
 			</td>
 			<td class="music-rank-writer">${list.view_cnts }
 			</td>
@@ -52,17 +52,17 @@
 	</table>
 	<table class="board list" id="board-rank-list">
 		<tr>
-			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">ÀÎ±â °øÀ¯ °Ô½Ã±Û</div>
+			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">ì¸ê¸° ê³µìœ  ê²Œì‹œê¸€</div>
 			</td>
 		</tr>
-		<c:forEach items="${share }" var="board">
+		<c:forEach items="${share }" var="list">
 		<tr>
 			<td class="board-rank">
 			</td>
 			<td class="board-rank-subject">
-			<a href="${initParam.root }/wmplayer/sharedetail/view.do?board_seq=${board.board_seq}">${board.board_title }-${board.board_artist }</a>
+			<a href="sharedetail?board_seq=${list.board_seq}">${list.board_title }-${list.board_artist }</a>
 			</td>
-			<td class="board-rank-writer">${board.userID }
+			<td class="board-rank-writer">${list.userID }
 			</td>
 		</tr>
 		</c:forEach>		

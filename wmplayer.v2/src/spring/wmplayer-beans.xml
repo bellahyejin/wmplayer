@@ -19,6 +19,7 @@
 		        <value>classpath:mybatis/board/notice.xml</value>
 		        <value>classpath:mybatis/board/share.xml</value>
 		        <value>classpath:mybatis/manager/manager.xml</value>
+		        <value>classpath:mybatis/manager/common.xml</value>
 		        <value>classpath:mybatis/music/musicLiked.xml</value>
 		        <value>classpath:mybatis/music/Music.xml</value>
 		        <value>classpath:mybatis/user/UserInfo.xml</value>
@@ -30,7 +31,7 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean" />
 	</bean>
-	
+
 	<bean id="columnboardDAO" class="kr.co.wmplayer.sinmina.dao.board.ColumnboardDAO"></bean>
 	<bean id="shareboardDAO" class="kr.co.wmplayer.sinmina.dao.board.ShareboardDAO"></bean>
 	<bean id="noticeboardDAO" class="kr.co.wmplayer.sinmina.dao.board.NoticeboardDAO"></bean>

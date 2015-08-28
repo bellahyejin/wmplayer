@@ -17,4 +17,9 @@
 	<select id="selectlike" parameterType="kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO" resultType="int">
 		select count(*) from like_music where musicID=#{musicID} and userID=#{userID}
 	</select>
+	
+	<select id="selectLikeMusic" parameterType="String"
+	    					resultType="kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO">
+		select * from like_music where userID = #{userID}	    
+	</select>
 </mapper>

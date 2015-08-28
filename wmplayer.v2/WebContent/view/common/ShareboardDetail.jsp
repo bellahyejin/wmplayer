@@ -1,7 +1,7 @@
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link type="text/css" href="${initParam.root }/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root }/css/ShareboardDetail.css" rel="stylesheet" />
@@ -58,12 +58,12 @@
 	if (nowIndex == 0) {
 		nextIdx = Integer.parseInt(seqList.get(0));
 		beforeIdx = Integer.parseInt(seqList.get(nowIndex + 1));
-		out.print("<script>function warning(){alert('´ÙÀ½ÆäÀÌÁö°¡ ¾ø½À´Ï´Ù')");
+		out.print("<script>function warning(){alert('ë‹¤ìŒí˜ì´ì§€ê°€ ì—†ìŠµë‹ˆë‹¤')");
 
 	} else if (nowIndex == size - 1) {
 		nextIdx = Integer.parseInt(seqList.get(nowIndex - 1));
 		beforeIdx = Integer.parseInt(seqList.get(size - 1));
-		out.print("<script>function warning2(){alert('ÀÌÀüÆäÀÌÁö°¡ ¾ø½À´Ï´Ù');}</script>");
+		out.print("<script>function warning2(){alert('ì´ì „í˜ì´ì§€ê°€ ì—†ìŠµë‹ˆë‹¤');}</script>");
 	} else {
 		nextIdx = Integer.parseInt(seqList.get(nowIndex - 1));
 		beforeIdx = Integer.parseInt(seqList.get(nowIndex + 1));
@@ -103,12 +103,12 @@ $(document).ready(function(){
 				- ${detail.board_artist }</marquee></span>
 		<div id="select-info">
 			<div id="col-date">
-				<span class="column-infotitle">µî·ÏÀÏ</span> <span id="column-date">
+				<span class="column-infotitle">ë“±ë¡ì¼</span> <span id="column-date">
 					<%= regi_day.replace("-", "/").substring(0, 10) %>
 				</span>
 			</div>
 			<div id="col-view">
-				<span class="column-infotitle">Á¶È¸¼ö</span> <span id="column-view">${detail.check_cnt }</span>
+				<span class="column-infotitle">ì¡°íšŒìˆ˜</span> <span id="column-view">${detail.check_cnt }</span>
 			</div>
 		</div>
 	</div>
@@ -120,11 +120,11 @@ $(document).ready(function(){
 		<div class="share-detail-info">
 			<table class="share-table">
 				<tr>
-					<td id="title">³¯&nbsp;&nbsp;&nbsp;¾¾</td>
+					<td id="title">ë‚ &nbsp;&nbsp;&nbsp;ì”¨</td>
 					<td>${detail.weather_custom }</td>
 				</tr>
 				<tr>
-					<td id="title">ÀÛ¼ºÀÚ</td>
+					<td id="title">ì‘ì„±ì</td>
 					<td>${detail.userID }</td>
 				</tr>
 				<tr>
@@ -136,18 +136,18 @@ $(document).ready(function(){
 	<div class="share-button">
 		<div class="paging-column">
 			<input type="button" class="styled-button-detail" id="detail"
-				value="ÀÌ Àü"
+				value="ì´ ì „"
 				onclick="before(); warning2();" />
 			<input type="button" class="styled-button-detail" id="detail"
-				value="´Ù À½"
+				value="ë‹¤ ìŒ"
 				onclick="next(); warning()" />
-			<input type="button" class="styled-button-list" id="list" value="¸ñ ·Ï"
+			<input type="button" class="styled-button-list" id="list" value="ëª© ë¡"
 				onclick="location.href='${initParam.root}/wmplayer/sharelist.do'" />
 		</div>
 		
-		<div><!-- ¸®ÇÃ½ÃÀÛ -->
+		<div><!-- ë¦¬í”Œì‹œì‘ -->
 <input type="text" size="68" id="repleTxt">
-<input type="button" value="È®ÀÎ" id="repleInput">
+<input type="button" value="í™•ì¸" id="repleInput">
 </div>
 
 <div id="AppendReple" style="size: 800px;">

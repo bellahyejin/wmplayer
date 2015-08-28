@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.wmplayer.sinmina.dao.music.MusicDAO;
 import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
+import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 
@@ -28,7 +29,7 @@ public class MusicController {
 	private UserInfoDAO dao;
 	
 	@Autowired
-	private MusicDAO mDao;
+	private MusicDAO musicdao;
 	
 	@RequestMapping("/musicplayer")
 	public ModelAndView musicplayer(HttpSession session){
@@ -46,12 +47,6 @@ public class MusicController {
 	public String receiveData(@RequestParam(value="cur_Latitude") double current_latitude,
 			@RequestParam(value="cur_Longitude") double current_longitude ,
 			Model model) throws MalformedURLException, IOException, InterruptedException{
-//		double current_latitude = Double.valueOf(request.getParameter("cur_Latitude")).doubleValue();
-//		double current_longitude = Double.valueOf(request.getParameter("cur_Longitude")).doubleValue();
-//		
-//		
-//		MusicDAO dao = new MusicDAO();
-		
 		AddressChangeModel addr = new AddressChangeModel();
 		addr.setGrid(current_longitude, current_latitude, false, true, 2);
 		
@@ -61,17 +56,44 @@ public class MusicController {
 		wm.setWeatherData(current_addr);
 		
 		double current_temper = wm.getWeatherData().getTemp();
-//		String current_weather = wm.getWeatherData().getWeather();
-		List<MusicInfoDTO> lists = mDao.selectTodayList(current_temper);
+		List<MusicInfoDTO> lists = musicdao.selectTodayList(current_temper);
 		model.addAttribute("lists", lists);
 		model.addAttribute("wm", wm);
 		model.addAttribute("current_addr", current_addr);
 		
-		System.out.println("addr : "+ current_addr+", temper:" +current_temper+", lists: "+lists.get(1).getTitle());
-		
-		
-	    return "receiveData";
+	    return "ajax/receiveData";
 	}
 	
-	
+	@RequestMapping("/ajax/MusicLikeData")
+	public String MusicLikeData(@RequestParam(value="musicID") String musicID,
+								@RequestParam(value="status") String status,
+								HttpSession session){
+		
+		System.out.println("::: MusicID, "+musicID+"status:::::"+status);
+		
+		String userID = (String) session.getAttribute("success");
+		LikeMusicDTO like = new LikeMusicDTO(musicID, userID);
+		String msg = "";
+		
+		if(musicID != null){
+			if(status.equals("add")){
+				musicdao.addLike(like);
+				System.out.println("like add : success");
+			}else if(status.equals("delete")){
+				musicdao.deleteLike(like);
+				System.out.println("like delete add: success");
+			}else if(status.equals("select")){
+				//전체를 담아줄 객체를 설정
+				//System.out.println( dao.selectLike(like));
+			 	if(musicdao.selectLike(like)){
+			 		msg = "like";
+			 	}else{
+			 		msg = "unlike";
+			 	}
+			}
+		}else {
+			System.out.println("musicId is null");
+		}
+		return msg;
+	}
 }

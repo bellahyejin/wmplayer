@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-	 <%request.setCharacterEncoding("UTF-8"); %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <script type="text/javascript" src="${initParam.root }/js/ajax.js"></script>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <script type="text/javascript" src="${initParam.root }/js/ajax.js"></script>
 <script type="text/javascript" src="${initParam.root }/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<form action="${initParam.root }/wmplayer/columnform/add.do" method="POST" name="frm">
+${alertMsg }
+<form action="columnadd" method="POST" name="frm">
 <div class="columnwrite-form">
 	<div class="columnwrite-header">
 		Column Editor
@@ -13,46 +13,46 @@
 	<div class="columnwrite-section">
 		<table>
 			<tr>
-				<td class="columnwrite-title">Á¦¸ñ</td>
+				<td class="columnwrite-title">ì œëª©</td>
 				<td style="width: 370px;">
-				<input name="title" type="text" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä" size="50" maxlength="100"></td>
+				<input name="title" type="text" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”" size="50" maxlength="100"></td>
 			</tr>
 			<tr>
-				<td class="columnwrite-title">ÇØ´ç ³¯¾¾</td>
+				<td class="columnwrite-title">í•´ë‹¹ ë‚ ì”¨</td>
 				<td>
 					<select name="mood">
-						<option value="¼±ÅÃ">=¼±ÅÃÇØÁÖ¼¼¿ä=</option>
-						<option value="¸¼À½">¸¼À½</option>
-						<option value="Èå¸²">Èå¸²</option>
-						<option value="ºñ">ºñ</option>
-						<option value="´«">´«</option>
-						<option value="±¸¸§Á¶±İ">±¸¸§Á¶±İ</option>
+						<option value="ì„ íƒ">=ì„ íƒí•´ì£¼ì„¸ìš”=</option>
+						<option value="ë§‘ìŒ">ë§‘ìŒ</option>
+						<option value="íë¦¼">íë¦¼</option>
+						<option value="ë¹„">ë¹„</option>
+						<option value="ëˆˆ">ëˆˆ</option>
+						<option value="êµ¬ë¦„ì¡°ê¸ˆ">êµ¬ë¦„ì¡°ê¸ˆ</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="columnwrite-title">Àå¸£</td>
+				<td class="columnwrite-title">ì¥ë¥´</td>
 				<td><input name="style" type="text" size="50" maxlength="50"
-				 placeholder="Àå¸£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä"></td>
+				 placeholder="ì¥ë¥´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”"></td>
 			</tr>
 			<tr>
-				<td class="columnwrite-title">¼³¸í</td>
+				<td class="columnwrite-title">ì„¤ëª…</td>
 			<tr>
 				<td colspan="2">
 					<textarea name="contents" id="contents"cols="66" rows="20" 
-					style="resize: none;" placeholder="¼³¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
+					style="resize: none;" placeholder="ì„¤ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div id="wm_btn">
 		<!--  
-		<input type="submit" class="styled-button-login" id="column" value="ÀÛ ¼º" onclick="columnInput()"/>
+		<input type="submit" class="styled-button-login" id="column" value="ì‘ ì„±" onclick="columnInput()"/>
 		-->
 		<input type="submit" class="styled-button-login" id="column"
-		 value="ÀÛ ¼º" onclick="submitContents(this)"/>
+		 value="ì‘ ì„±" onclick="submitContents(this)"/>
 		<input type="button" class="styled-button-login" id="column"
-		 value="Ãë ¼Ò" onclick="location.href='${initParam.root}/wmplayer/columnlist.do'"/>
+		 value="ì·¨ ì†Œ" onclick="location.href='columnlist'"/>
 	</div>
 </div>
 <script type="text/javascript">
@@ -65,13 +65,13 @@ nhn.husky.EZCreator.createInIFrame({
 });
 
 
-//¡®ÀúÀå¡¯ ¹öÆ°À» ´©¸£´Â µî ÀúÀåÀ» À§ÇÑ ¾×¼ÇÀ» ÇßÀ» ¶§ submitContents°¡ È£ÃâµÈ´Ù°í °¡Á¤ÇÑ´Ù.
+//â€˜ì €ì¥â€™ ë²„íŠ¼ì„ ëˆ„ë¥´ëŠ” ë“± ì €ì¥ì„ ìœ„í•œ ì•¡ì…˜ì„ í–ˆì„ ë•Œ submitContentsê°€ í˜¸ì¶œëœë‹¤ê³  ê°€ì •í•œë‹¤.
 function submitContents(elClickedObj) {
-    // ¿¡µğÅÍÀÇ ³»¿ëÀÌ textarea¿¡ Àû¿ëµÈ´Ù.
+    // ì—ë””í„°ì˜ ë‚´ìš©ì´ textareaì— ì ìš©ëœë‹¤.
     oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
  
-    // ¿¡µğÅÍÀÇ ³»¿ë¿¡ ´ëÇÑ °ª °ËÁõÀº ÀÌ°÷¿¡¼­
-    // document.getElementById("ir1").value¸¦ ÀÌ¿ëÇØ¼­ Ã³¸®ÇÑ´Ù.
+    // ì—ë””í„°ì˜ ë‚´ìš©ì— ëŒ€í•œ ê°’ ê²€ì¦ì€ ì´ê³³ì—ì„œ
+    // document.getElementById("ir1").valueë¥¼ ì´ìš©í•´ì„œ ì²˜ë¦¬í•œë‹¤.
  
     try {
         elClickedObj.submitForm.submit();

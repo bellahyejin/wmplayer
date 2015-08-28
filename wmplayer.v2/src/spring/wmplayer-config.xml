@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	
+
 	<mvc:annotation-driven >
 	    <mvc:message-converters>
 	      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -17,11 +17,11 @@
 		        </list>
 		     </property>
 	      </bean>
-      </mvc:message-converters> 
+      </mvc:message-converters>
 	</mvc:annotation-driven>
-	
+
 	<mvc:default-servlet-handler />
-	
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
@@ -37,7 +37,7 @@
 		<property name="prefix" value="/view/" />
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="2" />
-	</bean>	
+	</bean>
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
@@ -46,5 +46,5 @@
 			</list>
 		</property>
 	</bean>
-	
+
 </beans>

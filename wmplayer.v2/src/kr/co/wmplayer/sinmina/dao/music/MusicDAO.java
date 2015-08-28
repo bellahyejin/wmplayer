@@ -15,7 +15,6 @@ public class MusicDAO {
 	private SqlSession session;
 	
 	public List<MusicInfoDTO> selectTodayList(double temperature){
-		System.out.println("selectTodayList session: "+ session);
 		List<MusicInfoDTO> list = session.selectList("music.todaylist", temperature);
 		return list;
 	}
@@ -51,5 +50,15 @@ public class MusicDAO {
 		int t = session.insert("music.addmusic",musicInfo);
 		if(t == 1)	return true;
 		else return false;
+	}
+	
+	public List<LikeMusicDTO> selectLikeMusic(String userid){
+		List<LikeMusicDTO> like = session.selectList("like.selectLikeMusic", userid);
+		return like;
+	}
+	
+	public MusicInfoDTO likemusic(String musicid){
+		MusicInfoDTO like = session.selectOne("music.likemusic", musicid);
+		return like;
 	}
 }

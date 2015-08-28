@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,7 +23,7 @@
 						width : 600,
 						height : 250,
 						title : {
-							text : "·Î±×ÀÎ È½¼ö(1ÁÖÀÏ)"
+							text : "ë¡œê·¸ì¸ íšŸìˆ˜(1ì£¼ì¼)"
 						},
 						aixY : {
 							includeZero : false
@@ -31,7 +31,7 @@
 						data : [{
 							type : "column",
 							indexLabel : "{ y }",
-							toolTipContent : "{ label } : { y }¹ø",
+							toolTipContent : "{ label } : { y }ë²ˆ",
 							dataPoints : ${ week_login_list }
 						}]});
 
@@ -39,7 +39,7 @@
 						width : 600,
 						height : 250,
 						title : {
-							text : "·Î±×ÀÎ È½¼ö(½Ã°£º°)"
+							text : "ë¡œê·¸ì¸ íšŸìˆ˜(ì‹œê°„ë³„)"
 						},
 						aixY : {
 							includeZero : false
@@ -47,7 +47,7 @@
 						data : [{
 							type : "line",
 							indexLabel : "{ y }",
-							toolTipContent : "{ label } : { y }¹ø",
+							toolTipContent : "{ label } : { y }ë²ˆ",
 							dataPoints : ${ hour_login_list }
 						}]});
 				});
@@ -56,10 +56,10 @@
 <body>
 	<div class="manager-view">
 		<div class="manager-menu">
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">È¸¿ø ¸ñ·Ï</a> |
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">Å»Åğ ÀÌÀ¯</a> |
-			 Åë°è ÇöÈ²[ ·Î±×ÀÎ |
-		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">È¸¿ø°¡ÀÔ</a> ]
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">íšŒì› ëª©ë¡</a> |
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">íƒˆí‡´ ì´ìœ </a> |
+			 í†µê³„ í˜„í™©[ ë¡œê·¸ì¸ |
+		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">íšŒì›ê°€ì…</a> ]
 		</div>
 		<div id="chart4"></div>
 		<div id="chart5"></div>

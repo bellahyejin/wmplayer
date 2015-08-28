@@ -15,4 +15,8 @@
 	<insert id="addmusic" parameterType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
 		insert into musicinfo values(#{musicID},#{title},#{artist},#{image},#{bpm},#{location})	    
 	</insert>
+	
+	<select id="likemusic" parameterType="String" resultType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
+		select title, artist from musicinfo where musicID = #{musicID}	    
+	</select>
 </mapper>

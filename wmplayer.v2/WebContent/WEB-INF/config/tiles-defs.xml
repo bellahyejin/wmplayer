@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE tiles-definitions PUBLIC  
- "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+<!DOCTYPE tiles-definitions PUBLIC
+ "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="tiles.main" template= "/view/common/menuContents.jsp">
+	<definition name="tiles.main" template="/view/common/menuContents.jsp">
 		<put-attribute name="header" value="/view/common/TopMenu.jsp"/>
-		<put-attribute name="section" value="/view/common/HomeForm.jsp"/>
+		<put-attribute name="section" value=""/>
 	</definition>
-	<definition name="home" extends="tiles.main">
+	<definition name="homeform" extends="tiles.main">
+		<put-attribute name="section" value="/view/common/HomeForm.jsp"/>
 	</definition>
 	<definition name="noticelist" extends="tiles.main">
 		<put-attribute name="section" value="/view/common/NoticeList.jsp"/>
@@ -18,12 +19,7 @@
 	<definition name="columnlist" extends="tiles.main">
 		<put-attribute name="section" value="/view/common/ColumnList.jsp"/>
 	</definition>
-	<!-- <definition name="login" extends="tiles.main">
-		<put-attribute name="section" value="/view/common/LoginForm.jsp"/>
-	</definition>
-	<definition name="join" extends="tiles.main">
-		<put-attribute name="section" value="/view/user/JoinForm.jsp"/>
-	</definition> -->
+	<!-- <definition name="login" extends="tiles.main"> <put-attribute name="section" value="/view/common/LoginForm.jsp"/> </definition> <definition name="join" extends="tiles.main"> <put-attribute name="section" value="/view/user/JoinForm.jsp"/> </definition> -->
 	<definition name="userinfo" extends="tiles.main">
 		<put-attribute name="section" value="/view/user/UserAnalysis.jsp"/>
 	</definition>
@@ -39,8 +35,8 @@
 	<definition name="noticedetail" extends="tiles.main">
 		<put-attribute name="section" value="/view/common/NoticeDetail.jsp"/>
 	</definition>
-	
-	
+
+
 	<definition name="columnform" extends="tiles.main">
 		<put-attribute name="section" value="/view/manager/ColumnForm.jsp"/>
 	</definition>
@@ -57,12 +53,12 @@
 		<put-attribute name="section" value="/view/manager/ManagerView.jsp"/>
 	</definition>
 	<definition name="managerChartLogin" extends="tiles.main">
-		<put-attribute name="section" value="/view/manager/ManagerChartViewLogin.jsp" />
+		<put-attribute name="section" value="/view/manager/ManagerChartViewLogin.jsp"/>
 	</definition>
 	<definition name="managerChartJoin" extends="tiles.main">
-		<put-attribute name="section" value="/view/manager/ManagerChartViewJoin.jsp" />
+		<put-attribute name="section" value="/view/manager/ManagerChartViewJoin.jsp"/>
 	</definition>
 	<definition name="dropReason" extends="tiles.main">
-		<put-attribute name="section" value="/view/manager/DropUserReason.jsp" />
+		<put-attribute name="section" value="/view/manager/DropUserReason.jsp"/>
 	</definition>
 </tiles-definitions>

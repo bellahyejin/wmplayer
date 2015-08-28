@@ -1,11 +1,22 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
+import kr.co.wmplayer.sinmina.dao.music.MusicDAO;
 import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
+import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
+import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
+import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +26,10 @@ public class UserController {
 
 	@Autowired
 	private UserInfoDAO dao;
+	@Autowired
+	private ShareboardDAO sharedao;
+	@Autowired
+	private MusicDAO musicdao;
 
 	@RequestMapping("/intro")
 	public String intro(){
@@ -94,4 +109,64 @@ public class UserController {
 		session.invalidate();
 		return "redirect:intro";
 	}
+	
+	@RequestMapping("/userinfo")
+	public String userinfoform(HttpSession session, Model model){
+		
+		String userid = (String)session.getAttribute("success");
+
+		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid); 
+		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
+		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
+		
+		for(int i = 0 ; i < list.size() ; i++){
+			MusicInfoDTO music = musicdao.likemusic(list.get(i).getMusicID());
+			if(music != null){
+				musiclist.add(music);
+			}
+		}
+		model.addAttribute("share", list2);
+		model.addAttribute("music", musiclist);
+		model.addAttribute("listsize", list2.size());
+		model.addAttribute("musicsize", musiclist.size());
+		
+		return "userinfo";
+	}
+	
+	@RequestMapping("/join")
+	public String userjoin(@RequestParam(value="userID", required=false) String userID,
+						   @RequestParam(value="passwd", required=false ) String passwd,
+						   @RequestParam(value="name", required=false) String name,
+						   @RequestParam(value="year", required=false) String year,
+						   @RequestParam(value="month", required=false) String month,
+						   @RequestParam(value="date", required=false) String date,
+						   @RequestParam(value="gender", required=false) String gender,
+						   @RequestParam(value="email_id", required=false) String email_id,
+						   @RequestParam(value="email_addr", required=false) String addr,
+						   Model model){
+		
+		System.out.println("");
+		if(userID != null && passwd != null && gender != null && email_id != null && year != null && month != null
+				&& date != null){
+			
+			String birth = year + "/"+month+"/"+date;
+			String email = email_id+"@"+addr;
+			
+			UserInfoDTO user = new UserInfoDTO(userID,passwd,name,birth,gender, email);
+			if(dao.infoInsert(user)){
+				return "redirect:intro";
+			}else{
+				model.addAttribute("alertMsg", "<script>alert('가입에 실패 하였습니다. 다시 시도 해주세요')</script>");
+				return "redirect:intro";
+			}
+			
+		}else{
+			model.addAttribute("alertMsg", "<script>alert('회원 정보를 입력해주세요')</script>");
+			return "redirect:intro";
+		}
+	}
+	
+	//유효성 검사 중복확인과 pass워드 
+	
+	
 }

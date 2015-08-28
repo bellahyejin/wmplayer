@@ -1,10 +1,12 @@
 package kr.co.wmplayer.sinmina.dao.board;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,10 +28,11 @@ public class ColumnboardDAO {
 	}
 	
 	public List<ColumnBoardDTO> columnSelectAll(int start){
-		List<ColumnBoardDTO> columnDTO = session.selectList("column.columnSelectAll", start);
+		List<ColumnBoardDTO> columnDTO = session.selectList("column.columnSelectAll", null, new RowBounds(start, 10));
 		return columnDTO;
 	}
 	
+	//detail
 	public  ColumnBoardDTO select(int column_seq){
 		ColumnBoardDTO column =	session.selectOne("column.boardSelect", column_seq);
 		return column;
@@ -40,17 +43,27 @@ public class ColumnboardDAO {
 		return size;
 	}
 	
+	//detail
 	public void updatecnt(int column_seq){
 		session.update("column.cntplus", column_seq);
 	}
 	
+	//detail
 	public List<String> selectSeq(){
 		List<String> column = session.selectList("column.selectSeq");
 		return column;
 	}
 	
+	//detail
 	public int countReply(int column_seq){
-		return session.selectOne("column.countReple");
+		return session.selectOne("column.countReple", column_seq);
+	}
+	
+	public boolean delete(int column_seq) {
+		int t = session.delete("column.coldelete", column_seq);
+		if (t == 1)
+			return true;
+		return false;
 	}
 	
 }

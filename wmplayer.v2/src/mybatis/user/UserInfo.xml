@@ -4,7 +4,7 @@
 <mapper namespace="user">
 	<insert id="userinfoinsert" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
 		insert into UserInfo (userID,passwd,name,birth,gender,email,status) 
-		 		      values (#{userID},#{passwd},#{name},#{birth},#{gender},#{email},#{status})
+		 		      values (#{userID},#{passwd},#{name},#{birth},#{gender},#{email},'c')
 	</insert>
 
 	<update id="userinfoupdate" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">

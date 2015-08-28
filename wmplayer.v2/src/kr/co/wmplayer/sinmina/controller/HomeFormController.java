@@ -10,8 +10,8 @@ import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeFormController {
@@ -23,15 +23,8 @@ public class HomeFormController {
 	@Autowired
 	private NoticeboardDAO noticedao;
 	
-	@RequestMapping("/home")
-	public String homeform(){
-		return "home";
-	}
-	
 	@RequestMapping("/homelist")
-	public ModelAndView homelist(){
-		
-		ModelAndView mav = new ModelAndView();
+	public String homelist(Model model){
 		
 		List<String> title = noticedao.hometitle(1);
 
@@ -39,12 +32,15 @@ public class HomeFormController {
 
 		List<BoardUserDTO> board_rank = sharedao.selectPop();
 		
-		mav.addObject("notice", title);
-		mav.addObject("column", column_rank);
-		mav.addObject("share", board_rank);
-		mav.setViewName("home");
 		
-		return mav;
+		System.out.println(title.size());
+		System.out.println(column_rank.size());
+		System.out.println(board_rank.size());
+		model.addAttribute("notice", title);
+		model.addAttribute("column", column_rank);
+		model.addAttribute("share", board_rank);
+		
+		return "homeform";
 	}
 	
 	

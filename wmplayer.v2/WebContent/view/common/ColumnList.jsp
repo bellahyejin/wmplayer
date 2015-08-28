@@ -7,18 +7,6 @@
 	rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/ColumnList.css"
 	rel="stylesheet" />
-<%
-	int totalNumber = Integer.parseInt(request.getAttribute("size").toString());
-	System.out.print("size : "+totalNumber);
-	int page_max = 10;
-	int endPage = totalNumber / page_max;
-	int beginPage = 1;
-	request.setAttribute("totalNumber", totalNumber);
-	request.setAttribute("page_max", page_max);
-	request.setAttribute("endPage", endPage);
-	request.setAttribute("beginPage", beginPage);
-%>
-
 <div class="column-list-form">
 	<div class="column-list-header">
 		<span>Column</span>
@@ -27,41 +15,39 @@
 		<table class="column-list-table">
 			<tr>
 				<th width="10%">번호</th>
-				<th width="55%">제목</th>
-				<th width="5%"></th>
+				<th width="60%">제목</th>
 				<th width="20%">일자</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<c:forEach items="${list }" var="column">
+			<c:forEach items="${column }" var="column">
 				<tr align="center">
 					<td>${ column.column_seq }</td>
-					<td><a
-						href="${initParam.root }/wmplayer/columndetail.do?column_seq=${ column.column_seq }">${ column.title }</a></td>
-					<td>${ theNumberOfReple}</td>
+					<td><a href="columndetail?column_seq=${ column.column_seq }">${ column.title }</a></td>
 					<td>${ column.update_day }</td>
 					<td>${ column.view_cnt }</td>
-
 				</tr>
 			</c:forEach>
 		</table>
+		<c:if test="${success=='admin' }">
 		<input type="submit" class="styled-button-12" id="column"
 			value="Write"
-			onclick="location.href='${initParam.root}/wmplayer/columnform.do'" />
+			onclick="location.href='columnform'" />
+		</c:if>
 	</div>
 	<div class="pager-container-column">
 		<ul class="page-list">
 			<div id="first">
 				<c:choose>
-					<c:when test="${ i == 1 }">
+					<c:when test="${ i == 0 }">
 						<li class="none_a">start</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page" id="first-page"><a href="?i=1">start</a></li>
+						<li class="page" id="first-page"><a href="?i=0">start</a></li>
 					</c:otherwise>
 				</c:choose>
 			</div>
 			<div id="middle">
-				<c:forEach begin="${beginPage }" end="${endPage }" var="page">
+				<c:forEach begin="1" end="${endPage }" var="page">
 					<c:choose>
 						<c:when test="${ i != page }">
 							<li class="page"><a href="?i=${ page }">${ page }</a></li>

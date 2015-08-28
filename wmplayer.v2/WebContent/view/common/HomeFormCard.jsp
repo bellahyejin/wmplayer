@@ -74,8 +74,8 @@
 </script>
 <style>
 <!--
-#music-jacket-list { width:550px; height:170px; overflow-y:hidden; overflow-x:scroll;  }
-#music-jacket-list-all { width:3000px; text-align:left;  }
+#music-jacket-list { width:550px; height:190px; overflow-y:hidden; overflow-x:scroll;  }
+#music-jacket-list-all { width:3000px; height:190px; text-align:left;  }
 #music-jacket-list .list { display:inline-block; width: 110px; margin-left: 10px;}
 
 .list #image { padding: 10px 0 0 0 ; width: 100px; height: 100px;}
