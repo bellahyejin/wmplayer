@@ -107,7 +107,6 @@ $(document).ready(function(){
 	
 	
 	$('#submit-id').click(function(){
-		alert($("#findid #name").val())
 		$.ajax({
 			url:'findId',
 			type:'post',

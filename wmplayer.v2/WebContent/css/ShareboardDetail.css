@@ -11,6 +11,8 @@
 }
 .share-detail-info{
 	height: 100px;
+	width: 540px;
+	margin-left: 80px;
 	background: #f6f6f6;
 	padding: 9px 0 9px;
 	border-top: 1px solid #d5d5d5;
@@ -23,6 +25,7 @@
 /* position */
 .share-detail-mv{
 	margin: 15px 0 15px 50px ;
+	text-align: center;
 }
 .share-detail-header #select-info{float: right; margin: 15px 10px 0 0;}
 .share-button{
