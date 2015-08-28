@@ -55,7 +55,7 @@ public class ColumnboardDAO {
 	}
 	
 	//detail
-	public int countReply(int column_seq){
+	public String countReply(int column_seq){
 		return session.selectOne("column.countReple", column_seq);
 	}
 	

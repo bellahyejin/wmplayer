@@ -19,13 +19,13 @@
 			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
 				<span class="attribute">알림</span>
-					<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list }</a>
+					<a href='noticedetail?title=${list}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
 			<span class="notice-subject">
 			<span class="attribute">알림</span>
-			<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list.get(0)}</a>
+			<a href='noticedetail?title=${notice}'>${ notice}</a>
 			</span>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 			<td class="music-rank-object">
 				<a href="columndetail?column_seq=${list.column_seq}">${list.title }</a>
 			</td>
-			<td class="music-rank-writer">${list.view_cnts }
+			<td class="music-rank-writer">${list.view_cnt }
 			</td>
 		</tr>
 		</c:forEach>

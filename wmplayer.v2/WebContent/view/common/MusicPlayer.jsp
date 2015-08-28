@@ -112,7 +112,7 @@ function showPosition(position)
 		play_title.innerHTML = playinfo[curIdx];
 		document.albumcover.src = playimage[curIdx];
 		loadPlayer(playlist[curIdx]);
-		likeselect(playlist[curIdx]);
+		/* likeselect(playlist[curIdx]); */
 	}
 
 	function mix(curIndex) {
@@ -155,7 +155,7 @@ function showPosition(position)
 		/* loadPlayer(playlist[nexIdx]); */
 		ytplayer.loadVideoById(playlist[nexIdx]);
 		curIdx = nexIdx;
-	 	likeselect(playlist[curIdx]);
+	 	/* likeselect(playlist[curIdx]); */
 
 	}
 	function prePlay() {
@@ -168,7 +168,7 @@ function showPosition(position)
 		/* loadPlayer(playlist[preIdx]); */
 		ytplayer.loadVideoById(playlist[preIdx]);
 		curIdx = preIdx;
-	 	likeselect(playlist[curIdx]);
+	 	/* likeselect(playlist[curIdx]); */
 
 	}
 	/*
