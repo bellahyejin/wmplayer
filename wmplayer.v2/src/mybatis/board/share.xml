@@ -12,7 +12,7 @@
 
 	<insert id="insert" parameterType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
 		insert into board_user
-		values (share_seq.nextval, #{userID}, #{board_title}, #{board_artist}, #{videoID},
+		values (board_seq.nextval, #{userID}, #{board_title}, #{board_artist}, #{videoID},
 			#{albumcover}, #{weather_custom}, sysdate, #{board_desc}, 0)
 	</insert>
 
