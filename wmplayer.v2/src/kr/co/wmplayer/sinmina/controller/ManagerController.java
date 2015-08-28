@@ -21,6 +21,7 @@ import util.ListAndMapOperate;
 import util.ListMap;
 
 @Controller
+@RequestMapping(value = "/manager")
 public class ManagerController
 {
 	@Autowired ManagerDAO managerDAO;
@@ -32,7 +33,13 @@ public class ManagerController
 	int max_element = 15, page_div = 4, pres_page = 1;
 	String compare_data, output_data;
 
-	@RequestMapping(value = "/manager", method = RequestMethod.POST)
+	@RequestMapping(value = "/temp", method = RequestMethod.GET)
+	public String temp(Model model, HttpServletRequest request)
+	{
+		return main(model, request);
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String main(Model model, HttpServletRequest request)
 	{
 		Object userid = request.getSession().getAttribute("success");
@@ -193,8 +200,8 @@ public class ManagerController
 		return "managerChartJoin";
 	}
 
-	@ResponseBody @RequestMapping(value = "/manager/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String userInfo(HttpServletRequest request, @RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value, @RequestParam(value = "page") Integer page)
+	@ResponseBody @RequestMapping(value = "/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String userInfo(@RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value, @RequestParam(value = "page") Integer page)
 	{
 		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
 		value = value == null || value.equals("") ? null : value;

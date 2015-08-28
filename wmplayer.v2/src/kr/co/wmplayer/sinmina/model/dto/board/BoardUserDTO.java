@@ -13,11 +13,11 @@ public class BoardUserDTO implements WMPlayerDTO{
 	private String regi_day;
 	private String board_desc;
 	private int check_cnt;
-	
+
 	public BoardUserDTO() {
 
 	}
-	
+
 	public BoardUserDTO(int board_seq, String board_title, String board_artist){
 		this.board_seq = board_seq;
 		this.board_title = board_title;
@@ -45,7 +45,7 @@ public class BoardUserDTO implements WMPlayerDTO{
 		this.check_cnt = check_cnt;
 	}
 
-	public BoardUserDTO(int board_seq, String userID, String board_title, String board_artist, 
+	public BoardUserDTO(int board_seq, String userID, String board_title, String board_artist,
 						String albumcover, String weather_custom, String regi_day){
 		this.board_seq = board_seq;
 		this.userID = userID;
@@ -54,7 +54,7 @@ public class BoardUserDTO implements WMPlayerDTO{
 		this.albumcover = albumcover;
 		this.weather_custom = weather_custom;
 		this.regi_day=regi_day;
-		
+
 	}
 	public BoardUserDTO(int board_seq, String userID, String board_title,
 			String board_artist, String videoID, String albumcover
@@ -69,7 +69,7 @@ public class BoardUserDTO implements WMPlayerDTO{
 		this.board_desc = board_desc;
 	}
 
-	
+
 	public BoardUserDTO(int board_seq, String userID, String board_title,
 			String board_artist, String videoID, String albumcover,
 			String weather_custom, String regi_day, String board_desc,
@@ -135,11 +135,11 @@ public class BoardUserDTO implements WMPlayerDTO{
 		this.albumcover = albumcover;
 	}
 
-	public String getWaether_custom() {
+	public String getWeather_custom() {
 		return weather_custom;
 	}
 
-	public void setWaether_custom(String waether_custom) {
+	public void setWeather_custom(String waether_custom) {
 		this.weather_custom = waether_custom;
 	}
 
@@ -166,5 +166,5 @@ public class BoardUserDTO implements WMPlayerDTO{
 	public void setCheck_cnt(int check_cnt) {
 		this.check_cnt = check_cnt;
 	}
-	
+
 }

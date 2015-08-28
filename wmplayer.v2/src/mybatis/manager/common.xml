@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+	<select id="count" parameterType="hashmap" resultType="hashmap">
+		select count(${select_column}) as "cnt"
+		<if test="group_column != null">, ${group_column}</if>
+		from ${table}
+		<if test="column != null and sign != null and data != null">
+			where ${column} ${sign} #{data}
+		</if>
+		<if test="group_column != null">group by ${group_column}</if>
+	</select>
+</mapper>

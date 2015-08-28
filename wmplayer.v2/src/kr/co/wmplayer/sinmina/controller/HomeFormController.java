@@ -23,7 +23,12 @@ public class HomeFormController {
 	@Autowired
 	private NoticeboardDAO noticedao;
 	
-	@RequestMapping("/homelist")
+	@RequestMapping("/home")
+	public String homeform(){
+		return "common/HomeForm";
+	}
+	
+	@RequestMapping("/homeform")
 	public String homelist(Model model){
 		
 		List<String> title = noticedao.hometitle(1);
@@ -40,7 +45,7 @@ public class HomeFormController {
 		model.addAttribute("column", column_rank);
 		model.addAttribute("share", board_rank);
 		
-		return "homeform";
+		return "home";
 	}
 	
 	

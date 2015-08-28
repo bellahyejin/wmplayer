@@ -1,9 +1,9 @@
 
 body{ font-family: �����ٸ����; color: #757575;}
-#shareboardlist { 
-	width: 540px; 
+#shareboardlist {
+	width: 540px;
 	height: 100%;
-	padding: 20px 80px; 
+	padding: 20px 80px;
 }
 .title_share #title_text{	font-size: 20pt; font-style: bold; padding-left: 22px;}
 .title_share #title_button { float: right; margin: 8px 24px 0 0 ;}
@@ -51,12 +51,12 @@ label:BEFORE{
 #lowcloudy+label:before, #lowcloudy+label:after {color:#81d4fa;}
 /* paging position */
 
-.pager-container-share{  
+.pager-container-share{
 	width: 550px;
 	height: 40px;
 	margin : 20px 0 0 0;
 	padding-bottom: 10px;
-	float: left;	 
+	float: left;
 }
 
 .title_share #share{

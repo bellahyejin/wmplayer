@@ -28,7 +28,6 @@
 
 			$.ajax({
 				type : "post",
-				async : true,
 				url : "${ initParam.root }/manager/userinfo.ajax",
 				dataType : "html", // xml, json, html, script, jsonp, text
 				data : this.data,
