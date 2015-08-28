@@ -16,9 +16,9 @@
 .useranal-header span{ font-size: 9pt;}
 
 /* section table */
-.anal-left, .anal-right{float:left;}
-.anal-left table, .anal-right table	{ border-spacing:inherit;  width: 250px; height: 200px;}
-.anal-left{ margin: 0 65px 0 70px}
+.anal-left, .anal-right{float:left; width:280px; height: 400px; overflow-y: auto;}
+.anal-left table, .anal-right table	{ border-spacing:inherit;  width: 250px; }
+.anal-left{ margin: 0 30px 0 70px}
 .anal-right tr:HOVER td{background: #fafafa}
 
 /*table border*/

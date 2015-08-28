@@ -1,14 +1,16 @@
 .menu { border-color: #0000ff; text-align: center; width: 700px; height: 60px;}
 
-.menu .width { width: 18%;}
+.menu .width { width: 17%;}
 
 #bar { position: absolute; margin-top: 57px; left: 50px;}
-#notice_top, #share_top, #column_top, #user_top { font-size: 12pt; text-align: center; width: 690px; height: 50px; }
+#notice_top, #share_top, #column_top, #user_top { font-family:나눔바른고딕; font-size: 10pt; text-align: center; width: 690px; height: 50px; }
 
+.menu a:HOVER { color: #81d4fa;}
+.menu a:ACTIVE{ color: #62c8f9;}
 /* �α��� ��ư */
 
 #login_top, #logout_top, #join_top, #text_bar
 {
-	font-size: 11pt;
+	font-size: 10pt;
 	vertical-align: bottom;
 }
