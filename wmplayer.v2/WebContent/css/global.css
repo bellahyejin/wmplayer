@@ -18,65 +18,65 @@
 @IMPORT url("ShareboardDetail.css");
 @IMPORT url("ShareboardForm.css");
 
-/* css ÆÄÀÏ import ¹æ¹ý
-<link type="text/css" href="ÇöÀç ÆÄÀÏ¿¡¼­ »ó´ë°æ·Î" rel="stylesheet" />
+/* css ï¿½ï¿½ï¿½ï¿½ import ï¿½ï¿½ï¿½
+<link type="text/css" href="ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½" rel="stylesheet" />
 */
 
-/* ³ªÁß¿¡ Áö¿ï ¿¹Á¤(»çÀÌÁî ½±°Ô Ç¥½Ã À§ÇØ ÁöÁ¤) */
+/* ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) */
 /* div, table, span { border: 1px solid; }
 div { border-color: #ff5b5b; }
 table { border-color: #0000ff; }
 span { border-color: #00ff00; } */
 
 
-/* body ÃÊ±âÈ­ */
+/* body ï¿½Ê±ï¿½È­ */
 body { padding: 0; margin: 0;  left:0 ; top: 0;}
 
-textarea, input[type=text]{ font-family: ³ª´®¹Ù¸¥°íµñ; border: 1px solid #b0b0b0;}
-/* scroll ºñÇ¥½Ã */
+textarea, input[type=text]{ font-family: ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½; border: 1px solid #b0b0b0;}
+/* scroll ï¿½ï¿½Ç¥ï¿½ï¿½ */
 
 /* font */
-#korean { font-family: regular, ³ª´®¹Ù¸¥°íµñ; }
+#korean { font-family: regular, ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½; }
 .english { font-family: bebas, regular; }
-.font { font-family: bebas, ³ª´®¹Ù¸¥°íµñ; }
+.font { font-family: bebas, ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½; }
 .regular { font-family: regular; }
 
-/* table ¼Ó¼º */
+/* table ï¿½Ó¼ï¿½ */
 .list, .board { width: 660px; margin: 0; border-spacing: 0; }
-/* tr¿¡ ¸¶¿ì½º ¿Ã·ÈÀ» ¶§ ±× ÁÙ ÀüÃ¼ÀÇ ½ºÅ¸ÀÏ º¯°æ */
+/* trï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .board tr:hover td { background-color: #f6f6f6; }
-/* board, list table Á¦¸ñ ºÎºÐ */
+/* board, list table ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ */
 .board th, .list th { text-align: center; background-color: #bfe3f2; border-bottom: 2px solid #dedede; border-collapse: collapse; }
 .board th { padding: 5px; font-size: 10pt; }
-/* board, list table ³»¿ë ºÎºÐ */
+/* board, list table ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ */
 .board td, .list td { font-size: 9pt;}
 .board td{padding-top: 4px; }
-/* board, list table Á¦¸ñ, ³»¿ë ºÎºÐ¿¡ Á¡¼± Ãß°¡ */
+/* board, list table ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ */
 .bottom_border {border-bottom: 1px solid #757575; padding-bottom: 5px;}
 .bottom_border_tr {border-bottom: 1px solid #eee;}
 
 .boardpadding td{padding-top: 4px;}
-/* Á¦¸ñ ºÎºÐ */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ */
 .subject { text-align: left; position: relative; font-size: 11pt; }
 .top-margin-subject, .left-margin-subject { text-align: left; position: relative; font-size: 11pt; }
 .top-margin-subject { margin-top: 30px;}
 .left-margin-subject { margin-left: 10px; }
 
-/* ¸µÅ© ±âº» ½ºÅ¸ÀÏ ¹× ¹ØÁÙ Ç¥½Ã´Â ¸¶¿ì½º ¿Ã·ÈÀ» ¶§¸¸ */
+/* ï¿½ï¿½Å© ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½Ã´ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
-/* °Ô½Ã±Û(¶Ç´Â ¸Å´ÏÀú ÆäÀÌÁö) ÆäÀÌÁö ¼ýÀÚ ½ºÅ¸ÀÏ º¯°æ */
-/* ¾²´Â ¹æ¹ý
+/* ï¿½Ô½Ã±ï¿½(ï¿½Ç´ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-begin_page : forEachÀÇ begin ¼Ó¼º
-end_page : forEachÀÇ end ¼Ó¼º
-pres_page : ÇöÀç ÆäÀÌÁö
-max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
+begin_page : forEachï¿½ï¿½ begin ï¿½Ó¼ï¿½
+end_page : forEachï¿½ï¿½ end ï¿½Ó¼ï¿½
+pres_page : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+max_page : ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
 <div class="pager-container">
 	<ul class="page-list">
 	<c:choose>
 		<c:when test="${ pres_page == 1 || begin_page == 1 }"></c:when>
-		<c:otherwise><a href="?page=1">Ã¹ ÆäÀÌÁö</a></c:otherwise>
+		<c:otherwise><a href="?page=1">Ã¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</a></c:otherwise>
 	</c:choose>
 	<c:forEach begin="${ begin_page }" end="${ end_page }" var="page" >
 		<c:choose>
@@ -86,13 +86,13 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 	</c:forEach>
 	<c:choose>
 		<c:when test="${ pres_page == max_page || end_page == max_page }"></c:when>
-		<c:otherwise><a href="?page=${ max_page }">¸¶Áö¸· ÆäÀÌÁö</a></c:otherwise>
+		<c:otherwise><a href="?page=${ max_page }">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</a></c:otherwise>
 	</c:choose>
 	</ul>
 </div>
  */
 
-/* ÆäÀÌÁö ¼Ò½º*/
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½*/
 .page-list {
 	margin:0;
 	position: static;
@@ -126,7 +126,7 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 }
 
 
-/* write ¹öÆ° */
+/* write ï¿½ï¿½Æ° */
 /* nomal*/
 .styled-button-12 {
 	-webkit-box-shadow: #FEFFFF 0px 1px 1px ;
@@ -166,14 +166,14 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 
 }
 
-/* Å¬¸¯½Ã */
+/* Å¬ï¿½ï¿½ï¿½ï¿½ */
 .styled-button-12:ACTIVE {
 	-webkit-box-shadow: #757575 0px 1px 1px inset;
 	-moz-box-shadow: #757575 0px 1px 1px inset; 
 	box-shadow: #757575 0px 1px 1px inset; 
 }
 
-/* ·Î±×ÀÎ ½Ã ¹öÆ° */
+/* ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ° */
 .styled-button-login {
 	background: #fff;
 	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
@@ -215,7 +215,7 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 	box-shadow: #039be5 0px 1px 1px inset; 
 }
 
-/* detail ½Ã ¹öÆ° */
+/* detail ï¿½ï¿½ ï¿½ï¿½Æ° */
 .styled-button-detail {
 	background: #fff;
 	background: -moz-linear-gradient(top,#fff 0%,#fff 100%);
@@ -258,7 +258,7 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 }
 
 
-/* ¸ñ·Ï º¸±â*/
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 .styled-button-list {
 	background: #81d4fa;
 	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
@@ -301,7 +301,7 @@ max_page : ÀüÃ¼ ÆäÀÌÁö ¼ö
 }
 
 
-/* ´ñ±Û ÀÔ·Â*/
+/* ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½*/
 .styled-button-reply {
 	background: #81d4fa;
 	background: -moz-linear-gradient(top,#81d4fa 0%,#81d4fa 100%);
