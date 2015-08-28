@@ -145,6 +145,7 @@ public class UserController {
 						   @RequestParam(value="email_addr", required=false) String addr,
 						   Model model){
 		
+		System.out.println("");
 		if(userID != null && passwd != null && gender != null && email_id != null && year != null && month != null
 				&& date != null){
 			

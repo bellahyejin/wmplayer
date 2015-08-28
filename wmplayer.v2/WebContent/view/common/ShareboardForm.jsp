@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/ShareboardForm.css" rel="stylesheet" />
 <form action="shareinput.do" method="post">
@@ -10,44 +10,44 @@
 	<div class="sharewrite-contents">
 		<table>
 			<tr>
-				<td id="title">°î ¸í</td>
+				<td id="title">ê³¡ ëª…</td>
 				<td id="con">
-					<input type="text" name="musictitle" placeholder="  Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä" >
+					<input type="text" name="musictitle" placeholder="  ì œëª©ì„ ìž…ë ¥í•´ì£¼ì„¸ìš”" >
 				</td>
 			</tr>
 			<tr>
-				<td id="title">¾ÆÆ¼½ºÆ®</td>
+				<td id="title">ì•„í‹°ìŠ¤íŠ¸</td>
 				<td id="con">
-					<input type="text" name="artist" placeholder="  ¾ÆÆ¼½ºÆ®¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä">
+					<input type="text" name="artist" placeholder="  ì•„í‹°ìŠ¤íŠ¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš”">
 				</td>
 			</tr>
 			<tr>
-				<td id="title">¾î¿ï¸®´Â ³¯¾¾</td>
+				<td id="title">ì–´ìš¸ë¦¬ëŠ” ë‚ ì”¨</td>
 				<td id="con">
 					<select id="weather-customer" name="weather">
-						<option>=¼±ÅÃÇØÁÖ¼¼¿ä=</option>
-						<option value="¸¼À½">¸¼À½</option>
-						<option value="Èå¸²">Èå¸²</option>
-						<option value="ºñ">ºñ</option>
-						<option value="´«">´«</option>
-						<option value="¹Ù¶÷">¹Ù¶÷</option>
+						<option>=ì„ íƒí•´ì£¼ì„¸ìš”=</option>
+						<option value="ë§‘ìŒ">ë§‘ìŒ</option>
+						<option value="íë¦¼">íë¦¼</option>
+						<option value="ë¹„">ë¹„</option>
+						<option value="ëˆˆ">ëˆˆ</option>
+						<option value="ë°”ëžŒ">ë°”ëžŒ</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" id="title">À½¾Ç¿¡ ´ëÇÑ ¼³¸í</td>
+				<td colspan="2" id="title">ìŒì•…ì— ëŒ€í•œ ì„¤ëª…</td>
 			</tr>
 			<tr>
 				<td colspan="2" id="con">
-					<textarea name="contents" rows="20" cols="50" placeholder="  ³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
+					<textarea name="contents" rows="20" cols="50" placeholder="  ë‚´ìš©ì„ ìž…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
 				</td>
 			</tr>
 			
 		</table>
 	</div>
 	<div id="wm_btn">
-		<input type="submit" class="styled-button-login" id="column" value="ÀÛ ¼º" />
-		<input type="button" class="styled-button-login" id="column" value="Ãë ¼Ò" onclick="location.href='${initParam.root}/wmplayer/sharelist.do'"/>
+		<input type="submit" class="styled-button-login" id="column" value="ìž‘ ì„±" />
+		<input type="button" class="styled-button-login" id="column" value="ì·¨ ì†Œ" onclick="location.href='${initParam.root}/wmplayer/sharelist.do'"/>
 	</div>
 </div>
 </form>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,16 +25,16 @@
 				width : 300,
 				height : 250,
 				title : {
-					text : "È¸¿ø°¡ÀÔ ¼ö(³²ÀÚ)"
+					text : "íšŒì›ê°€ì… ìˆ˜(ë‚¨ì)"
 				},
 				axisY : {
-					title : "yÃà"
+					title : "yì¶•"
 				},
 				data : [{
 					type : "doughnut",
 					indexLabel : "{ }",
 					startAngle : 270,
-					toolTipContent : "{ label } : { y }¸í",
+					toolTipContent : "{ label } : { y }ëª…",
 					dataPoints : ${ gender_join_list }
 				}]});
 
@@ -43,16 +43,16 @@
 				width : 300,
 				height : 250,
 				title : {
-					text : "È¸¿ø°¡ÀÔ ¼ö(¿©ÀÚ)"
+					text : "íšŒì›ê°€ì… ìˆ˜(ì—¬ì)"
 				},
 				axisY : {
-					title : "yÃà"
+					title : "yì¶•"
 				},
 				data : [{
 					type : "doughnut",
 					indexLabel : "{ }",
 					startAngle : 270,
-					toolTipContent : "{ label } : { y }¸í",
+					toolTipContent : "{ label } : { y }ëª…",
 					dataPoints : ${ gender_join_list }
 				}]});
 
@@ -60,7 +60,7 @@
 				width : 600,
 				height : 250,
 				title : {
-					text : "È¸¿ø°¡ÀÔ ¼ö(³ªÀÌº°)"
+					text : "íšŒì›ê°€ì… ìˆ˜(ë‚˜ì´ë³„)"
 				},
 				axisX : {
 					labelFormatter : function(data)
@@ -79,9 +79,9 @@
 <body>
 	<div class="manager-view">
 		<div class="manager-menu">
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">È¸¿ø ¸ñ·Ï</a> |
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">Å»Åğ ÀÌÀ¯</a> |
-			 Åë°è ÇöÈ²[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">·Î±×ÀÎ</a> | È¸¿ø°¡ÀÔ ]
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">íšŒì› ëª©ë¡</a> |
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">íƒˆí‡´ ì´ìœ </a> |
+			 í†µê³„ í˜„í™©[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">ë¡œê·¸ì¸</a> | íšŒì›ê°€ì… ]
 		</div>
 		<div id="chart1"></div>
 		<div id="chart2"></div>

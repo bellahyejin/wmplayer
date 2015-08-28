@@ -2,8 +2,8 @@
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/UserAnalysis.css" rel="stylesheet" />
@@ -15,11 +15,11 @@
 			<table>
 				<tr>
 					<td colspan="2" id="anal-th">
-						<span>¥ÁΩ≈¿« </span>
-						<span id="anal-like">¡¡æ∆ø‰</span>
-						<span>∞Ó ∏Ò∑œ</span>
+						<span>ÎãπÏã†Ïùò </span>
+						<span id="anal-like">Ï¢ãÏïÑÏöî</span>
+						<span>Í≥° Î™©Î°ù</span>
 						<span id="anal-cnt">${musicsize }</span>
-						<span>∞«</span>
+						<span>Í±¥</span>
 					</td>
 				</tr>
 				<c:forEach items="${music }" var="list" varStatus="status">
@@ -34,10 +34,10 @@
 		<table>
 			<tr>
 				<td colspan="3" id="anal-th">
-						<span>¥ÁΩ≈¿Ã ø√∏∞ </span>
+						<span>ÎãπÏã†Ïù¥ Ïò¨Î¶∞ </span>
 						<span id="anal-board">MusicVideo</span>
 						<span id="anal-cnt">${listsize } </span>
-						<span>∞«</span>
+						<span>Í±¥</span>
 				</td>
 			</tr>
 			<c:forEach items="${share }" var="list" varStatus="status">
@@ -50,7 +50,7 @@
 	</div>
 	</div>
 	<div class="anal-button">
-		<input type="button" class="styled-button-login" id="edit" value="»∏ø¯ ºˆ¡§" onclick="location.href='${initParam.root}/wmplayer/update/edit.do?action=select&id=${success }'"/>
-		&nbsp;<input type="button" class="styled-button-login" id="drop" value="»∏ø¯ ≈ª≈" onclick="location.href='drop'"/>
+		<input type="button" class="styled-button-login" id="edit" value="ÌöåÏõê ÏàòÏ†ï" onclick="location.href='${initParam.root}/wmplayer/update/edit.do?action=select&id=${success }'"/>
+		&nbsp;<input type="button" class="styled-button-login" id="drop" value="ÌöåÏõê ÌÉàÌá¥" onclick="location.href='drop'"/>
 	</div>
 </div>

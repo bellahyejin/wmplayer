@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
 <div class="cardtotal">
 	<li>
@@ -10,18 +10,18 @@
 		<div class="back">
 			<table>
 				<tr>
-					<td id="title" colspan="2">³Î »ý°¢ÇØ</td>
+					<td id="title" colspan="2">ë„ ìƒê°í•´</td>
 				</tr>
 				<tr>
 					<td class="info_title left up">Artist</td>
-					<td id="artist">¿ø ¸ð¾î Âù½º</td>
+					<td id="artist">ì› ëª¨ì–´ ì°¬ìŠ¤</td>
 				</tr>
 				<tr>
 					<td class="info_title left">Gerne</td>
 					<td id="gerne">Ballad</td>
 				</tr>
 				<tr>
-					<td class="writeinfo left">¿ÀÁØ¿ø</td>
+					<td class="writeinfo left">ì˜¤ì¤€ì›</td>
 					<td id="writedate">2015/07/08</td>
 				</tr>
 			</table>

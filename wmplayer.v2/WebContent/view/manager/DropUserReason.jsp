@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,18 +35,18 @@
 	<body>
 	<div class="manager-view">
 		<div class="manager-menu">
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">È¸¿ø ¸ñ·Ï</a> |
-			Å»Åð ÀÌÀ¯ |
-			Åë°è ÇöÈ²[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">·Î±×ÀÎ</a> |
-		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">È¸¿ø°¡ÀÔ</a> ]
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'userinfo')">íšŒì› ëª©ë¡</a> |
+			íƒˆí‡´ ì´ìœ  |
+			í†µê³„ í˜„í™©[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">ë¡œê·¸ì¸</a> |
+		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">íšŒì›ê°€ìž…</a> ]
 		</div>
 		<div class="drop-reason-table">
-			<div class="member-subject">Å»Åð ÀÌÀ¯</div>
+			<div class="member-subject">íƒˆí‡´ ì´ìœ </div>
 			<table class="board">
 				<tr>
-					<th width="10%">¹øÈ£</th>
-					<th width="70%">ÀÌ À¯</th>
-					<th width="20%">¼±ÅÃÈ½¼ö</th>
+					<th width="10%">ë²ˆí˜¸</th>
+					<th width="70%">ì´ ìœ </th>
+					<th width="20%">ì„ íƒíšŸìˆ˜</th>
 				</tr>
 				<c:forEach items="${ drop_reason_list }" var="reason"
 					varStatus="sta">
@@ -66,8 +66,8 @@
 			<div class="member-subject"></div>
 			<table class="board">
 				<tr>
-					<th width="70%">ÀÌ À¯</th>
-					<th width="30%">¼±ÅÃÈ½¼ö</th>
+					<th width="70%">ì´ ìœ </th>
+					<th width="30%">ì„ íƒíšŸìˆ˜</th>
 				</tr>
 				<c:forEach items="${ drop_etc_list }" var="etc">
 					<tr align="center">

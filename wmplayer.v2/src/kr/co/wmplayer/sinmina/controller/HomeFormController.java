@@ -40,7 +40,7 @@ public class HomeFormController {
 		model.addAttribute("column", column_rank);
 		model.addAttribute("share", board_rank);
 		
-		return "redirect:homeform";
+		return "homeform";
 	}
 	
 	

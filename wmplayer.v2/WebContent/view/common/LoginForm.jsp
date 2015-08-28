@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
@@ -31,8 +31,8 @@ window.onload=function(){
 			</tr>
 			<tr>
 				<td colspan="2" align="center" id="bt_row">
-					<input type="submit" class="styled-button-login" id="logina" value="·Î±×ÀÎ" >
-					<input type="button" class="styled-button-login" id="join" value="È¸¿ø°¡ÀÔ" onclick="location.href='${initParam.root}/wmplayer/join.do'"/>
+					<input type="submit" class="styled-button-login" id="logina" value="ë¡œê·¸ì¸" >
+					<input type="button" class="styled-button-login" id="join" value="íšŒì›ê°€ìž…" onclick="location.href='${initParam.root}/wmplayer/join.do'"/>
 				</td>
 			</tr>
 		</table>

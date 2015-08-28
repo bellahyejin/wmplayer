@@ -1,7 +1,7 @@
 <%@page import="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO"%>
 <%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
 <script type="text/javascript" src="${initParam.root}/js/ajax.js"></script>
 <link type="text/css" href="${initParam.root}/css/global.css"
    rel="stylesheet" />
@@ -13,7 +13,7 @@
    String password = user.getPasswd();
    String birth = user.getBirth();
    String birthArr[] = birth.split("/");
-   String gender = user.getGender();// "¼­¿ïÆ¯º°½Ã µµºÀ±¸"
+   String gender = user.getGender();// "ì„œìš¸íŠ¹ë³„ì‹œ ë„ë´‰êµ¬"
    String email = user.getEmail();
 %>
 <script type="text/javascript">
@@ -21,11 +21,11 @@
       var password = document.frm.pass.value;
       var password_check = document.frm.passcheck.value;
       if (password != password_check) {
-         document.getElementById("message1").innerHTML = "ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡";
+         document.getElementById("message1").innerHTML = "ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜";
          document.getElementById("message2").innerHTML = "";
       } else {
          document.getElementById("message1").innerHTML = "";
-         document.getElementById("message2").innerHTML = "ºñ¹Ğ¹øÈ£ ÀÏÄ¡";
+         document.getElementById("message2").innerHTML = "ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜";
 
       }
    }     
@@ -37,7 +37,7 @@
    window.onload = function () {
       
       var gen = "${ user.gender }";
-         if(gen == '³²'){
+         if(gen == 'ë‚¨'){
             document.getElementsByName('gender').item(0).checked=true;
             
          }else{
@@ -45,19 +45,19 @@
             
          }
          for(i=0;i < weather.length; i++){
-            if(weather[i] == '¸¼À½'){
+            if(weather[i] == 'ë§‘ìŒ'){
                document.getElementsByName('favor').item(0).checked = true;
             }
-            if(weather[i] == 'ºñ'){
+            if(weather[i] == 'ë¹„'){
                document.getElementsByName('favor').item(1).checked = true;
             }
-            if(weather[i] == 'Èå¸²'){
+            if(weather[i] == 'íë¦¼'){
                document.getElementsByName('favor').item(2).checked = true;
             }
-            if(weather[i] == '¹Ù¶÷'){
+            if(weather[i] == 'ë°”ëŒ'){
                document.getElementsByName('favor').item(3).checked = true;
             }
-            if(weather[i] == '´«'){
+            if(weather[i] == 'ëˆˆ'){
                document.getElementsByName('favor').item(4).checked = true;
             }
          }
@@ -74,23 +74,23 @@
             value="<%=session.getAttribute("success")%>"></td>
       </tr>
       <tr>
-         <td class="title_edit">ºñ¹Ğ¹øÈ£ *</td>
+         <td class="title_edit">ë¹„ë°€ë²ˆí˜¸ *</td>
          <td class="con_edit"><input class="in_text_edit" type="password"
             name="pass" value="${user.passwd }"></td>
       </tr>
       <tr>
-         <td class="title_edit">ºñ¹Ğ¹øÈ£ È®ÀÎ *</td>
+         <td class="title_edit">ë¹„ë°€ë²ˆí˜¸ í™•ì¸ *</td>
          <td class="con_edit"><input class="in_text_edit" type="password"
             name="passcheck" onkeyup="checkPass();" value="${user.passwd }">&nbsp;<span
             id="message1"></span><span id="message2"></span></td>
       </tr>
       <tr>
-         <td class="title_edit">ÀÌ ¸§ *</td>
+         <td class="title_edit">ì´ ë¦„ *</td>
          <td class="con_edit"><input class="in_text_edit" type="text"
             name="name" value="${user.name }"></td>
       </tr>
       <tr>
-         <td class="title_edit">»ı ³â ¿ù ÀÏ *</td>
+         <td class="title_edit">ìƒ ë…„ ì›” ì¼ *</td>
          <td class="con_edit"><select id="birthyear" class="brith_edit"
             name="year">
                <%
@@ -131,9 +131,9 @@
          </select></td>
       </tr>
       <tr>
-         <td class="title_edit">¼º º° *</td>
-         <td class="con_edit"><input type="radio" name="gender" value="³²">&nbsp;³²&nbsp;
-            <input type="radio" name="gender" value="¿©">&nbsp;¿©</td>
+         <td class="title_edit">ì„± ë³„ *</td>
+         <td class="con_edit"><input type="radio" name="gender" value="ë‚¨">&nbsp;ë‚¨&nbsp;
+            <input type="radio" name="gender" value="ì—¬">&nbsp;ì—¬</td>
       </tr>
       <tr>
          <td class="title_edit">E-mail</td>
@@ -143,7 +143,7 @@
                <%
                   String[] domains = { "naver.com", "freechal.com", "dreamwiz.com",
                         "korea.com", "lycos.co.kr", "yahoo.co.kr", "hanmail.net",
-                        "gmail.com", "paran.com", "hotmail.com", "nate.com", "Á÷Á¢ÀÔ·Â" };
+                        "gmail.com", "paran.com", "hotmail.com", "nate.com", "ì§ì ‘ì…ë ¥" };
 
                   for (int i = 0; i < domains.length; i++) {
                      out.print("<option value=\"" + domains[i] + "\"");
@@ -156,28 +156,28 @@
          </select></td>
       </tr>
       <tr>
-         <td class="title_edit">ÁÖ ¼Ò *</td>
+         <td class="title_edit">ì£¼ ì†Œ *</td>
          <td class="con_edit">
             <select class="city_edit" id='city' name="city" onchange="getGugundong(this)">
-               <option>=¼±ÅÃÇØ ÁÖ¼¼¿ä</option>
+               <option>=ì„ íƒí•´ ì£¼ì„¸ìš”</option>
             </select>
             <select class="city_edit" id='gudong' name="gudong">
-               <option>=¼±ÅÃÇØ ÁÖ¼¼¿ä</option>
+               <option>=ì„ íƒí•´ ì£¼ì„¸ìš”</option>
             </select>
          </td>
       </tr>
       <tr>
-         <td class="title_edit">¼± È£ ³¯ ¾¾ *</td>
-         <td class="con_edit"><input type="checkbox" name="favor" value="¸¼À½">
-            ¸¼À½ <input type="checkbox" name="favor" value="ºñ"> ºñ <input
-            type="checkbox" name="favor" value="Èå¸²"> Èå¸² <input type="checkbox"
-            name="favor" value="¹Ù¶÷"> ¹Ù¶÷ <input type="checkbox" name="favor" value="´«">
-            ´«</td>
+         <td class="title_edit">ì„  í˜¸ ë‚  ì”¨ *</td>
+         <td class="con_edit"><input type="checkbox" name="favor" value="ë§‘ìŒ">
+            ë§‘ìŒ <input type="checkbox" name="favor" value="ë¹„"> ë¹„ <input
+            type="checkbox" name="favor" value="íë¦¼"> íë¦¼ <input type="checkbox"
+            name="favor" value="ë°”ëŒ"> ë°”ëŒ <input type="checkbox" name="favor" value="ëˆˆ">
+            ëˆˆ</td>
       </tr>
       <tr>
          <td class="edit_submit" colspan="2" align="center"><input
-            type="submit" class="styled-button-login" id="edit" value="¼öÁ¤"> <input
-            type="button" class="styled-button-login" id="edit" value="Ãë¼Ò"
+            type="submit" class="styled-button-login" id="edit" value="ìˆ˜ì •"> <input
+            type="button" class="styled-button-login" id="edit" value="ì·¨ì†Œ"
             onclick="location.href='${initParam.root}/wmplayer/userinfo.do'">
          </td>
       </tr>

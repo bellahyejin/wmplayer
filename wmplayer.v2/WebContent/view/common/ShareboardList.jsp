@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <link rel="stylesheet" href="${initParam.root }/css/style.css">
@@ -62,24 +62,24 @@ function sendAjaxSort(params){
 					<label for="all">All</label>
 				</li>
 				<li>
-					<input type="checkbox" name="sort" id="sun" value="¸¼À½" onchange="checkboxData(this)"/> 
-					<label for="sun">¸¼À½</label>
+					<input type="checkbox" name="sort" id="sun" value="ë§‘ìŒ" onchange="checkboxData(this)"/> 
+					<label for="sun">ë§‘ìŒ</label>
 				</li>
 				<li>
-					<input type="checkbox" name="sort" id="rain" value="ºñ" onchange="checkboxData(this)"/> 
-					<label for="rain">ºñ</label>
+					<input type="checkbox" name="sort" id="rain" value="ë¹„" onchange="checkboxData(this)"/> 
+					<label for="rain">ë¹„</label>
 				</li>
 				<li>
-					<input type="checkbox" name="sort" id="snow" value="´«" onchange="checkboxData(this)"/> 
-					<label for="snow">´«</label>
+					<input type="checkbox" name="sort" id="snow" value="ëˆˆ" onchange="checkboxData(this)"/> 
+					<label for="snow">ëˆˆ</label>
 				</li>
 				<li>
-					<input type="checkbox" name="sort" id="cloud" value="Èå¸²" onchange="checkboxData(this)"/> 
-					<label for="cloud">Èå¸²</label>
+					<input type="checkbox" name="sort" id="cloud" value="íë¦¼" onchange="checkboxData(this)"/> 
+					<label for="cloud">íë¦¼</label>
 				</li>
 				<li>
-					<input type="checkbox" name="sort" id="lowcloudy" value="¹Ù¶÷" onchange="checkboxData(this)"/> 
-					<label for="lowcloudy">¹Ù¶÷</label>
+					<input type="checkbox" name="sort" id="lowcloudy" value="ë°”ëŒ" onchange="checkboxData(this)"/> 
+					<label for="lowcloudy">ë°”ëŒ</label>
 				</li>
 			</ul>
 		</div>

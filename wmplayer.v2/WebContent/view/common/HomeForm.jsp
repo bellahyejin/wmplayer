@@ -4,8 +4,8 @@
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-     pageEncoding="EUC-KR" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/HomeForm.css" rel="stylesheet" />
@@ -14,28 +14,28 @@
 <script src="${initParam.root }/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <div class="home-menu">
 	<div class="regular" id="notice-list">
-		<div class="subject top-margin-subject notice-list-subject">�������ע�</div>
+		<div class="subject top-margin-subject notice-list-subject">공지사항▶</div>
 			<div class="notice">
 			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
-				<span class="attribute">�˸�</span>
+				<span class="attribute">알림</span>
 					<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
 			<span class="notice-subject">
-			<span class="attribute">�˸�</span>
+			<span class="attribute">알림</span>
 			<a href='noticedetail?title=${list.get(list.indexOf(notice))}'>${ list.get(0)}</a>
 			</span>
 		</div>
 	</div>
-	<div class="subject must-list-subject">������ ��õ ����Ʈ</div>
+	<div class="subject must-list-subject">오늘의 추천 리스트</div>
 	<div id="must-list">
 		<jsp:include page="HomeFormCard.jsp"/>
 	</div>
 	<table class="boardpadding list left-margin-subject" id="music-rank-list">
 		<tr id="title">
-			<td colspan="3" class="bottom_border"><div class="music-rank-list-subject left-margin-subject">�α� Į��</div>
+			<td colspan="3" class="bottom_border"><div class="music-rank-list-subject left-margin-subject">인기 칼럼</div>
 			</td>
 		</tr>
 		<c:forEach items="${column }" var="list">
@@ -52,7 +52,7 @@
 	</table>
 	<table class="board list" id="board-rank-list">
 		<tr>
-			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">�α� ���� �Խñ�</div>
+			<td colspan="3" class="bottom_border"><div class="board-rank-list-subject left-margin-subject ">인기 공유 게시글</div>
 			</td>
 		</tr>
 		<c:forEach items="${share }" var="list">

@@ -3,8 +3,8 @@
 <%@page import="kr.co.wmplayer.sinmina.interfaces.WMPlayerDAO"%>
 <%@page import="Weather.AddressChangeModel"%>
 <%@page import="Weather.WeatherModel"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${initParam.root }/css/style.css">
 <link type="text/css" href="${initParam.root}/css/global.css"
@@ -23,7 +23,7 @@ var params = '';
 window.onload=function (){
 	getLocation_cord();	   
 }
-/*ÇöÀç À§Ä¡ Ã£±â */
+/*í˜„ìž¬ ìœ„ì¹˜ ì°¾ê¸° */
 function getLocation_cord()
 {
 	if (navigator.geolocation)
@@ -37,8 +37,8 @@ function getLocation_cord()
 }
 function showPosition(position)
 {
-	var cur_Latitude = Math.floor(position.coords.latitude*100)/100; //À§µµ
-   	var cur_Longitude = Math.floor(position.coords.longitude*100)/100; //°æµµ
+	var cur_Latitude = Math.floor(position.coords.latitude*100)/100; //ìœ„ë„
+   	var cur_Longitude = Math.floor(position.coords.longitude*100)/100; //ê²½ë„
 	params  += 'cur_Latitude='+cur_Latitude+'&cur_Longitude='+cur_Longitude;
 	$.ajax({
 		url: 'ajax/receiveData',
@@ -57,14 +57,14 @@ function showPosition(position)
     var curIdx = 13;
     var nexIdx = 0;
     var autoNext = 0;
-    //play list »ý¼º
+    //play list ìƒì„±
 	var playlist = new Array();
 	var playinfo = new Array();
 	var playimage = new Array();
 	var listLength = 0;
-    // °´Ã¼ »ý¼º
-	 //ÄÝ¹éÇÔ¼ö
-	//°á°ú Ãâ·Â °úÁ¤
+    // ê°ì²´ ìƒì„±
+	 //ì½œë°±í•¨ìˆ˜
+	//ê²°ê³¼ ì¶œë ¥ ê³¼ì •
 	
 	function printData(doc) {
 		/* var doc = xhr.responseXML; */
@@ -77,7 +77,7 @@ function showPosition(position)
 		var artist = doc.getElementsByTagName('artist');
 		var image = doc.getElementsByTagName('image');
 
-		//µ¥ÀÌÅÍ ³ÖÀ» div
+		//ë°ì´í„° ë„£ì„ div
 		var play_title = document.getElementById('slidetitle');
 		var doc_location = document.getElementById('location');
 		var doc_weathertxt = document.getElementById('weathertext');
@@ -86,15 +86,15 @@ function showPosition(position)
 
 		var weathertxt_value = weather_text.item(0).firstChild.nodeValue;
 
-		if (weathertxt_value.includes('¸¼À½')) {
+		if (weathertxt_value.includes('ë§‘ìŒ')) {
 			doc_weathericon.className = "icon-sun icon-weather";
-		} else if (weathertxt_value.includes('Èå¸²')) {
+		} else if (weathertxt_value.includes('íë¦¼')) {
 			doc_weathericon.className = "icon-cloudy2 icon-weather";
-		} else if (weathertxt_value.includes('ºñ')) {
+		} else if (weathertxt_value.includes('ë¹„')) {
 			doc_weathericon.className = "icon-rainy2 icon-weather";
-		} else if (weathertxt_value.includes('´«')) {
+		} else if (weathertxt_value.includes('ëˆˆ')) {
 			doc_weathericon.className = "icon-snowy3 icon-weather";
-		} else if (weathertxt_value.includes('±¸¸§')) {
+		} else if (weathertxt_value.includes('êµ¬ë¦„')) {
 			doc_weathericon.className = "icon-cloudy icon-weather";
 		}
 
@@ -121,7 +121,7 @@ function showPosition(position)
 		var tempImage = null;
 		var msg = "";
 		var msg2 = "";
-		// ÇöÀç Àç»ýÇÏ´Â ¼ø¼­ ´ÙÀ½ºÎÅÍ ¸¶Áö¸·±îÁö¼ø¼­¸¦ ¼¯´Â ·ÎÁ÷ */
+		// í˜„ìž¬ ìž¬ìƒí•˜ëŠ” ìˆœì„œ ë‹¤ìŒë¶€í„° ë§ˆì§€ë§‰ê¹Œì§€ìˆœì„œë¥¼ ì„žëŠ” ë¡œì§ */
 		for (var i = curIndex + 1; i < listLength; i++) {
 
 			var random = Math.floor((Math.random() * listLength) + 1);
@@ -146,7 +146,7 @@ function showPosition(position)
 	}
 	var pre = 0;
 	function nextPlay() {
-		//µ¥ÀÌÅÍ ³ÖÀ» div
+		//ë°ì´í„° ë„£ì„ div
 		var play_title = document.getElementById('slidetitle');
 		mix(curIdx);
 		nexIdx = curIdx + 1;
@@ -159,7 +159,7 @@ function showPosition(position)
 
 	}
 	function prePlay() {
-		//µ¥ÀÌÅÍ ³ÖÀ» div
+		//ë°ì´í„° ë„£ì„ div
 		var preIdx = curIdx - 1;
 		var play_title = document.getElementById('slidetitle');
 
@@ -242,7 +242,7 @@ function showPosition(position)
 
 	}
 
-	var cnt = 0; // Àç»ýÁß°ú ÀÏ½ÃÁ¤Áö Ç¥½Ã
+	var cnt = 0; // ìž¬ìƒì¤‘ê³¼ ì¼ì‹œì •ì§€ í‘œì‹œ
 	// Allow the user to set the volume from 0-100
 
 	function playVideo() {
@@ -275,7 +275,7 @@ function showPosition(position)
 		// This causes the updatePlayerInfo function to be called every 250ms to
 		// get fresh data from the player
 		setInterval(updatePlayerInfo, 250);
-		updatePlayerInfo();//»óÅÂ º¯È¯
+		updatePlayerInfo();//ìƒíƒœ ë³€í™˜
 		ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
 		ytplayer.addEventListener("onError", "onPlayerError");
 
@@ -284,14 +284,14 @@ function showPosition(position)
 	// The "main method" of this sample. Called when someone clicks "Run".
 	function loadPlayer(playmusic) {
 		// Lets Flash from another domain call JavaScript
-		// µ¿¿µ»ó ¼Ó¼º ÁöÁ¤
+		// ë™ì˜ìƒ ì†ì„± ì§€ì •
 		var params = {
 			allowScriptAccess : "always"
 		};
 		// The element id of the Flash embed
 		var atts = {
 			id : "ytPlayer"
-		}; //¾ÆÀÌµð
+		}; //ì•„ì´ë””
 		// All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
 		swfobject
 				.embedSWF(
@@ -301,7 +301,7 @@ function showPosition(position)
 						"videoDiv", "0", "0", "8", null, null, params, atts);
 	}
 
-	//Àç»ý , ÀÏ½ÃÁ¤Áö ÀÌ¹ÌÁö º¯È¯
+	//ìž¬ìƒ , ì¼ì‹œì •ì§€ ì´ë¯¸ì§€ ë³€í™˜
 	function imgChange() {
 		if (cnt == 0) {
 			document.getElementById("play").className = "icon-size-medium icon-play3 icon";
@@ -387,11 +387,11 @@ function colorchange(data){
 <div id="nav">
 	<div id="profile">
 		<c:choose>
-			<c:when test="${user.gender == '³²'}">
+			<c:when test="${user.gender == 'ë‚¨'}">
 				<img id="gender" src="${ initParam.root}/img/button/gender_wman.png"
 					width="35px" height="35px">
 			</c:when>
-			<c:when test="${user.gender== '¿©' }">
+			<c:when test="${user.gender== 'ì—¬' }">
 				<img id="gender" src="${ initParam.root}/img/button/gender_woman.png"
 					width="35px" height="35px">
 			</c:when>
@@ -400,7 +400,7 @@ function colorchange(data){
 			<span id="login_id">
 				${user.name }
 			</span>
-			 <span id="fix">´Ô</span>
+			 <span id="fix">ë‹˜</span>
 		</div>
 			<button class="like"><i class="icon icon-heart icon-size-small" id="like"></i></button>
 		<div id="videoDiv"></div>
@@ -443,7 +443,7 @@ function colorchange(data){
 				<i class="icon-location2 icon-size-small icon"></i><span id="location"></span>
 			</div>
 			<div id="temp">
-				<i class="icon-thermometer icon-size-xsmall "></i><span id="temper"></span>¡É
+				<i class="icon-thermometer icon-size-xsmall "></i><span id="temper"></span>â„ƒ
 			</div>
 		</div>
 		<div class="weathericon">

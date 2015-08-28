@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
@@ -63,7 +63,7 @@
 							if (data[0].equals("drop")) href = "drop/retire";
 							else href = "manager/block";
 
-							if (confirm("ÀÌ È¸¿øÀ» " + $(this).attr("value") + (data[0].equals("drop") ? ""  : (data[0].equals("current") ? "È­" : "ÇÏ") + "½Ã°Ú½À´Ï±î?"))) location.href = "${ initParam.root }/wmplayer/" + href + ".do?id=" + id + "&action=" + action + "&page=" + page;
+							if (confirm("ì´ íšŒì›ì„ " + $(this).attr("value") + (data[0].equals("drop") ? ""  : (data[0].equals("current") ? "í™”" : "í•˜") + "ì‹œê² ìŠµë‹ˆê¹Œ?"))) location.href = "${ initParam.root }/wmplayer/" + href + ".do?id=" + id + "&action=" + action + "&page=" + page;
 						});
 
 					$("#query-status-select").on("change", function()
@@ -111,23 +111,23 @@
 <body>
 	<div class="manager-view">
 		<div class="manager-menu">
-			È¸¿ø ¸ñ·Ï |
-			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">Å»Åğ ÀÌÀ¯</a> |
-			 Åë°è ÇöÈ²[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">·Î±×ÀÎ</a> |
-		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">È¸¿ø°¡ÀÔ</a> ]
+			íšŒì› ëª©ë¡ |
+			<a href="#" class="link" onclick="setLink(null, 'manager', 'dropreason')">íƒˆí‡´ ì´ìœ </a> |
+			 í†µê³„ í˜„í™©[ <a href="#" class="link" onclick="setLink(null, 'manager', 'chartlogin')">ë¡œê·¸ì¸</a> |
+		<a href="#" class="link" onclick="setLink(null, 'manager', 'chartjoin')">íšŒì›ê°€ì…</a> ]
 		</div>
 		<div class="member-table">
 			<div class="member-subject">
-				È¸¿ø ¸ñ·Ï
+				íšŒì› ëª©ë¡
 				<div class="member-filter">
 					<select id="query-status-select" name="status">
-						<option value="all">ÀüÃ¼ È¸¿ø</option>
-						<option value="block">Â÷´Ü È¸¿ø</option>
-						<option value="current">È°¼º È¸¿ø</option>
+						<option value="all">ì „ì²´ íšŒì›</option>
+						<option value="block">ì°¨ë‹¨ íšŒì›</option>
+						<option value="current">í™œì„± íšŒì›</option>
 					</select>
-					<input type="radio" name="gender" class="query-radio" value="all" checked="checked" />ÀüÃ¼
-					<input type="radio" name="gender" class="query-radio" value="man" />³²ÀÚ
-					<input type="radio"name="gender" class="query-radio" value="woman" />¿©ÀÚ
+					<input type="radio" name="gender" class="query-radio" value="all" checked="checked" />ì „ì²´
+					<input type="radio" name="gender" class="query-radio" value="man" />ë‚¨ì
+					<input type="radio"name="gender" class="query-radio" value="woman" />ì—¬ì
 				</div>
 			</div>
 			<table id="member_table"></table>
@@ -135,9 +135,9 @@
 			<div class="search">
 				<select id="query-search-select" name="search">
 					<option value="userid">ID</option>
-					<option value="name">ÀÌ¸§</option>
-				</select> <input id="query-text" name="value" type="text" size="10" placeholder="°Ë»öÇØÁÖ¼¼¿ä"/>
-				<input class="search-button" type="button" id="button" value="°Ë»ö"  />
+					<option value="name">ì´ë¦„</option>
+				</select> <input id="query-text" name="value" type="text" size="10" placeholder="ê²€ìƒ‰í•´ì£¼ì„¸ìš”"/>
+				<input class="search-button" type="button" id="button" value="ê²€ìƒ‰"  />
 			</div>
 		</div>
 
