@@ -6,31 +6,27 @@
 <script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
 <script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script type="text/javascript">
-	function warning(str)
-	{
-		alert(str + "페이지가 없습니다");
-	}
-
-	this.board_seq = ${ data.board_seq };
+	this.sequence = ${ data.board_seq };
 
 	function getData(page)
 	{
 		this.data = {
-				board_seq : ${ data.board_seq },
-				page_no : page
+				column_seq : this.sequence,
+				pageNo : page
 			};
 
-		if(!JSONDataCompare(this.prev_data, this.data))
+		if (!JSONDataCompare(this.prev_data, this.data))
 		{
 			this.prev_data = this.data;
+
 			$.ajax({
 				type : "post",
-				url : "${ initParam.root }/share/reple",
+				url : "${ initParam.root }/view/ajax/share/CallReple.jsp",
 				dataType : "html",
 				data : this.data,
 				success : function(data, status, xhr)
 				{
-					$("#appendreple").html(data);
+					$("#reple_list").html(data);
 				},
 				error : function(xhr, status, error)
 				{
@@ -43,11 +39,11 @@
 	{
 		$.ajax({
 			type : "post",
-			url : "${ initParam.root }/share/reple",
+			url : "${ initParam.root }/view/ajax/share/InsertReple.jsp",
 			dataType : "html",
 			data : {
-				board_seq : ${ data.board_seq },
-				content : $("reple_content").val()
+				column_seq : this.sequence,
+				repleContent : $("#reple_content").val()
 			},
 			success : function(data, status, xhr)
 			{
@@ -105,7 +101,7 @@
 	</div>
 </div>
 <div id="reple_form">
-	<input type="text" name="" id="reple_txt" size="68" />
+	<input type="text" id="reple_txt" size="68" />
 	<input type="button" value="확인" id="reple_input" />
 </div>
 <div id="reple_list" style="size : 800px;"></div>

@@ -1,5 +1,8 @@
 package util;
 
+import java.io.UnsupportedEncodingException;
+import java.util.regex.Pattern;
+
 public class StringOperate
 {
 	private static StringOperate operate;
@@ -53,5 +56,50 @@ public class StringOperate
 		if (i < 0) throw new StringIndexOutOfBoundsException(i);
 		if (i == 0) return str;
 		return fnUpperCase(str, start_idx, end_idx);
+	}
+
+	public String substring(String str, int start_idx, int byte_length, boolean isNoTag, boolean isAddDot)
+	{
+		if (str == null) throw new NullPointerException("str");
+		if (start_idx <= 0 || start_idx > str.length())  throw new StringIndexOutOfBoundsException(start_idx);
+		if (byte_length <= 0 || byte_length > str.length())  throw new StringIndexOutOfBoundsException(byte_length);
+
+		String value = str.substring(start_idx);
+		Pattern p = Pattern.compile("<(/?)([^<>]*)?>", Pattern.CASE_INSENSITIVE);
+
+		if (isNoTag) value = p.matcher(value).replaceAll("");
+		value = value.replaceAll("&amp;", "&").replaceAll("(!/|\r|\n|&nbsp;&nbsp;)", "&nbsp;");
+
+		try
+		{
+			byte[] bytes = value.getBytes("utf-8");
+
+			int i = 0, original_length = 0, real_length = 0;
+
+			while (i < bytes.length)
+			{
+				if ((bytes[i] & 0x80) != 0)
+				{
+					if (original_length + 2 > byte_length) break;
+					original_length += 2;
+					real_length += 3;
+					i += 3;
+				}
+				else
+				{
+					if (original_length + 1 > byte_length) break;
+					original_length++;
+					real_length++;
+					i++;
+				}
+			}
+
+			return new String(bytes, 0, real_length, "utf-8").concat(isAddDot ? "..." : "");
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+			return str;
+		}
 	}
 }

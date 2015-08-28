@@ -152,7 +152,6 @@ public class ShareBoardController
 	public String shareData(@RequestParam(value = "weather_custom") String weather_custom, @RequestParam(value = "page") Integer page)
 	{
 		StringBuffer sb = new StringBuffer();
-		String[] weather = (weather_custom == null ? "all" : weather_custom).split(",");
 		List<String> weather_list = new ArrayList<String>();
 		map = new ListMap<String, Object>();
 		map.put("select_column", "*");
@@ -239,6 +238,7 @@ public class ShareBoardController
 						.append("</div>")
 					.append("</ul>")
 				.append("</div>");
+
 		return sb.toString();
 	}
 
@@ -280,11 +280,5 @@ public class ShareBoardController
 		}
 
 		return weather_list;
-	}
-
-	@ResponseBody @RequestMapping(value = "/reple", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String reple()
-	{
-		return "";
 	}
 }
