@@ -25,7 +25,7 @@
 			</c:forEach>
 			<span class="notice-subject">
 			<span class="attribute">알림</span>
-			<a href='noticedetail?title=${notice.get(0)}'>${ notice.get(0)}</a>
+			<a href='noticedetail?title=${notice}'>${ notice}</a>
 			</span>
 		</div>
 	</div>

@@ -38,10 +38,9 @@
 		order by notice_seq desc
 	</select>
 	
-	<select id="noticeHomeTitle" parameterType="int" resultType="java.lang.String">
-		select title from (select data.*, rownum as rn from (select title from
-		noticeboard order by notice_seq desc) data) where rn between #{start}
-		and #{start} + 4
+	<select id="noticeHomeTitle" parameterType="int" resultType="String">
+		select title from noticeboard
+		order by notice_seq desc
 	</select>
 	
 	<select id="repleSelect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO">

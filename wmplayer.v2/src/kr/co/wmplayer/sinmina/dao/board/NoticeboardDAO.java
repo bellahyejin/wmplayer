@@ -14,8 +14,8 @@ public class NoticeboardDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public List<String> hometitle(int start){
-		List<String> notice = session.selectList("notice.noticeHomeTitle", start);
+	public List<String> hometitle(){
+		List<String> notice = session.selectList("notice.noticeHomeTitle", null, new RowBounds(0, 5));
 		return notice;
 	}
 	

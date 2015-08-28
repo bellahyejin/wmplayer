@@ -7,6 +7,7 @@ import kr.co.wmplayer.sinmina.dao.board.NoticeboardDAO;
 import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
 import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
+import kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class TilesController {
 	
 	@RequestMapping("/content")
 	public String contentform(Model model){
-		List<String> title = noticedao.hometitle(1);
+		List<String> title = noticedao.hometitle();
 
 		List<ColumnBoardDTO> column_rank = columndao.selectHomerank();
 
