@@ -1,89 +1,79 @@
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<link rel="stylesheet" href="${initParam.root }/css/style.css">
-<link type="text/css" href="${initParam.root }/css/global.css"
-	rel="stylesheet" />
-<link type="text/css" href="${initParam.root }/css/ShareboardList.css"
-	rel="stylesheet" />
-<link type="text/css" href="${initParam.root }/css/ShareCard.css"
-	rel="stylesheet" />
-<script src="${initParam.root }/js/jquery.min.js"></script>
+<link type="text/css" href="${ initParam.root }/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="${ initParam.root }/css/global.css" type="text/css" />
+<link rel="stylesheet" href="${ initParam.root }/css/ShareboardList.css" type="text/css" />
+<link rel="stylesheet" href="${ initParam.root }/css/ShareCard.css" type="text/css" />
+<script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script type="text/javascript">
-var pageNum = 0;
-var flag = false;
-var params = 'weather_custom=';
-$(document).ready(function(){
-	sendAjaxSort('weather_custom=all,&page=1');	
-});
+	this.pres_page = ${ pres_page };
+	this.weather = "";
 
-function pagetrans(num){
-	
-	params +='&page='+num;
-	
-	if(!flag){
-		sendAjaxSort(params);
-		flag = true;
-	}
-}
+	function listData(weather)
+	{
+		this.data = {
+			weather_custom : weather,
+			page : this.pres_page
+		};
 
-function checkboxData(value){
-		params = 'weather_custom=';
-	$('input:checkbox[name="sort"]:checked').each(function(){
-		params += "'"+this.value+"',";
-	});
-	flag = false;
-	pagetrans(1);
-}
-
-function sendAjaxSort(params){
-	alert(params)
-	$.ajax({
-		url: '${initParam.root}/ajax/sortData.jsp',
-		type:'POST',
-		data: params,
-		dataType: 'text',
-		success: function(data){
-			$('#share-content').html(data);
+		if (!JSONDataCompare(this.prev_data, this.data))
+		{
+			this.prev_data = this.data;
+			$.ajax(
+				{
+				type : "post",
+				url : "${ initParam.root }/share/listdata",
+				dataType : "html",
+				data : this.data,
+				success : function(data, status, xhr)
+				{
+					$("#share-content").html(data);
+				},
+				error : function(xhr, status, error)
+				{
+					alert("error");
+				}});
 		}
-	});
-}
+	}
 
+	function startAjax(weather)
+	{
+		this.pres_page = 1;
+		listData(weather);
+	}
+
+	$(document).ready(function()
+			{
+				listData("all");
+				$(document).ajaxSuccess(function()
+					{
+						$(".sort-checkbox :checkbox[name='sort']").change(function()
+							{
+								weather = "";
+								$(".sort-checkbox :checkbox[name='sort']:checked").each(function(index)
+									{
+										weather += $(this).attr("id") + (index == $(".sort-checkbox :checkbox[name='sort']:checked").length - 1 ? "" : ",");
+									});
+								startAjax(weather);
+							});
+					});
+			});
 </script>
 <div id="shareboardlist">
 	<div class="title_share">
-		<span id="title_text">Share Music Video</span>
+		<span id="title_text"></span>
 		<div class="sort-checkbox">
 			<ul>
-				<li>
-					<input type="checkbox" name="sort" id="all" value="all" onchange="checkboxData(this)" checked="checked"/> 
-					<label for="all">All</label>
-				</li>
-				<li>
-					<input type="checkbox" name="sort" id="sun" value="∏º¿Ω" onchange="checkboxData(this)"/> 
-					<label for="sun">∏º¿Ω</label>
-				</li>
-				<li>
-					<input type="checkbox" name="sort" id="rain" value="∫Ò" onchange="checkboxData(this)"/> 
-					<label for="rain">∫Ò</label>
-				</li>
-				<li>
-					<input type="checkbox" name="sort" id="snow" value="¥´" onchange="checkboxData(this)"/> 
-					<label for="snow">¥´</label>
-				</li>
-				<li>
-					<input type="checkbox" name="sort" id="cloud" value="»Â∏≤" onchange="checkboxData(this)"/> 
-					<label for="cloud">»Â∏≤</label>
-				</li>
-				<li>
-					<input type="checkbox" name="sort" id="lowcloudy" value="πŸ∂˜" onchange="checkboxData(this)"/> 
-					<label for="lowcloudy">πŸ∂˜</label>
-				</li>
+				<li><input type="checkbox" name="sort" id="all" checked="checked" /><label for="all">All</label></li>
+				<li><input type="checkbox" name="sort" id="sun" /><label for="sun">ÎßëÏùå</label></li>
+				<li><input type="checkbox" name="sort" id="rain" /><label for="rain">ÎπÑ</label></li>
+				<li><input type="checkbox" name="sort" id="snow" /><label for="snow">Îàà</label></li>
+				<li><input type="checkbox" name="sort" id="cloud" /><label for="cloud">ÌùêÎ¶º</label></li>
+				<li><input type="checkbox" name="sort" id="lowcloudy" /><label for="lowcloudy">Íµ¨Î¶Ñ Ï°∞Í∏à</label></li>
 			</ul>
 		</div>
 	</div>
-	<div id="share-content">
-	</div>
+	<div id="share-content"></div>
 </div>
