@@ -63,7 +63,7 @@
 </script>
 <div id="shareboardlist">
 	<div class="title_share">
-		<span id="title_text"></span>
+		<span id="title_text">Share Muisc Video</span>
 		<div class="sort-checkbox">
 			<ul>
 				<li><input type="checkbox" name="sort" id="all" checked="checked" /><label for="all">All</label></li>
