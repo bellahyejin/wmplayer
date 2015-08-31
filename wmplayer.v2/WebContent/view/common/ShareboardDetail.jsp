@@ -75,7 +75,7 @@
 </div>
 <div class="share-detail-section">
 	<div class="share-detail-mv">
-		<embed src="//www.youtube.com/embed/${ data.videoID }?controls=0&showinfo=0&rel=0&wmode='transparent'&allowfullscreen='false'" autoplay="true" type="application/x-shockwave-flash" width="400" height="300" />
+		<embed src="//www.youtube.com/embed/${ data.videoID }?autoplay=1&controls=0&showinfo=0&rel=0&wmode='transparent'&allowfullscreen='false'" type="" width="400" height="300" />
 	</div>
 	<div class="share-detail-info">
 		<table class="share-table">
