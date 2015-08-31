@@ -26,9 +26,9 @@ body {
 div {
 	font-family: basic title font;
 	color: #fff;
-	padding-left: 3%;
+	padding-left: 30px;
 }
-ul { padding: 0; margin: 0; width: 100%;	padding-top: 10%;}
+ul { padding: 0; margin: 0; width: 400px;	padding-top: 10%;}
 ul li{ list-style: none; margin-left: 5%}
 
 .finddata{ text-align: center;}
@@ -38,41 +38,34 @@ a:HOVER{
 	color: #81d4fa;
 }
 
-.top {
-	margin: 15%
-}
-
+.top{ margin-top: 200px}
 .center {
 	position: absolute;
-	left: 33%;
+	left: 450px;
 }
 
 .introbox {
-	width: 30%;
-	height: 25%;
+	width: 420px;
+	height: 180px;
 	background : rgba(255,255,255,0.3);
-	border: 0.125em solid #fff;
+	border: 2px solid #fff;
 }
 .logo {
-	font-size: 480%;
-	letter-spacing: 0.0165em;
+	font-size: 60pt;
+	letter-spacing: 1px;
 	font-weight: bold;
-	width: 85%;
-	height: 50%
 }
 
 .slogun {
-	font-size: 150%;
+	font-size: 18pt;
 	font-weight: bold;
-	word-spacing: -0.1em;
-	padding-left: 2%;
-	width: 85%;
+	word-spacing: -1px;
+	padding-left: 13px;
 }
 
 .btn {
-	width: 53%;
 	float : left;
-	margin: 21% 0 0 19.5%;
+	margin: 195px 0 0 390px;
 }
 
 /* 로그인 시 버튼 */
