@@ -269,3 +269,22 @@ input {
 
 
 .birth-div select, .email-div select { background-color: #eeeaea; height: 30px; border-radius: 3px; padding-left: 5px}
+
+
+/* 회원가입 유효성 검사 */
+
+.tooltip{
+	font-size: 9pt;
+	font-family: 나눔바른고딕;
+	color: #334;
+	background-color: #fff;
+	border: 1px solid #95A5A6;
+	border-radius: 3px;
+	width: 220px;
+	padding: 2px 0;
+	opacity:0.8;
+	display: none;
+	float: left;
+}
+
+

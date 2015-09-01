@@ -7,10 +7,44 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/UserAnalysis.css" rel="stylesheet" />
+<link rel="stylesheet" href="${initParam.root }/css/style.css">
 <script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
 <script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <div class="useranalysis-form">
+	<div class="avgbpm">
+		<div class="title"> 
+			<span>평균</span>
+			<span class="sub-title">BPM</span>
+		</div>
+		<div class="average">
+			<span>130.5</span>
+		</div>
+	</div>
 	<div class="useranal-header">
+		<table>
+			<tr>
+				<td>비밀번호</td>
+				<td>*******</td> <!-- DB에 저장되어있는 비밀번호 길이 만큼 *로 표시한다 -->
+				<td><a><i class="icon-pencil3"></i></a></td>
+			</tr>
+			<tr>
+				<td>이 름</td>
+				<td>이혜진</td>
+				<td><a><i class="icon-pencil3"></i></a></td> 
+			</tr>
+			<tr>
+				<td>생년월일</td>
+				<td>1993/08/08</td> <!-- 버튼 클릭시 관련 select 창이 뜬다  -->
+				<td><a><i class="icon-pencil3"></i></a></td>
+							<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>bela010@naver.com</td> <!-- 수정버튼 클릭시 관련 emailid 부분은  input text, 뒷부분은 select   -->
+				<td><a><i class="icon-pencil3"></i></a></td>
+								<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
+			</tr>
+		</table>
 	</div>
 	<div class="useranal-section">
 		<div class="anal-left">

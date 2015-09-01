@@ -63,7 +63,7 @@ public class UserController {
 		String result = null;
 		if(user.getName() == null || user.getEmail() == null) {
 			return 	"해당 정보를 입력해주세요"  //정보를 입력하지 않았을 경우
-					+ "<input class='input-submit' type='submit' id='submit-id' value='아이디 찾기' />";
+					+ "<input class='input-submit' type='button' id='submit-id' value='아이디 찾기' />";
 		}
 		else{
 			String userid = dao.findid(user);
@@ -74,7 +74,7 @@ public class UserController {
 			}
 			else //회원 정보가 없을 경우
 				return "등록된 회원정보가 없습니다. 다시입력해주세요"
-						+ "<input class='input-submit' type='submit' id='submit-id' value='아이디 찾기' />";
+						+ "<input class='input-submit' type='button' id='submit-id' value='아이디 찾기' />";
 		}
 	}
 
@@ -98,10 +98,10 @@ public class UserController {
 			}
 			else //해당정보가 없을 경우
 				return "등록된 회원정보가 없습니다. 다시입력해주세요"
-						+ "<input class='input-submit' type='submit' id='submit-pass' value='비밀번호찾기' />";
+						+ "<input class='input-submit' type='button' id='submit-pass' value='비밀번호찾기' />";
 		}else //정보를 입력하지 않았을 경우
 			return "해당 정보를 입력해주세요"
-					+ "<input class='input-submit' type='submit' id='submit-pass' value='비밀번호찾기' />";
+					+ "<input class='input-submit' type='button' id='submit-pass' value='비밀번호찾기' />";
 	}
 
 	@RequestMapping("/logout")
