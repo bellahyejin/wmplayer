@@ -15,7 +15,7 @@ html, body {
 }
 
 body {
-	background-image: url("../img/hands.jpg");
+	background-image: url("../img/gittar.jpg");
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -26,10 +26,9 @@ body {
 div {
 	font-family: basic title font;
 	color: #fff;
-	padding-left: 30px;
 }
-ul { padding: 0; margin: 0; width: 400px;	padding-top: 10%;}
-ul li{ list-style: none; margin-left: 5%}
+ul { padding: 0; margin: 0; width: 400px;	padding-top: 30px;}
+ul li{ list-style: none; margin-left: 20px}
 
 .finddata{ text-align: center;}
 a{color: #757575; font-size: 10pt; font-family: 나눔바른고딕; text-decoration: none;}
@@ -45,12 +44,15 @@ a:HOVER{
 }
 
 .introbox {
-	width: 420px;
-	height: 180px;
+	width: 412px;
+	height: 150px;
 	background : rgba(255,255,255,0.3);
 	border: 2px solid #fff;
+	padding-left: 40px;
+	padding-top: 30px;
 }
 .logo {
+	height: 80px;
 	font-size: 60pt;
 	letter-spacing: 1px;
 	font-weight: bold;
@@ -60,19 +62,20 @@ a:HOVER{
 	font-size: 18pt;
 	font-weight: bold;
 	word-spacing: -1px;
-	padding-left: 13px;
+	padding-left: 10px;
 }
 
 .btn {
 	float : left;
-	margin: 195px 0 0 390px;
+	margin: 195px 0 0 450px;
 }
 
 /* 로그인 시 버튼 */
-.join {padding: 3px 40px;}
-.login { padding: 3px 40px;}
+.join {padding: 3px 30px;}
+.login { padding: 3px 30px;}
 .styled-button {
 	width : 223px;
+	height : 40px;
 	background: none;
 	color: #fff;
 	font-family: basic title font;

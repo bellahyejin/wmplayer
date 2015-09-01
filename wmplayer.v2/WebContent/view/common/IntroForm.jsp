@@ -8,12 +8,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${initParam.root }/css/intro.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script> 
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 ${alertMsg }
 <script>
 $(document).ready(function(){
@@ -107,7 +105,7 @@ $(document).ready(function(){
 	   	$("#findpass").css("display","none");
 	});
 	
-	
+	//id 찾기
 	$('#submit-id').click(function(){
 		$.ajax({
 			url:'findId',
@@ -121,7 +119,7 @@ $(document).ready(function(){
 			}			
 		});
 	});
-	
+	//비밀번호 찾기 
 	$('#submit-pass').click(function(){
 		$.ajax({
 			url:'findPass',
@@ -136,8 +134,6 @@ $(document).ready(function(){
 			}			
 		});
 	});
-	
-	$('[data-toggle="tooltip"]').tooltip();
 	
 });
 
@@ -232,8 +228,8 @@ function moveback(){
 				<i class="fa fa-plus-square-o"></i>
 			</div>
 			<h1>JOIN</h1>
-			<input class="input-text-join tooltip" name="userID" type="text" data-toggle="tooltip" title="아이디는 영문, 숫자 및 8자이상 16자이하만 입력가능합니다" placeholder="ID" />
-			<input class="input-text-join tooltip" name="passwd" type="password" data-toggle="tooltip" title="비밀번호는 영문 대소문자와 숫자,특수문자를 포함 10자 이상이여야 합니다." placeholder="Password" /> 
+			<input class="input-text-join tooltip" name="userID" type="text"  placeholder="ID" />
+			<input class="input-text-join tooltip" name="passwd" type="password" placeholder="Password" /> 
 			<input class="input-text-join" name="passwdcheck" type="password" placeholder="Password Check" />
 			<input class="input-text-join" name="name" type="text" placeholder="Name" />
 			<div class="birth-div">
