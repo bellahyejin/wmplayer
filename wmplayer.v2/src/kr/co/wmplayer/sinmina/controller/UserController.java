@@ -116,7 +116,8 @@ public class UserController {
 	public String userinfoform(HttpSession session, Model model){
 		String pattern = "#####.##";
 		String userid = (String)session.getAttribute("success");
-
+		UserInfoDTO bean = dao.select(userid);
+		model.addAttribute("user", bean);
 		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid);
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
 		
@@ -140,6 +141,24 @@ public class UserController {
 
 		return "userinfo";
 	}
+	
+	@RequestMapping("/update")
+	public String userupdate(@RequestParam(value="passwd", required=false) String passwd,
+			                 @RequestParam(value="name", required=false) String name,
+			                 @RequestParam(value="year", required=false) String year,
+							 @RequestParam(value="month", required=false) String month,
+							 @RequestParam(value="date", required=false) String date,
+							 @RequestParam(value="email_id", required=false) String email_id,
+							 @RequestParam(value="email_addr", required=false) String addr,
+							 HttpSession session,Model model){
+		String userid = (String)session.getAttribute("success");
+		
+		String birth = year + "/"+month+"/"+date;
+		String email = email_id+"@"+addr;
+		
+		return "userinfo";       
+	}
+
 
 	@RequestMapping("/join")
 	public String userjoin(@RequestParam(value="userID", required=false) String userID,

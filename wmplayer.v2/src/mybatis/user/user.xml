@@ -8,7 +8,7 @@
 	</insert>
 
 	<update id="userinfoupdate" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
-		update UserInfo set passwd=#{passwd}, name=#{name}, birth=#{birth}, gender=#{gender},email=#{email} where userID=#{userID}
+		update UserInfo set passwd=#{passwd}, name=#{name}, birth=#{birth}, email=#{email} where userID=#{userID}
 	</update>
 
 	<update id="userinfodrop" parameterType="String">
