@@ -171,7 +171,7 @@ public class UserController {
 	@RequestMapping("/duplicationid")
 	@ResponseBody
 	public String duplicationid(String userID){
-		
+		System.out.println("userID: "+userID);
 		int result =dao.selectcheck(userID);
 		if(result == 1) return "unable";
 		else return "able";

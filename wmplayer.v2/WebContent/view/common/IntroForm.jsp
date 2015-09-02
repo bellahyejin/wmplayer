@@ -136,7 +136,11 @@ $(document).ready(function(){
 	});
 	
 	$('#userid').keyup(function(){
-		duplicationid();
+		if(perfectID()){
+			duplicationid();
+		}else
+			$('.modal-join #userid').css({'border-bottom-color' : '#E74C3C'});
+		
 	});
 });
 
@@ -179,11 +183,11 @@ function duplicationid(){
 		url: 'duplicationid',
 		type:'post',
 		data : {
-			userID : $('#modal-join #userid').val()
+			userID : $('.modal-join #userid').val()
 		},
 		dataType: 'text',
 		success:function(data){
-			if(data.toString == 'unable'){
+			if(data == 'able'){
 				$('#userid').css({'border-bottom-color' : '#2ECC71'});
 			}else
 				$('#userid').css({'border-bottom-color' : '#E74C3C'});
@@ -191,6 +195,18 @@ function duplicationid(){
 	});
 }
 
+
+//id 유효성 검사 
+function perfectID(){
+	var userID = $('.modal-join #userid').val();
+	var idRegx =/^[A-za-z0-9]{6,16}$/g;
+	
+	if (idRegx.test(userID)) {
+		return true;
+	} else {
+		return false;
+	}
+}
 // 유효성 검사 함수
 function checkPass(val){
 	var passRegx = /^[\d|a-z|A-Z|]{10,20}$/gi;
