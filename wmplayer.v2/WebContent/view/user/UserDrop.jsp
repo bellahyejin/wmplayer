@@ -13,14 +13,14 @@
     		  document.frm.etctext.disabled='disabled';
     	  }
     }
-
+	
     function CheckReason(){
     	var dd = document.frm.dropreason.value;
     	var text = document.frm.etctext.value;
 		var id = document.frm.id.value;
     	alert(id+'님이 탈퇴되었습니다.');
-    	location.replace("userdrop?dropreason="+dd+'&etctext='+text);
-
+    	parent.location.href="userdrop?dropreason="+dd+'&etctext='+text;
+		
     	if(dd==''){
     	alert("회원님의 탈퇴할 이유를 선택해주세요.");
     	}

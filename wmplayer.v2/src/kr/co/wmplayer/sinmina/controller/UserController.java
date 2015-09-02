@@ -168,7 +168,14 @@ public class UserController {
 	}
 
 	//유효성 검사 중복확인과 pass워드
-
+	@RequestMapping("/duplicationid")
+	@ResponseBody
+	public String duplicationid(String userID){
+		
+		int result =dao.selectcheck(userID);
+		if(result == 1) return "unable";
+		else return "able";
+	}
 
 	//drop
 	@RequestMapping("/dropform")

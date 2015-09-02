@@ -123,23 +123,20 @@ $(document).ready(function(){
 			else $('#passwdcheck').css({'border-bottom-color':'#E74C3C'});
 	});
 	
-	var flag = true;
-	$('#userid').focus(function(){
-		if(flag != false){
-			$('.toolid').css({'display':'block'});
-		}else
-			$('.toolid').css({'display':'none'});
+	$('#userid').hover(function(){
+		$('.toolid').fadeIn();
+	},function(){
+		$('.toolid').fadeOut();
 	});
 	
-	$('#passwd').focus(function(){
-		$('.toolpass').css({'display':'block'});		
+	$('#passwd').hover(function(){
+		$('.toolpass').fadeIn();
+	},function(){
+		$('.toolpass').fadeOut();
 	});
 	
 	$('#userid').keyup(function(){
-		var id = $('#userid').val();
-		
-		
-		
+		duplicationid();
 	});
 });
 
@@ -175,11 +172,31 @@ function buttonclick(){
 		});
 	});
 }
+
+//중복확인 
+function duplicationid(){
+	$.ajax({
+		url: 'duplicationid',
+		type:'post',
+		data : {
+			userID : $('#modal-join #userid').val()
+		},
+		dataType: 'text',
+		success:function(data){
+			if(data.toString == 'unable'){
+				$('#userid').css({'border-bottom-color' : '#2ECC71'});
+			}else
+				$('#userid').css({'border-bottom-color' : '#E74C3C'});
+		}
+	});
+}
+
+// 유효성 검사 함수
 function checkPass(val){
 	var passRegx = /^[\d|a-z|A-Z|]{10,20}$/gi;
 	var message;
 	if (val == '') {
-		message = true;
+		message = false;
 	} else if (passRegx.test(val)){
 		message = true;
 	} else {
