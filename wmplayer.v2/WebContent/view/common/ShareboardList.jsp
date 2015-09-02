@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${ initParam.root }/css/ShareCard.css" type="text/css" />
 <div id="shareboardlist">
 	<div class="title_share">
-		<span id="title_text">Share Muisc Video</span>
+		<span id="title_text">Share Music Video</span>
 		<div class="sort-checkbox">
 			<ul>
 				<li><input type="checkbox" name="sort" id="all" /><label for="all">All</label></li>
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	<div id="share-content">
-	<div id="card"></div>
+	<div id="list"></div>
 		<div class="searchboard">
 			<div class="search">
 				<select class="search-select">
@@ -60,13 +60,13 @@
 			$.ajax(
 				{
 				type : "post",
-				url : "${ initParam.root }/share/listdata",
+				url : "${ initParam.root }/share/listdata.ajax",
 				dataType : "html",
 				data : this.data,
 				success : function(data, status, xhr)
 				{
 					var temp = data.split("|");
-					$("#card").html(temp[0]);
+					$("#list").html(temp[0]);
 					$(".pager-container-share").html(temp[1] == undefined || temp[1] == null ? "" : temp[1]);
 				}});
 		}
@@ -141,7 +141,7 @@
 
 					$(".pager-container-share a").click(function()
 						{
-							this.$(this).prop("title")
+							$(this).prop("title")
 						});
 				});
 		});

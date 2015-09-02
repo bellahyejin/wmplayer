@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import util.ListMap;
+import util.Paging;
 import util.StringOperate;
 import youtube.YoutubeSearch;
 
@@ -168,12 +169,14 @@ public class ShareBoardController
 		}
 	}
 
-	@ResponseBody @RequestMapping(value = "/listdata", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	@ResponseBody @RequestMapping(value = "/listdata.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
 	public String shareData(@RequestParam(value = "weather_custom") String weather_custom, @RequestParam(value = "search_select", required = false) String search_select, @RequestParam(value = "search_text", required = false) String search_text, @RequestParam(value = "page") Integer page)
 	{
 		weather_custom = weather_custom == null || weather_custom.equals("") ? "all" : weather_custom;
+		search_text = (search_text == null || search_text.equals("") ? null : "%" + search_text + "%");
 
-		StringBuffer sb = new StringBuffer();
+		Paging p = Paging.getInstance();
+		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
 		List<String> weather_list = getWeather(weather_custom);
 		map = new ListMap<String, Object>();
 		map.put("select_column", "*");
@@ -181,16 +184,13 @@ public class ShareBoardController
 		map.put("table", "board_user");
 		map.put("column", search_select);
 		map.put("sign", "like");
-		map.put("data", search_text = (search_text == null || search_text.equals("") ? null : "%" + search_text + "%"));
+		map.put("data", search_text);
 		map.put("list_compare_column", "weather_custom");
 		map.put("list_value", weather_list);
 		int count_element = ((BigDecimal) shareboardDAO.count(map).get("cnt")).intValue();
-
 		int pres_page = page == null ? 1 : page.intValue();
-		int start_idx = (pres_page - 1) * max_element;
-		int max_page = ((int) count_element / max_element) + (count_element % max_element == 0 ? 0 : 1);
-		int begin_page = (pres_page <= 1 + page_div || 1 + page_div * 2 >= max_page ? 1 : (pres_page + page_div >= max_page ? max_page - page_div * 2 : pres_page - page_div));
-		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
+
+		Map<String, Integer> page_data = p.setData(count_element, pres_page, max_element, page_div, "begin&last", false);
 		boolean flag;
 
 		map.clear();
@@ -200,10 +200,13 @@ public class ShareBoardController
 		map.put("compare_column", search_select);
 		map.put("value", search_text);
 
-		List<BoardUserDTO> list = shareboardDAO.select(map, start_idx, max_element);
-		for (BoardUserDTO bean : list)
+		List<BoardUserDTO> list = shareboardDAO.select(map, page_data.get("item_start"), max_element);
+		sb = sb.append("<div id=\"card\">");
+		if (list != null && list.size() > 0)
 		{
-			sb = sb.append("<div class=\"cardtotal\">")
+			for (BoardUserDTO bean : list)
+			{
+				sb = sb.append("<div class=\"cardtotal\"")
 							.append("<li>")
 								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : ").append(bean.getBoard_seq()).append(" })\">")
 									.append("<div class=\"cardimg\">")
@@ -231,30 +234,43 @@ public class ShareBoardController
 								.append("</a>")
 							.append("</li>")
 						.append("</div>");
-		}
+			}
 
-		if (count_element > max_element)
-		{
-			if (search_text != null) search_text = search_text.replaceAll("%", "");
-			else search_text = "";
+			int max_page = page_data.get("last");
 
-			String temp = "\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : ";
-			String temp2 = ", 'weather_custom' : '" + weather_custom + "', 'search_select' : '" + search_select + "', 'search_text' : '" + search_text;
+			if (max_page > 1)
+			{
+				if (search_text != null) search_text = search_text.replaceAll("%", "");
+				else search_text = "";
 
-			sb = sb.append("|<ul class=\"page-list\">")
-							.append("<div id=\"first\">")
-								.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page".concat(temp).concat(Integer.toString(1)).concat(temp2).concat("' })")).append("\">start<").append(flag ? "" : "/a><").append("/li>")
+				String temp = "\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : ";
+				String temp2 = ", 'weather_custom' : '" + weather_custom + "', 'search_select' : '" + search_select + "', 'search_text' : '" + search_text;
+
+				sb2 = sb2.append("<ul class=\"page-list\">")
+								.append("<div id=\"first\">")
+									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page".concat(temp).concat(Integer.toString(1)).concat(temp2).concat("' })")).append("\">start<").append(flag ? "" : "/a><").append("/li>")
+								.append("</div>")
+								.append("<div id=\"middle\">");
+				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp.concat(Integer.toString(i)).concat(temp2).concat("' })")).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+				sb2 = sb2.append("</div>")
+							.append("<div id=\"end\">")
+								.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-").append(temp).append(max_page).append(temp2).append("' })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
 							.append("</div>")
-							.append("<div id=\"middle\">");
-			for (int i = begin_page; i <= end_page; i++) sb = sb.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp.concat(Integer.toString(i)).concat(temp2).concat("' })")).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
-			sb = sb.append("</div>")
-						.append("<div id=\"end\">")
-							.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-").append(temp).append(max_page).append(temp2).append("' })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
-						.append("</div>")
-					.append("</ul>");
+						.append("</ul>");
+			}
+		}
+		else
+		{
+			sb = sb.append("<table>")
+							.append("<tr align=\"center\">")
+								.append("<td>검색 결과가 없습니다.</td>")
+							.append("</tr>")
+						.append("</table>");
 		}
 
-		return sb.toString();
+		sb = sb.append("</div>");
+
+		return sb.append("|").append(sb2).toString();
 	}
 
 	public List<String> getWeather(CharSequence weather_custom)
