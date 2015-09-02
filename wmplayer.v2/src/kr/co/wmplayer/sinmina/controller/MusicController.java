@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import Weather.AddressChangeModel;
@@ -64,36 +65,37 @@ public class MusicController {
 	    return "ajax/receiveData";
 	}
 	
-	@RequestMapping("/ajax/MusicLikeData")
-	public String MusicLikeData(@RequestParam(value="musicID") String musicID,
-								@RequestParam(value="status") String status,
-								HttpSession session){
+	@RequestMapping("/MusicLikeData")
+	@ResponseBody
+	public String MusicLikeData(String musicID, String action, HttpSession session){
 		
-		System.out.println("::: MusicID, "+musicID+"status:::::"+status);
 		
 		String userID = (String) session.getAttribute("success");
-		LikeMusicDTO like = new LikeMusicDTO(musicID, userID);
-		String msg = "";
+		double bpm = musicdao.selectBpm(musicID);
+		System.out.println(bpm);
+		LikeMusicDTO like = new LikeMusicDTO(musicID, userID,bpm);
+		System.out.println(musicID);
 		
 		if(musicID != null){
-			if(status.equals("add")){
+			if(action.equals("add")){
 				musicdao.addLike(like);
-				System.out.println("like add : success");
-			}else if(status.equals("delete")){
+				return "like";
+			}else if(action.equals("delete")){
 				musicdao.deleteLike(like);
-				System.out.println("like delete add: success");
-			}else if(status.equals("select")){
+				return "unlike";
+			}else if(action.equals("select")){
 				//전체를 담아줄 객체를 설정
 				//System.out.println( dao.selectLike(like));
 			 	if(musicdao.selectLike(like)){
-			 		msg = "like";
+			 		return "like";
 			 	}else{
-			 		msg = "unlike";
+			 		return "unlike";
 			 	}
 			}
 		}else {
 			System.out.println("musicId is null");
+			return "fail";
 		}
-		return msg;
+		return "fail";
 	}
 }

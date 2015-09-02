@@ -13,11 +13,11 @@
 <div class="useranalysis-form">
 	<div class="avgbpm">
 		<div class="title"> 
-			<span>평균</span>
+			<span>선호 음악 평균</span>
 			<span class="sub-title">BPM</span>
 		</div>
 		<div class="average">
-			<span>130.5</span>
+			<span>${avgbpm }</span>
 		</div>
 	</div>
 	<div class="useranal-header">

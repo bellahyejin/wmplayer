@@ -6,23 +6,26 @@ public class LikeMusicDTO implements WMPlayerDTO{
 	private String musicID;
 	private String userID;
 	private String like_date;
+	private double bpm;
 	
 	public LikeMusicDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LikeMusicDTO(String musicID, String userID) {
+	public LikeMusicDTO(String musicID, String userID, double bpm) {
 		super();
 		this.musicID = musicID;
 		this.userID = userID;
+		this.bpm = bpm;
 	}
 
 	public LikeMusicDTO(String musicID, String userID, String like_date,
-			String location) {
+			double bpm) {
 		super();
 		this.musicID = musicID;
 		this.userID = userID;
 		this.like_date = like_date;
+		this.bpm = bpm;
 	}
 
 	public String getMusicID() {
@@ -48,4 +51,13 @@ public class LikeMusicDTO implements WMPlayerDTO{
 	public void setLike_date(String like_date) {
 		this.like_date = like_date;
 	}
+
+	public double getBpm() {
+		return bpm;
+	}
+
+	public void setBpm(double bpm) {
+		this.bpm = bpm;
+	}
+	
 }

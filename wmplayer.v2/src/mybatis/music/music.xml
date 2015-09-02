@@ -19,4 +19,8 @@
 	<select id="likemusic" parameterType="String" resultType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
 		select title, artist from musicinfo where musicID = #{musicID}	    
 	</select>
+		
+	<select id="selectbpm" parameterType="String" resultType="double">
+	    select bpm from musicinfo where musicID = #{musicID}
+	</select>
 </mapper>

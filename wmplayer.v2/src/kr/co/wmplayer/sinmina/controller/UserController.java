@@ -118,6 +118,7 @@ public class UserController {
 
 		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid);
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
+		double avgbpm = musicdao.avgBpm(userid);
 		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
 
 		for(int i = 0 ; i < list.size() ; i++){
@@ -128,6 +129,7 @@ public class UserController {
 		}
 		model.addAttribute("share", list2);
 		model.addAttribute("music", musiclist);
+		model.addAttribute("avgbpm", avgbpm);
 		model.addAttribute("listsize", list2.size());
 		model.addAttribute("musicsize", musiclist.size());
 

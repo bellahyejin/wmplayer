@@ -61,4 +61,12 @@ public class MusicDAO {
 		MusicInfoDTO like = session.selectOne("music.likemusic", musicid);
 		return like;
 	}
+	
+	public double selectBpm(String musicID){
+		return session.selectOne("music.selectbpm",musicID);
+	}
+	
+	public double avgBpm(String userID){
+		return session.selectOne("like.avgBpm",userID);
+	}
 }

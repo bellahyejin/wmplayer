@@ -85,7 +85,8 @@ function showPosition(position)
 		var doc_weathericon = document.getElementById('weathericon');
 
 		var weathertxt_value = weather_text.item(0).firstChild.nodeValue;
-
+	
+		//날씨 표현
 		if (weathertxt_value.includes('맑음')) {
 			doc_weathericon.className = "icon-sun icon-weather";
 		} else if (weathertxt_value.includes('흐림')) {
@@ -97,22 +98,26 @@ function showPosition(position)
 		} else if (weathertxt_value.includes('구름')) {
 			doc_weathericon.className = "icon-cloudy icon-weather";
 		}
-
+	
+		//xml 파싱 결과 담기
 		for (var i = 0; i < musicID.length; i++) {
 			playlist[i] = musicID.item(i).firstChild.nodeValue;
 			playinfo[i] = title.item(i).firstChild.nodeValue + ' - '
 					+ artist.item(i).firstChild.nodeValue;
 			playimage[i] = image.item(i).firstChild.nodeValue;
 		}
+		//날씨 정보
 		doc_location.innerHTML = location.item(0).firstChild.nodeValue;
 		doc_weathertxt.innerHTML = weathertxt_value;
 		doc_temper.innerHTML = temper.item(0).firstChild.nodeValue;
+		
+		//음악 정보
 		listLength = playlist.length - 1;
 		curIdx = Math.floor(Math.random() * listLength + 1);
 		play_title.innerHTML = playinfo[curIdx];
 		document.albumcover.src = playimage[curIdx];
+		//음악 로드
 		loadPlayer(playlist[curIdx]);
-		/* likeselect(playlist[curIdx]); */
 	}
 
 	function mix(curIndex) {
@@ -152,10 +157,9 @@ function showPosition(position)
 		nexIdx = curIdx + 1;
 		play_title.innerHTML = playinfo[nexIdx];
 		document.albumcover.src = playimage[nexIdx];
-		/* loadPlayer(playlist[nexIdx]); */
+		selectuserlike(playlist[nexIdx]);
 		ytplayer.loadVideoById(playlist[nexIdx]);
 		curIdx = nexIdx;
-	 	/* likeselect(playlist[curIdx]); */
 
 	}
 	function prePlay() {
@@ -165,15 +169,11 @@ function showPosition(position)
 
 		play_title.innerHTML = playinfo[preIdx];
 		document.albumcover.src = playimage[preIdx];
-		/* loadPlayer(playlist[preIdx]); */
+		selectuserlike(playlist[preIdx]);
 		ytplayer.loadVideoById(playlist[preIdx]);
 		curIdx = preIdx;
-	 	/* likeselect(playlist[curIdx]); */
 
 	}
-	/*
-	 * Chromeless player has no controls.
-	 */
 	// Update a particular HTML element with a new value
 	function updateHTML(elmId, value) {
 		var current = 0;
@@ -183,16 +183,11 @@ function showPosition(position)
 			nextPlay();
 		} else if (elmId == 'videoDuration' || elmId == 'videoCurrentTime') {
 			document.getElementById(elmId).innerHTML = value;
-		}/*  else if (elmId == 'favorDuration') {
-			duration = value;
-			favorTime = (current + duration) * 0.8;
-			/*        	alert('current : '+current+", duration :"+duration+', favor : '+ favorTime)
-	  }  */
+		}
 	}
 
 	// This function is called when an error is thrown by the player
 	function onPlayerError(errorCode) {
-		//alert("An error occured of type:" + errorCode);
 		if (errorCode == 150) {
 			loadPlayer(playlist[curIdx]);
 		}
@@ -215,7 +210,7 @@ function showPosition(position)
 		var curMin = parseInt(currentTime / 60);
 		var curSec = parseInt(currentTime % 60);
 		var favorTime = (currentTime + duration) * 0.8;
-		//timebarIncrease(intCur, intDur);
+		//시간 변환
 		if (durMin < 10) {
 			durMin = '0' + durMin;
 		}
@@ -231,15 +226,11 @@ function showPosition(position)
 			curSec = '0' + curSec;
 		}
 		if (ytplayer && ytplayer.getDuration) {
-			/* updateHTML("favorDuration", duration);
-			updateHTML("favorCurrentTime", currentTime); */
 			updateHTML("videoDuration", durMin + " : " + durSec);
 			updateHTML("videoCurrentTime", curMin + " : " + curSec);
-
-			document.changer.style.width = (280 / ytplayer.getDuration())
-					* ytplayer.getCurrentTime();
+			//Timeline 표시 비율로
+			document.changer.style.width = (280 / ytplayer.getDuration())* ytplayer.getCurrentTime();
 		}
-
 	}
 
 	var cnt = 0; // 재생중과 일시정지 표시
@@ -249,25 +240,24 @@ function showPosition(position)
 		if (ytplayer) {
 			ytplayer.playVideo();
 		}
-	}
-
+	}//재생
 	function pauseVideo() {
 		if (ytplayer) {
 			ytplayer.pauseVideo();
 			cnt = 0;
 		}
-	}
+	}//일시정지
 	function muteVideo() {
 		if (ytplayer) {
 			ytplayer.mute();
 		}
-	}
+	}//음소거
 
 	function unMuteVideo() {
 		if (ytplayer) {
 			ytplayer.unMute();
 		}
-	}
+	}//소리켜기
 
 	// This function is automatically called by the player once it loads
 	function onYouTubePlayerReady(playerId) {
@@ -278,13 +268,12 @@ function showPosition(position)
 		updatePlayerInfo();//상태 변환
 		ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
 		ytplayer.addEventListener("onError", "onPlayerError");
-
-		//ytplayer.cueVideoById(playerId);
 	}
 	// The "main method" of this sample. Called when someone clicks "Run".
 	function loadPlayer(playmusic) {
 		// Lets Flash from another domain call JavaScript
 		// 동영상 속성 지정
+		selectuserlike(playmusic);
 		var params = {
 			allowScriptAccess : "always"
 		};
@@ -293,12 +282,9 @@ function showPosition(position)
 			id : "ytPlayer"
 		}; //아이디
 		// All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
-		swfobject
-				.embedSWF(
-						"http://www.youtube.com/v/"
-								+ playmusic
-								+ "?version=3&rel=0&autoplay=1&enablejsapi=1&playerapiid=ytplayer&",
-						"videoDiv", "0", "0", "8", null, null, params, atts);
+		swfobject.embedSWF("http://www.youtube.com/v/" + playmusic
+							+ "?version=3&rel=0&autoplay=1&enablejsapi=1&playerapiid=ytplayer&",
+							"videoDiv", "0", "0", "8", null, null, params, atts);
 	}
 
 	//재생 , 일시정지 이미지 변환
@@ -313,74 +299,59 @@ function showPosition(position)
 			cnt = 0;
 		}
 	}
-</script>
-<script type="text/javascript">
-/* Like function jquery ajax*/
-var status ;
-var toggle = 1;
-$(document).ready(function() {
-	$('.like').on('click',function(event) {
-		if(toggle == 1){
-			status = 'add';
-			var dataSend = 'musicid='+playlist[curIdx]+'&status='+status;
-			$.ajax({
-					url: 'ajax/MusicLikeData',
-					type: 'POST',
-					data: dataSend,
-					cache: false,
-					success : function(data){
-						alert("Add::Data : " + data+", status : "+status+", toggle : "+ toggle);
-					}
-				});
-			$('#like').css('color','#81d4fa');
-			toggle=0;
-			status = 'delete';
+	
+var flag = false; 
+$(document).ready(function(){
+	$('.like').click(function(){
+		if(flag != true){
+			likeAction(playlist[curIdx],'add');
+			flag = true;
 		}else{
-			status = 'delete';
-			var dataSend = 'musicid='+playlist[curIdx]+'&status='+status;
-			$.ajax({
-					url: 'ajax/MusicLikeData',
-					type: 'POST',
-					data: dataSend,
-					cache: false,
-					success : function(data){
-						alert("Delete::Data : " + data+", status : "+status+", toggle : "+ toggle);
-
-					}
-				});
-			$('#like').css('color','#ffffff');
-			toggle=1;
-			status = 'add';
+			likeAction(playlist[curIdx],'delete');
+			flag = false;
 		}
 	});
 });
-/* select */
-var response = '';
-function likeselect(playlist){
-	status = 'select';
-	var dataSend = 'musicid='+playlist+'&status='+status;
+
+//like select 
+function selectuserlike(musicID){
 	$.ajax({
-		url: 'ajax/MusicLikeData',
-		type: 'POST',
-		data: dataSend,
-		cache: false,
-		success : function(data){
-			colorchange(data);
+		url: 'MusicLikeData',
+		data : {
+			musicID : musicID,
+			action : 'select'
 		},
-		error: function(xhr, status, error){
-			alert("Error :: "+xhr+", Status :: "+status + ", Error:::"+ error)
+		dataType : 'Text',
+		success : function(data){
+			if(data == 'like'){
+				$('.like i').css({'color':'#81d4fa'});
+				flag = true;
+			}
+			else{
+				$('.like i').css({'color':'#ffffff'});
+				flag = false;
+			}
 		}
 	});
-	
 }
 
-
-function colorchange(data){
-	if(data == 'like'){
-		$("#like").css('color','#81d4fa');
-	}else if(data == 'unlike'){
-		$("#like").css('color','#ffffff');
-	}
+//like add 
+function likeAction(musicID, action){
+	$.ajax({
+		url : 'MusicLikeData',
+		data : {
+			musicID : musicID,
+			action : action
+		},
+		dataType : 'Text',
+		success : function(data){
+			if(data == 'like'){
+				$('.like i').css({'color' : '#81d4fa'});
+			}else{
+				$('.like i').css({'color' : '#ffffff'});
+			}
+		}
+	});
 }
 </script>
 
