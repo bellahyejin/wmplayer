@@ -30,7 +30,7 @@ public class JSONFileParser
 	{
 	}
 
-	public boolean setUrl(String url_string) throws GoogleJsonResponseException
+	public boolean setUrl(String url_string)
 	{
 		/*
 		 * try
@@ -76,11 +76,6 @@ public class JSONFileParser
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-			else
-			{
-				// Other error, re-throw.
-				throw e;
 			}
 		}
 		catch (IOException e)
