@@ -1,21 +1,25 @@
 String.prototype.trim = function()
 {
-	return this.replace(/(^\s*)|(\s\s*\s\s)|(\s*$)/gi, "");
+	var str = this;
+	return str.replace(/(^\s*)|(\s\s*)|(*\s\s)|(\s*$)/gi, "");
 }
 
 String.prototype.ltrim = function()
 {
-	return this.replace(/(^\s*)/gi, "");
+	var str = this;
+	return str.replace(/(^\s*)/gi, "");
 }
 
 String.prototype.ctrim = function()
 {
-	return this.replace(/(\s\s*\s\s)/gi, "");
+	var str = this;
+	return str.replace(/(\s\s*\s\s)/gi, "");
 }
 
 String.prototype.rtrim = function()
 {
-	return this.replace(/(\s*$)/gi, "");
+	var str = this;
+	return str.replace(/(\s*$)/gi, "");
 }
 
 String.prototype.equals = function(com_str)
@@ -43,12 +47,13 @@ String.prototype.split = function(split_str)
 
 		do
 		{
-			array[array_idx++] = str.substring(0, split_idx == -1 ? str.length : split_idx);
+			var temp = str.substring(0, split_idx == -1 ? str.length : split_idx);
+			if (temp != "") array[array_idx++] = temp;
 			str = split_idx == -1 ? "" : str.substring(split_idx + split_str.length);
 		}
 		while (!((split_idx = str.indexOf(split_str)) == -1 && str == ""));
 	}
-	else array[0] = split_str;
+	else array[0] = str;
 
 	return array;
 }
@@ -56,4 +61,13 @@ String.prototype.split = function(split_str)
 String.prototype.contains = function(str)
 {
 	return this.indexOf(str) != -1;
+}
+
+String.prototype.replaceAll = function(oldstr, newstr)
+{
+	var str = this;
+
+	if (oldstr != newstr) while (str.indexOf(oldstr) != -1) str = str.replace(oldstr, newstr);
+
+	return str;
 }

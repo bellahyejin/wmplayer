@@ -5,8 +5,9 @@
 <script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
 <script type="text/javascript">
-	if ("${ fail }" == "fail") alert("노래가 없습니다");
-	else if ("${ fail }" == "error") alert("나중에 다시 시도해주세요");
+	if ("${ data.fail }" == "fail") alert("노래가 없습니다");
+	else if ("${ data.fail }" == "error") alert("나중에 다시 시도해주세요");
+	else if ("${ data.fail }" == "blank") alert("빈칸을 모두 채워주세요");
 </script>
 <form id="writeform" method="post">
 	<div class="sharewrite-form">
@@ -50,3 +51,12 @@
 		</div>
 	</div>
 </form>
+<script type="text/javascript">
+$(document).ready(function()
+	{
+		$(".sharewrite-contents :text[name='board_title']").val("${ data.bean.board_title }");
+		$(".sharewrite-contents :text[name='board_artist']").val("${ data.bean.board_artist }");
+		$(".sharewrite-contents option[value='${ data.bean.weather_custom }']").attr("selected", "selected");
+		$(".sharewrite-contents textarea").html("${ data.bean.board_desc }");
+	});
+</script>

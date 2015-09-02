@@ -2,67 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link type="text/css" href="${ initParam.root }/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${ initParam.root }/css/ShareboardDetail.css" rel="stylesheet" />
-<script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
-<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
-<script type="text/javascript">
-	this.sequence = ${ data.board_seq };
-
-	function getData(page)
-	{
-		this.data = {
-				column_seq : this.sequence,
-				pageNo : page
-			};
-
-		if (!JSONDataCompare(this.prev_data, this.data))
-		{
-			this.prev_data = this.data;
-
-			$.ajax({
-				type : "post",
-				url : "${ initParam.root }/view/ajax/share/CallReple.jsp",
-				dataType : "html",
-				data : this.data,
-				success : function(data, status, xhr)
-				{
-					$("#reple_list").html(data);
-				},
-				error : function(xhr, status, error)
-				{
-					alert("reple getdata error");
-				}});
-		}
-	}
-
-	function insertData()
-	{
-		$.ajax({
-			type : "post",
-			url : "${ initParam.root }/view/ajax/share/InsertReple.jsp",
-			dataType : "html",
-			data : {
-				column_seq : this.sequence,
-				repleContent : $("#reple_content").val()
-			},
-			success : function(data, status, xhr)
-			{
-				$("#reple_content").val("");
-			},
-			error : function(xhr, status, error)
-			{
-				alert("reple insert error");
-			}});
-	}
-
-	$(document).ready(function()
-		{
-			$("#reple_input").click(function()
-				{
-					insertData();
-				});
-		});
-</script>
 <div class="share-detail">
 	<div class="share-detail-header">
 		<span>
@@ -105,3 +44,74 @@
 	<input type="button" value="확인" id="reple_input" />
 </div>
 <div id="reple_list" style="size : 800px;"></div>
+<script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
+<script type="text/javascript">
+	this.sequence = ${ data.board_seq };
+
+	function getData(page)
+	{
+		this.data = {
+				column_seq : this.sequence,
+				pageNo : page
+			};
+
+		if (!JSONDataCompare(this.prev_data, this.data))
+		{
+			this.prev_data = this.data;
+
+			$.ajax({
+				type : "post",
+				url : "${ initParam.root }/share/replelist",
+				dataType : "html",
+				data : this.data,
+				success : function(data, status, xhr)
+				{
+					$("#reple_list").html(data);
+				},
+				error : function(xhr, status, error)
+				{
+					alert("reple getdata error");
+				}});
+		}
+	}
+
+	function insertData()
+	{
+		$.ajax({
+			type : "post",
+			url : "${ initParam.root }/view/ajax/share/InsertReple.jsp",
+			dataType : "html",
+			data : {
+				column_seq : this.sequence,
+				repleContent : $("#reple_content").val()
+			},
+			success : function(data, status, xhr)
+			{
+				$("#reple_content").val("");
+			},
+			error : function(xhr, status, error)
+			{
+				alert("reple insert error");
+			}});
+	}
+
+	function updateData()
+	{
+		//
+	}
+
+	function deleteData()
+	{
+		//
+	}
+
+	$(document).ready(function()
+		{
+			$("#reple_input").click(function()
+				{
+					insertData();
+				});
+		});
+</script>

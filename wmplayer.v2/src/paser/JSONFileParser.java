@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,57 +16,76 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
-
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
 public class JSONFileParser
 {
 	private InputStream is;
 
-	public JSONFileParser() { }
-
-	public boolean setUrl(String url_string) throws MalformedURLException, IOException, InterruptedException
+	public JSONFileParser()
 	{
-		/*try
-		{
-			int status_code = 0;
-			URL url = new URL(url_string);
+	}
 
-			while ((status_code = ((HttpURLConnection) url.openConnection()).getResponseCode()) != 200)
-			{
-				if (status_code == 400) return false;
-				int sleep = (int)(Math.random() * 10000) + 5000;
-				System.out.println(status_code + " error " + sleep + " millisecond sleep");
-				Thread.sleep(sleep);
-			}
+	public boolean setUrl(String url_string) throws GoogleJsonResponseException
+	{
+		/*
+		 * try
+		 * {
+		 * int status_code;
+		 * URL url = new URL(url_string);
+		 *
+		 * while ((status_code = ((HttpURLConnection)
+		 * url.openConnection()).getResponseCode()) != 200)
+		 * {
+		 * if (status_code == 400) return false;
+		 * int sleep = (int) (Math.random() * 10000) + 5000;
+		 * System.out.println(status_code + " error " + sleep +
+		 * " millisecond sleep");
+		 * Thread.sleep(sleep);
+		 * }
+		 *
+		 * return (is = url.openStream()) != null;
+		 * }
+		 * catch (InterruptedException | IOException e)
+		 * {
+		 * e.printStackTrace();
+		 * return false;
+		 * }
+		 */
 
-			return (is = url.openStream()) != null;
-		}
-		catch (InterruptedException | IOException e)
-		{
-			e.printStackTrace();
-			return false;
-		}*/
 		Random randomGenerator = new Random();
 		try
 		{
 			return (is = new URL(url_string).openStream()) != null;
 		}
-		catch (GoogleJsonResponseException e) {
-	        if (e.hashCode() == 403
-	                && (e.getDetails().getErrors().get(0).getReason().equals("rateLimitExceeded")
-	                    || e.getDetails().getErrors().get(0).getReason().equals("userRateLimitExceeded"))) {
-	              // Apply exponential backoff.
-	              Thread.sleep(3* 1000 + randomGenerator.nextInt(1001));
-	            } else {
-	              // Other error, re-throw.
-	              throw e;
-	            }
+		catch (GoogleJsonResponseException e)
+		{
+			if (e.hashCode() == 403 && (e.getDetails().getErrors().get(0).getReason().equals("rateLimitExceeded") || e.getDetails().getErrors().get(0).getReason().equals("userRateLimitExceeded")))
+			{
+				// Apply exponential backoff.
+				try
+				{
+					Thread.sleep(3 * 1000 + randomGenerator.nextInt(1001));
+				}
+				catch (InterruptedException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			else
+			{
+				// Other error, re-throw.
+				throw e;
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -118,7 +138,7 @@ public class JSONFileParser
 
 	public List<HashMap<String, Object>> parser(String root_key, Map<String, Boolean> key_name)
 	{
-		return processNode(Json.createParser(is), "/root"+(root_key == null ? "" : root_key)  , key_name);
+		return processNode(Json.createParser(is), "/root" + (root_key == null ? "" : root_key), key_name);
 	}
 
 	private String location_check(String key_location, List<String> array_key)
@@ -161,7 +181,10 @@ public class JSONFileParser
 					child_data.put(key, data);
 					break;
 				}
-				else { if (key_name.get(key)) child_data.put(key, child_data.get(key).toString() + " | " + data); }
+				else
+				{
+					if (key_name.get(key)) child_data.put(key, child_data.get(key).toString() + " | " + data);
+				}
 			}
 			else
 			{
@@ -175,9 +198,9 @@ public class JSONFileParser
 
 	public List<HashMap<String, Object>> processNode(JsonParser node, String root_key, Map<String, Boolean> key_name)
 	{
-		List<String> array_key = new ArrayList<String> (1);
-		Map<String, Object> child_data = new HashMap<String, Object> (1);
-		List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>> (1);
+		List<String> array_key = new ArrayList<String>(1);
+		Map<String, Object> child_data = new HashMap<String, Object>(1);
+		List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>(1);
 
 		Event event;
 		String key_location = "/root";
@@ -207,10 +230,12 @@ public class JSONFileParser
 					{
 						boolean insert_flag = false;
 
-						for (Map<String, Object> map : data) for (String key : key_name.keySet()) if (key_name.get(key)) insert_flag |= map.get(key).toString().equals(child_data.get(key).toString());
+						for (Map<String, Object> map : data)
+							for (String key : key_name.keySet())
+								if (key_name.get(key)) insert_flag |= map.get(key).toString().equals(child_data.get(key).toString());
 
 						if (!insert_flag) data.add(data.size(), (HashMap<String, Object>) child_data);
-						child_data = new HashMap<String, Object> ();
+						child_data = new HashMap<String, Object>();
 					}
 
 					key_location = location_check(key_location, array_key);
