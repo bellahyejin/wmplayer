@@ -62,7 +62,7 @@ public class UserInfoDAO {
 	}// select
 
 	public int selectcheck(String userID) {
-		return (int) session.selectOne("user.useridcheck", userID);
+		return session.selectOne("user.useridcheck", userID);
 	}
 
 	public int loginproccess(UserInfoDTO user)

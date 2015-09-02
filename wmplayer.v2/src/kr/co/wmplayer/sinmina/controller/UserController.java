@@ -1,5 +1,6 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class UserController {
 		String result = null;
 		if(user.getName() == null || user.getEmail() == null) {
 			return 	"해당 정보를 입력해주세요"  //정보를 입력하지 않았을 경우
-					+ "<input class='input-submit' type='submit' id='submit-id' value='아이디 찾기' />";
+					+ "<input class='input-submit' type='button' id='submit-id' value='아이디 찾기' />";
 		}
 		else{
 			String userid = dao.findid(user);
@@ -74,7 +75,7 @@ public class UserController {
 			}
 			else //회원 정보가 없을 경우
 				return "등록된 회원정보가 없습니다. 다시입력해주세요"
-						+ "<input class='input-submit' type='submit' id='submit-id' value='아이디 찾기' />";
+						+ "<input class='input-submit' type='button' id='submit-id' value='아이디 찾기' />";
 		}
 	}
 
@@ -98,10 +99,10 @@ public class UserController {
 			}
 			else //해당정보가 없을 경우
 				return "등록된 회원정보가 없습니다. 다시입력해주세요"
-						+ "<input class='input-submit' type='submit' id='submit-pass' value='비밀번호찾기' />";
+						+ "<input class='input-submit' type='button' id='submit-pass' value='비밀번호찾기' />";
 		}else //정보를 입력하지 않았을 경우
 			return "해당 정보를 입력해주세요"
-					+ "<input class='input-submit' type='submit' id='submit-pass' value='비밀번호찾기' />";
+					+ "<input class='input-submit' type='button' id='submit-pass' value='비밀번호찾기' />";
 	}
 
 	@RequestMapping("/logout")
@@ -113,11 +114,17 @@ public class UserController {
 
 	@RequestMapping("/userinfo")
 	public String userinfoform(HttpSession session, Model model){
-
+		String pattern = "#####.##";
 		String userid = (String)session.getAttribute("success");
-
+		UserInfoDTO bean = dao.select(userid);
+		model.addAttribute("user", bean);
 		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid);
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
+		
+		DecimalFormat format = new DecimalFormat(pattern);
+		
+		String avgbpm = format.format(musicdao.avgBpm(userid));
+		
 		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
 
 		for(int i = 0 ; i < list.size() ; i++){
@@ -128,11 +135,30 @@ public class UserController {
 		}
 		model.addAttribute("share", list2);
 		model.addAttribute("music", musiclist);
+		model.addAttribute("avgbpm", avgbpm);
 		model.addAttribute("listsize", list2.size());
 		model.addAttribute("musicsize", musiclist.size());
 
 		return "userinfo";
 	}
+	
+	@RequestMapping("/update")
+	public String userupdate(@RequestParam(value="passwd", required=false) String passwd,
+			                 @RequestParam(value="name", required=false) String name,
+			                 @RequestParam(value="year", required=false) String year,
+							 @RequestParam(value="month", required=false) String month,
+							 @RequestParam(value="date", required=false) String date,
+							 @RequestParam(value="email_id", required=false) String email_id,
+							 @RequestParam(value="email_addr", required=false) String addr,
+							 HttpSession session,Model model){
+		String userid = (String)session.getAttribute("success");
+		
+		String birth = year + "/"+month+"/"+date;
+		String email = email_id+"@"+addr;
+		
+		return "userinfo";       
+	}
+
 
 	@RequestMapping("/join")
 	public String userjoin(@RequestParam(value="userID", required=false) String userID,
@@ -168,7 +194,14 @@ public class UserController {
 	}
 
 	//유효성 검사 중복확인과 pass워드
-
+	@RequestMapping("/duplicationid")
+	@ResponseBody
+	public String duplicationid(String userID){
+		System.out.println("userID: "+userID);
+		int result =dao.selectcheck(userID);
+		if(result == 1) return "unable";
+		else return "able";
+	}
 
 	//drop
 	@RequestMapping("/dropform")

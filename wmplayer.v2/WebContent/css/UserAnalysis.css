@@ -4,9 +4,13 @@
 	padding-top: 30px;
 }
 
+/* 회원 정보 */
+.avgbpm, .useranal-header table { font-family: 나눔바른고딕; font-size: 10pt;}
+.avgbpm { float: left;}
+.useranal-header { float: right; width: 300px; margin: 0px;}
+
 /*��� ���� ����� */
 .anal-button{text-align: center;}
-.useranal-header{text-align: center; margin: 20px 0 30px;}
 /*  header */
 .useranal-header #name{ color: #6495f0}
 .useranal-header #style{ color: orange;}
@@ -16,9 +20,10 @@
 .useranal-header span{ font-size: 9pt;}
 
 /* section table */
-.anal-left, .anal-right{float:left; width:280px; height: 400px; overflow-x:hidden; overflow-y: auto; }
+.anal-left, .anal-right{width:280px; height: 400px; overflow-x:hidden; overflow-y: auto; }
+.anal-left { clear : both;}
+.anla-right{ float: left;}
 .anal-left table, .anal-right table	{ border-spacing:inherit;  width: 250px; height: auto;}
-.anal-left{ margin: 0 5px 0 70px}
 .anal-right tr:HOVER td{background: #fafafa}
 
 /*table border*/

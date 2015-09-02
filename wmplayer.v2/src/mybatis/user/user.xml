@@ -8,7 +8,7 @@
 	</insert>
 
 	<update id="userinfoupdate" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO">
-		update UserInfo set passwd=#{passwd}, name=#{name}, birth=#{birth}, gender=#{gender},email=#{email} where userID=#{userID}
+		update UserInfo set passwd=#{passwd}, name=#{name}, birth=#{birth}, email=#{email} where userID=#{userID}
 	</update>
 
 	<update id="userinfodrop" parameterType="String">
@@ -20,8 +20,8 @@
 		select * from UserInfo where userID=#{userID} and status in ('a', 'c')
 	</select>
 
-	<select id="useridcheck" parameterType="String" resultType="java.lang.String">
-		select userID from UserInfo where userID=#{userID}
+	<select id="useridcheck" parameterType="String" resultType="int">
+		select count(userID) from UserInfo where userID=#{userID}
 	</select>
 
 	<select id="logincheck" parameterType="kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO" resultType="int">

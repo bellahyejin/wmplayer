@@ -105,7 +105,48 @@ $(document).ready(function(){
 	   	$("#findpass").css("display","none");
 	});
 	
+	buttonclick();
+	$(document).ajaxSuccess(
+		buttonclick()
+	);
 	
+	$("#passwd, #passwdcheck").keyup(function(){
+			var pass = $("#passwd").val();
+			var passcheck = $("#passwdcheck").val();
+			var message = checkPass(pass);
+			var message2 = checkPassRe(pass, passcheck)
+			
+			if(message != false) $('#passwd').css({'border-bottom-color':'#2ECC71'});
+			else $('#passwd').css({'border-bottom-color':'#E74C3C'});
+				
+			if(message2 != false) $('#passwdcheck').css({'border-bottom-color':'#2ECC71'});
+			else $('#passwdcheck').css({'border-bottom-color':'#E74C3C'});
+	});
+	
+	$('#userid').hover(function(){
+		$('.toolid').fadeIn();
+	},function(){
+		$('.toolid').fadeOut();
+	});
+	
+	$('#passwd').hover(function(){
+		$('.toolpass').fadeIn();
+	},function(){
+		$('.toolpass').fadeOut();
+	});
+	
+	$('#userid').keyup(function(){
+		if(perfectID()){
+			duplicationid();
+		}else
+			$('.modal-join #userid').css({'border-bottom-color' : '#E74C3C'});
+		
+	});
+});
+
+//아이디 찾기 비밀번호 찾기 버튼
+function buttonclick(){
+	//id 찾기
 	$('#submit-id').click(function(){
 		$.ajax({
 			url:'findId',
@@ -119,7 +160,7 @@ $(document).ready(function(){
 			}			
 		});
 	});
-	
+	//비밀번호 찾기 
 	$('#submit-pass').click(function(){
 		$.ajax({
 			url:'findPass',
@@ -134,11 +175,67 @@ $(document).ready(function(){
 			}			
 		});
 	});
-	
-	$('input[type="text"]').tooltip();
-	
-});
+}
 
+//중복확인 
+function duplicationid(){
+	$.ajax({
+		url: 'duplicationid',
+		type:'post',
+		data : {
+			userID : $('.modal-join #userid').val()
+		},
+		dataType: 'text',
+		success:function(data){
+			if(data == 'able'){
+				$('#userid').css({'border-bottom-color' : '#2ECC71'});
+			}else
+				$('#userid').css({'border-bottom-color' : '#E74C3C'});
+		}
+	});
+}
+
+
+//id 유효성 검사 
+function perfectID(){
+	var userID = $('.modal-join #userid').val();
+	var idRegx =/^[A-za-z0-9]{6,16}$/g;
+	
+	if (idRegx.test(userID)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+// 유효성 검사 함수
+function checkPass(val){
+	var passRegx = /^[\d|a-z|A-Z|]{10,20}$/gi;
+	var message;
+	if (val == '') {
+		message = false;
+	} else if (passRegx.test(val)){
+		message = true;
+	} else {
+		message = false;
+	}
+	return message;
+}
+function checkPassRe(pass, passcheck){
+	var message;
+	if (passcheck == '') {
+		message = '';
+	} else {
+		if (pass == '') {
+			message = true;
+		} else if (pass == passcheck) {
+			message = true;
+		} else {
+			message = false;
+		}
+	}
+	return message;
+}
+//아이디 찾기 비밀번호 찾기 폼 띄우기
 function findid(){
 	var loginform = document.getElementById("loginform");
 	var idform = document.getElementById("findid")
@@ -153,6 +250,7 @@ function findpass(){
 	passform.style.display = 'block';
 	loginform.style.display = 'none';
 }
+//뒤로가기
 function moveback(){
 	var loginform = document.getElementById("loginform");
 	var idform = document.getElementById("findid");
@@ -205,7 +303,7 @@ function moveback(){
 			<input class="input-text" type="text" id="name" name="name" placeholder="Name" /> 
 			<input class="input-text" type="text" id="email" name="email" placeholder="Email은 @와 함께 써주세요" />
 			<div class="finddata">
-				<input class="input-submit" type="submit" id="submit-id" value="아이디 찾기" />
+				<input class="input-submit" type="button" id="submit-id" value="아이디 찾기" />
 			</div>
 		</div>
 		<div id="findpass">
@@ -218,7 +316,7 @@ function moveback(){
 			<input class="input-text" type="text" id="name" name="name" placeholder="Name" />
 			<input class="input-text" type="text" id="email" name="email" placeholder="Email은 @와 함께 써주세요" />
 			<div class="finddata">
-			<input class="input-submit" type="submit" id="submit-pass" value="비밀번호찾기" />
+			<input class="input-submit" type="button" id="submit-pass" value="비밀번호찾기" />
 			</div>
 		</div>
 	</div>
@@ -230,9 +328,11 @@ function moveback(){
 				<i class="fa fa-plus-square-o"></i>
 			</div>
 			<h1>JOIN</h1>
-			<input class="input-text-join tooltip" name="userID" type="text" title="아이디는 영문, 숫자 및 8자이상 16자이하만 입력가능합니다" placeholder="ID" />
-			<input class="input-text-join tooltip" name="passwd" type="password" title="비밀번호는 영문 대소문자와 숫자,특수문자를 포함 10자 이상이여야 합니다." placeholder="Password" /> 
-			<input class="input-text-join" name="passwdcheck" type="password" placeholder="Password Check" />
+			<input class="input-text-join" name="userID" type="text" id="userid"  placeholder="ID" />
+			<div class="tooltip toolid">아이디는 영문, 숫자 및 8자이상<br>16자이하만 입력가능합니다</div>
+			<input class="input-text-join" name="passwd" type="password" id="passwd" placeholder="Password" /> 
+			<div class="tooltip toolpass">비밀번호는 영문 대소문자와 숫자,<br>특수문자를포함 10자 이상이여야 합니다.</div>
+			<input class="input-text-join" name="passwdcheck" type="password" id="passwdcheck" placeholder="Password Check" />
 			<input class="input-text-join" name="name" type="text" placeholder="Name" />
 			<div class="birth-div">
 				<span>생년월일</span><br> 

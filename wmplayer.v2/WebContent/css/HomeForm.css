@@ -15,7 +15,7 @@
 #music-rank-list, #board-rank-list{ top: 0px; left: 65px; width: 268px; height: 250px; margin-top: 20px;}
 
 .notice { text-align: left; position: relative; height: 20px; overflow: hidden }
-.notice a, a:LINK, a:HOVER, a:VISITED{color: #757575}
+.notice a, a:LINK, a:HOVER, a:VISITED{color: #5f5f5f}
 .notice span { display: inline; }
 .notice span + span { display: inline; }
 .notice #attribute { color: #ff0000; font-weight: bold; }
@@ -29,7 +29,7 @@
 
 .jacket { width: 100px; height: 100px; }
 .must-music-subject { font-size: 11pt; font-style: #424242; text-align: center;}
-.must-music-artist { font-size: 9pt; font-style: #757575; text-align: center;}
+.must-music-artist { font-size: 9pt; font-style: #5f5f5f; text-align: center;}
 
 .music-rank { width: 20px;}
 #music-rank-list, #board-rank-list { float: left;}
