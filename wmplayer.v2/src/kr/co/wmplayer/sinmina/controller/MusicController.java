@@ -28,7 +28,6 @@ public class MusicController {
 	
 	@Autowired
 	private UserInfoDAO dao;
-	
 	@Autowired
 	private MusicDAO musicdao;
 	

@@ -100,6 +100,10 @@ public class NoticeBoardController {
 		
 		dao.updateView(notice_seq);
 		
+		String date = notice.getUpdate_day();
+		
+		notice.setUpdate_day(date.replace("-", "/").substring(0, 10));
+		
 		model.addAttribute("noticedetail", notice);
 		model.addAttribute("nextsu", nextsu);
 		model.addAttribute("beforesu", beforesu);
