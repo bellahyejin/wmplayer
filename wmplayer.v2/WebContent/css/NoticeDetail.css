@@ -38,8 +38,6 @@ pre{
 	width: 450px; 
 	height: 428px; 
 	padding: 20px 0 0 40px;
-	border-bottom: 2px solid #dedede;
-	
 }
 
 .notice-button{
@@ -47,6 +45,7 @@ pre{
 	height: 28px;
 	padding-top:8px; 
 	float: left;
+	border-top: 2px solid #dedede;
 }
 
 .paging-notice{ float: left;}

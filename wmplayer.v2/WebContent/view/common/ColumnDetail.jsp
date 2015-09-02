@@ -128,10 +128,10 @@ ${column.contents }
 		</div>
 		<br>
 
-		<div>
+		<div class="columnreply">
 			<!-- 리플시작 -->
-			<input type="text" size="65" id="repleTxt"> <input
-				type="button" value="확인" id="repleInput">
+			<input type="text" size="65" id="repleTxt" placeholder="댓글을 입력해주세요"> 
+			<input type="button" value="댓글입력" id="repleInput">
 		</div>
 		<div id="AppendReple" style="size: 800px;"></div>
 		<div id="replePage">

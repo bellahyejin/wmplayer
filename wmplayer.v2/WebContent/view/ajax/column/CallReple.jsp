@@ -5,6 +5,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link type="text/css" href="${initParam.root}/css/ColumnDetail.css"
+	rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
@@ -69,8 +71,7 @@
 	});
 </script>
 <table style="width: 540px" class="call_click">
-	<tr>
-		<th style="width: 10%">번호</th>
+	<tr class="replytitle">
 		<th style="width: 50%">내용</th>
 		<th style="width: 10%">작성자</th>
 		<th style="width: 20%">작성일</th>
@@ -78,7 +79,6 @@
 	</tr>
 	<c:forEach items="${reples}" var="reple" varStatus="status">
 		<tr>
-			<td>${status.count}</td>
 			<td>${reple.contents}<br> 
 				<input id="${reple.columnreply_seq}" type='text' size="30">
 				<input id="updateButton" type="button" value="수정">
