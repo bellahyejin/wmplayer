@@ -1,5 +1,6 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,12 +114,16 @@ public class UserController {
 
 	@RequestMapping("/userinfo")
 	public String userinfoform(HttpSession session, Model model){
-
+		String pattern = "#####.##";
 		String userid = (String)session.getAttribute("success");
 
 		List<BoardUserDTO> list2 = sharedao.selectMyboard(userid);
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
-		double avgbpm = musicdao.avgBpm(userid);
+		
+		DecimalFormat format = new DecimalFormat(pattern);
+		
+		String avgbpm = format.format(musicdao.avgBpm(userid));
+		
 		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
 
 		for(int i = 0 ; i < list.size() ; i++){
