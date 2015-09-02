@@ -26,13 +26,22 @@ body{font-family: �����ٸ����}
 .column-infotitle{color: #666; border-right: 1px solid #dedede; margin-right: 7px; padding-right: 7px;}
 #column-date, #column-view{color:#999; margin-right: 12px;}
 
-pre{ font: 10pt �����ٸ����;}
+pre{ 
+	font: 10pt �����ٸ����;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-break:break-all;
+}
 .column-contents{ 
 	clear: both; 
-	width: 500px; 
+	width: 450px; 
 	height: 400px; 
 	padding: 20px 0 0 40px;
 	border-bottom: 1px solid #dedede;
+	word-break: keep-all;
 }
 
 .column-button .styled-button-list {float: right;}

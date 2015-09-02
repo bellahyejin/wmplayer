@@ -24,13 +24,22 @@ body{font-family: �����ٸ����}
 .notice-infotitle{color: #666; border-right: 1px solid #dedede; margin-right: 7px; padding-right: 7px;}
 #notice-date, #notice-view{color:#999; margin-right: 12px;}
 
-pre{ font: 10pt �����ٸ����;}
+pre{ 
+	font: 10pt �����ٸ����; 
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-break:break-all;
+}
 .notice-contents{ 
 	clear: both; 
-	width: 500px; 
+	width: 450px; 
 	height: 428px; 
 	padding: 20px 0 0 40px;
 	border-bottom: 2px solid #dedede;
+	
 }
 
 .notice-button{
@@ -38,7 +47,6 @@ pre{ font: 10pt �����ٸ����;}
 	height: 28px;
 	padding-top:8px; 
 	float: left;
-	
 }
 
 .paging-notice{ float: left;}
