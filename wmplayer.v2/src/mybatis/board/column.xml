@@ -68,9 +68,9 @@
 		select
 		count(*) from columnReple where column_seq=#{column_seq}
 	</select>
-		<delete id="deleteReple" parameterType="int">
-		delete from columnReple
-		where columnReple_seq=#{delNum}
+	<delete id="deleteReple" parameterType="java.util.HashMap" >
+		delete from columnreple
+		where columnreple_seq=#{columnreple_seq} and column_seq = #{column_seq}
 	</delete>
 	
 	<update id="updateReple" parameterType="java.util.HashMap">

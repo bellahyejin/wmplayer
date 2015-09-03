@@ -88,6 +88,9 @@ public class ColumnBoardController {
 		model.addAttribute("varColumn_seq", varColumn_seq);
 		ColumnBoardDTO column = columndao.select(column_seq);
 		columndao.updatecnt(column_seq);
+		
+		String date = column.getUpdate_day();
+		column.setUpdate_day(date.replace("-", "/").substring(0, 10));
 		model.addAttribute("column",column);
 
 		// 여기부터는 다음과 이전 버튼 설정
@@ -143,26 +146,34 @@ public class ColumnBoardController {
 	    }
 	}
 	
-	@RequestMapping("/CallReply")
-	public String columnreply(@RequestParam(value="column_seq")int column_seq, @RequestParam(value="pageNo")int pageNo, Model model){
+	@RequestMapping("/CallReple")
+	public String columnreply(@RequestParam(value="column_seq")int column_seq, @RequestParam(value="pageNo",required=false)int pageNo, Model model){
 		
 		List<ColumnReplyDTO> list =  replydao.selectAll(column_seq, pageNo);
 		
 		for(ColumnReplyDTO reple : list){
 			String date = reple.getSubmit_date();
-			reple.setSubmit_date(date.replace("-", "/").substring(0, 10));
+			reple.setSubmit_date(date.replace("-", "/"));
 		}
 		
+		model.addAttribute("column_num", column_seq);
+		model.addAttribute("varPageNum", pageNo);
 		model.addAttribute("reples", list);
 		
 		return "ajax/column/CallReple";
 	}
 	
-	@RequestMapping("/DeleteReply")
-	public String deletereply(@RequestParam(value="delNum")int delNum){
+	@RequestMapping("/columnDeleteReple")
+	public String deletereply(@RequestParam(value="delNum")int delNum, @RequestParam(value="pageNo") int pageNo, @RequestParam(value="column_seq") int column_seq){
 		
-		replydao.delete(delNum);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("column_seq", column_seq);
+		map.put("columnreple_seq", delNum);
+		System.out.println(replydao.delete(map));
 		
+		/*	if(replydao.delete(map)){
+			System.out.println("삭제");
+		}*/
 		return "ajax/column/CallReple";
 	}
 	
@@ -171,7 +182,7 @@ public class ColumnBoardController {
 		
 		replydao.update(upNum, updatedContents);
 		
-		return "ajax/column/CallReple";
+		return "redirect:CallReple";
 	}
 	
 	@RequestMapping("/InsertReple")
@@ -181,6 +192,6 @@ public class ColumnBoardController {
 		
 		replydao.insert(column_seq, repleContent, id);
 		
-		return "ajax/column/CallReple";
+		return "redirect:CallReple";
 	}
 }

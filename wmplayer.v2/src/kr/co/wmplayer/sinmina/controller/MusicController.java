@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.wmplayer.sinmina.dao.music.MusicDAO;
 import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
+import kr.co.wmplayer.sinmina.model.dto.BpmInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
@@ -57,9 +58,13 @@ public class MusicController {
 		
 		double current_temper = wm.getWeatherData().getTemp();
 		List<MusicInfoDTO> lists = musicdao.selectTodayList(current_temper);
+		
+		BpmInfoDTO bpm = musicdao.todaybpm(current_temper);
+		
 		model.addAttribute("lists", lists);
 		model.addAttribute("wm", wm);
 		model.addAttribute("current_addr", current_addr);
+		model.addAttribute("bpm",bpm);
 		
 	    return "ajax/receiveData";
 	}
@@ -97,4 +102,6 @@ public class MusicController {
 		}
 		return "fail";
 	}
+	
+	
 }

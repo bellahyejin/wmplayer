@@ -8,7 +8,9 @@
 <link type="text/css" href="${initParam.root}/css/ColumnDetail.css"
 	rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script>
+var pageNum = "${varPageNum }";
 	$(document).ready(function() {
 
 		$("#AppendReple :input").hide();
@@ -18,20 +20,27 @@
 			var delNum = $(this).attr("value");
 			
 			$.ajax({
-				url : 'DeleteReply',
-				type : 'post',
+				url : 'columnDeleteReple',
+				type : 'POST',
 				data : {
-					delNum : delNum
+					 delNum : delNum,
+			         pageNo : pageNum,
+			         column_seq : "${column_num}"
 				},
 				success : function(data){
 					alert("댓글이 삭제 되었습니다");
 					
-					$.post("CallReply", {
-						column_seq : column_seq,
-						pageNo : pageNum
-					}, function(data) {
-						$('#AppendReple').empty();
-						$('#AppendReple').append(data);
+					$.ajax({
+						url : "CallReple",
+						type : "POST",
+						data : {
+							column_seq : column_seq,
+							pageNo : pageNum
+						},
+						success : function(data){
+							$('#AppendReple').empty();
+							$('#AppendReple').html(data);
+						}
 					});
 				}
 			});
@@ -50,20 +59,27 @@
 			
 			$.ajax({
 				url : 'UpdateReple',
-				type : 'post',
+				type : 'POST',
 				data : {
-					column_seq : column_seq,
-					pageNo : pageNum
+					upNum : upNum,
+		            updatedContents : updatedContents,
+		            pageNo : pageNum,
+		            column_seq : "${column_num}"
 				},
-				success : function(){
+				success : function(data){
 					alert("댓글이 수정 되었습니다");
-
-					$.post("CallReply", {
-						column_seq : column_seq,
-						pageNo : pageNum
-					}, function(data) {
-						$('#AppendReple').empty();
-						$('#AppendReple').append(data);
+					
+					$.ajax({
+						url : 'CallReple',
+						type : 'POST',
+						data : {
+							column_seq : column_seq,
+							pageNo : pageNum
+						},
+						success : function(data){
+							$('#AppendReple').empty();
+							$('#AppendReple').html(data);
+						}
 					});
 				}
 			});
