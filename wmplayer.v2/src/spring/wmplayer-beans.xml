@@ -21,7 +21,7 @@
 		        <value>classpath:mybatis/manager/manager.xml</value>
 		        <value>classpath:mybatis/manager/common.xml</value>
 		        <value>classpath:mybatis/music/musicLiked.xml</value>
-		        <value>classpath:mybatis/music/music.xml</value>
+				<value>classpath:mybatis/music/music.xml</value>
 		        <value>classpath:mybatis/user/user.xml</value>
 		        <value>classpath:mybatis/board/videoUploaded.xml</value>
 		    </list>

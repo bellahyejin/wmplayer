@@ -26,14 +26,67 @@ body{font-family: �����ٸ����}
 .column-infotitle{color: #666; border-right: 1px solid #dedede; margin-right: 7px; padding-right: 7px;}
 #column-date, #column-view{color:#999; margin-right: 12px;}
 
-pre{ font: 10pt �����ٸ����;}
+pre{ 
+	font: 10pt �����ٸ����;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-break:break-all;
+}
 .column-contents{ 
 	clear: both; 
-	width: 500px; 
+	width: 450px; 
 	height: 400px; 
 	padding: 20px 0 0 40px;
-	border-bottom: 1px solid #dedede;
 }
 
 .column-button .styled-button-list {float: right;}
-.column-button { margin-top: 20px}
+.column-button {
+	padding-top: 8px;
+	border-top: 2px solid #dedede;
+	width: 100%; 
+	height: 28px; 
+}
+
+.columnreply { height: 40px;}
+.columnreply input[type=text]{
+	width : 430px;
+	height : 25px;
+	margin-left : 20px;
+	padding-left: 10px;
+	border-radius : 3px;
+	border : 1px solid #c2c2c2; 
+	font-size: 9pt;
+}
+.columnreply input[type=button]{
+	outline: 0;
+	border : 0;
+	background-color: #fff;
+	font-family: 나눔바른고딕;
+	font-size: 10pt;
+	color: #454545;
+}
+.columnreply input[type=button]:HOVER {
+	color : #81d4fa;
+}
+.columnreply input[type=button]:ACTIVE {
+	color:  rgba(116,191,226,1);
+}
+
+.pageNum{
+	color: #757575;
+	font-size: 10pt;
+}
+
+
+.call_click  { 
+	font-family: 나눔바른고딕;
+	font-size: 10pt;
+}
+.call_click .replytitle{ 
+	border-top : 1px solid #FAFAFA;
+	border-bottom: 1px solid #FAFAFA; 
+}
+

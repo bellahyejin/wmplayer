@@ -5,9 +5,14 @@
 		select count(${select_column}) as "cnt"
 		<if test="group_column != null">, ${group_column}</if>
 		from ${table}
-		<if test="column != null and sign != null and data != null">
-			where ${column} ${sign} #{data}
-		</if>
+		<trim prefix="where" prefixOverrides="and">
+			<if test="column != null and sign != null and data != null">
+				${column} ${sign} #{data}
+			</if>
+			<if test="list_compare_column != null and list_value != null">
+				and ${list_compare_column} in <foreach collection="list_value" item="item" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+		</trim>
 		<if test="group_column != null">group by ${group_column}</if>
 	</select>
 </mapper>

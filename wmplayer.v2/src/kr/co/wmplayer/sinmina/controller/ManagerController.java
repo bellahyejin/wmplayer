@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import util.JSONOperate;
 import util.ListAndMapOperate;
 import util.ListMap;
+import util.Paging;
 
 @Controller
 @RequestMapping(value = "/manager")
@@ -203,6 +204,7 @@ public class ManagerController
 	@ResponseBody @RequestMapping(value = "/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
 	public String userInfo(@RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value, @RequestParam(value = "page") Integer page)
 	{
+		Paging p = Paging.getInstance();
 		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
 		value = value == null || value.equals("") ? null : value;
 		List<String> status_list = new ArrayList<String>();
@@ -221,13 +223,12 @@ public class ManagerController
 
 		pres_page = page.intValue();
 		int member_num = managerDAO.membercount(map);
-		int max_page = ((int) member_num / max_element) + (member_num % max_element == 0 ? 0 : 1);
-		int begin_page = (pres_page <= 1 + page_div || 1 + page_div * 2 >= max_page ? 1 : (pres_page + page_div >= max_page ? max_page - page_div * 2 : pres_page - page_div));
-		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
-		int rownum_start_idx = max_element * (pres_page - 1);
+
+		Map<String, Integer> page_data = p.setData(member_num, pres_page, max_element, page_div, "begin&last", false);
 		boolean flag;
 
-		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, rownum_start_idx, max_element);
+		int start_idx = page_data.get("item_start");
+		List<UserInfoDTO> list = managerDAO.selectmemberinfo(map, start_idx, max_element);
 
 		sb = sb.append("<tr class=\"manager_title\">")
 						.append("<th width=\"8%\">번호</th>")
@@ -237,49 +238,48 @@ public class ManagerController
 						.append("<th width=\"4%\">성별</th>")
 						.append("<th width=\"28%\">이메일</th>")
 						.append("<th width=\"10%\"></th>")
-					.append("</tr>");
+					.append("</tr>")
+					.append("<tr align=\"center\">");
 
-		if (list.size() > 0)
+		if (list != null && list.size() > 0)
 		{
 			for (int i = 0; i < list.size(); i++)
 			{
 				UserInfoDTO data = list.get(i);
 				status = data.getStatus();
 
-				sb = sb.append("<tr align=\"center\">")
-								.append("<td>".concat(Integer.toString((member_num - (rownum_start_idx + i)))).concat("</td>"))
-								.append("<td>".concat(data.getUserID()).concat("</td>"))
-								.append("<td>".concat(data.getName()).concat("</td>"))
-								.append("<td>".concat(data.getBirth()).concat("</td>"))
-								.append("<td>".concat(data.getGender()).concat("</td>"))
-								.append("<td>".concat(data.getEmail()).concat("</td>"))
-								.append("<td>")
-									.append("<input type=\"button\" class=\"button\" name=".concat(status.equals("b") ? "current" : "block").concat("-").concat(data.getUserID()).concat(" style=\"font: 9pt\" value=").concat(status.equals("b") ? "활성" : "차단") + ">")
-									.append("<input type=\"button\" class=\"button\" name=\"drop-".concat(data.getUserID()).concat("\" style=\"font: 9pt\" value=\"탈퇴\">"))
-							.append("</tr>");
+				sb = sb.append("<td>".concat(Integer.toString((member_num - (start_idx + i)))).concat("</td>"))
+							.append("<td>".concat(data.getUserID()).concat("</td>"))
+							.append("<td>".concat(data.getName()).concat("</td>"))
+							.append("<td>".concat(data.getBirth()).concat("</td>"))
+							.append("<td>".concat(data.getGender()).concat("</td>"))
+							.append("<td>".concat(data.getEmail()).concat("</td>"))
+							.append("<td>")
+								.append("<input type=\"button\" class=\"button\" name=".concat(status.equals("b") ? "current" : "block").concat("-").concat(data.getUserID()).concat(" style=\"font: 9pt\" value=").concat(status.equals("b") ? "활성" : "차단") + ">")
+								.append("<input type=\"button\" class=\"button\" name=\"drop-".concat(data.getUserID()).concat("\" style=\"font: 9pt\" value=\"탈퇴\">"));
 			}
 
-			sb2 = sb2.append("<ul class=\"page-list\">")
-								.append("<div id=\"first\">")
-									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
-								.append("</div>")
-							.append("<div id=\"middle\">");
+			int max_page = page_data.get("last");
 
-			for (int i = begin_page; i <= end_page; i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
-
-			sb2 = sb2.append("</div>")
-								.append("<div id=\"end\">")
-									.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
-								.append("</div>")
-							.append("</ul>");
+			if (max_page > 1)
+			{
+				sb2 = sb2.append("<ul class=\"page-list\">")
+									.append("<div id=\"first\">")
+										.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
+									.append("</div>")
+								.append("<div id=\"middle\">");
+				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+				sb2 = sb2.append("</div>")
+									.append("<div id=\"end\">")
+										.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
+									.append("</div>")
+								.append("</ul>");
+			}
 		}
-		else
-		{
-			sb = sb.append("<tr align=\"center\">")
-							.append("<td colspan=\"7\">검색 결과가 없습니다.</td>")
-						.append("</tr>");
-		}
+		else sb = sb.append("<td colspan=\"7\">검색 결과가 없습니다.</td>");
 
-		return sb.toString().concat("|").concat(sb2.toString());
+		sb = sb.append("</tr>");
+
+		return sb.append("|").append(sb2).toString();
 	}
 }

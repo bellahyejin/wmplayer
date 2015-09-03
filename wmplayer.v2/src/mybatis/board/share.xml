@@ -30,10 +30,10 @@
 	<select id="select" parameterType="map" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
 		select ${select_column}
 		from board_user
-		<trim prefix="where">
-			<if test="get == 'one'">${compare_column} = #{value}</if>
-			<if test="get == 'all'">
-				weather_custom in
+		<trim prefix="where" prefixOverrides="and">
+			<if test="compare_column != null and value != null">${compare_column} like #{value}</if>
+			<if test="weather_custom != null">
+				and weather_custom in
 				<include refid="weather"/>
 			</if>
 		</trim>

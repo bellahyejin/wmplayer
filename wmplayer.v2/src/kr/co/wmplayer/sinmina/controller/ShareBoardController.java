@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import util.ListMap;
+import util.Paging;
 import util.StringOperate;
 import youtube.YoutubeSearch;
 
@@ -27,32 +30,36 @@ public class ShareBoardController
 {
 	@Autowired ShareboardDAO shareboardDAO;
 
+	BoardUserDTO bean;
+
 	List<String> seq_list;
 	StringOperate so = StringOperate.getInstance();
 	Map<String, Object> map;
+	String fail = "";
 
 	int max_element = 9, page_div = 4;
 
 	@RequestMapping(value = "/temp", method = RequestMethod.GET)
-	public String temp(Model model, HttpServletRequest request)
+	public String temp(Model model, HttpServletRequest request, HttpSession session)
 	{
-		return main(model, request, null);
+		return main(model, request, session, null, null);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String main(Model model, HttpServletRequest request, BoardUserDTO bean)
+	public String main(Model model, HttpServletRequest request, HttpSession session, RedirectAttributes reAttr, BoardUserDTO bean)
 	{
-		Object userid = request.getSession().getAttribute("success");
+		Object userid = session.getAttribute("success");
 		map = new HashMap<String, Object>();
 
 		if (userid != null)
 		{
+			this.bean = bean;
 			String action = request.getParameter("action");
 
 			if (action == null || action.equals("list")) return shareList(model, request);
 			else if (action.equals("content")) return shareContent(model, request, bean);
 			else if (action.equals("write")) return shareWrite(model, request);
-			else if (action.equals("data_insert")) return shareInsert(model, request, bean);
+			else if (action.equals("data_insert")) return shareInsert(model, request, reAttr, bean);
 			else return null;
 		}
 		else return "redirect:/intro";
@@ -98,8 +105,8 @@ public class ShareBoardController
 			}
 		}
 
-		if (content_idx != 0) prev_content = seq_list.get(content_idx - 1).getBoard_seq();
-		if (content_idx != seq_list.size() - 1) next_content = seq_list.get(content_idx + 1).getBoard_seq();
+		if (content_idx != 0) next_content = seq_list.get(content_idx - 1).getBoard_seq();
+		if (content_idx != seq_list.size() - 1) prev_content = seq_list.get(content_idx + 1).getBoard_seq();
 
 		request.setAttribute("data", list.get(0));
 		request.setAttribute("prev_content", prev_content);
@@ -107,19 +114,32 @@ public class ShareBoardController
 		return "sharedetail";
 	}
 
+	@RequestMapping(value = "/write")
 	public String shareWrite(Model model, HttpServletRequest request)
 	{
-
 		return "sharewrite";
 	}
 
-	public String shareInsert(Model model, HttpServletRequest request, BoardUserDTO bean)
+	public String shareInsert(Model model, HttpServletRequest request, RedirectAttributes reAttr, BoardUserDTO bean)
 	{
+		map.clear();
+		map.put("bean", bean);
+
+		String artist = so.toUpperCase(bean.getBoard_artist(), 0);
+		String title = so.toUpperCase(bean.getBoard_title(), 0);
+		String content = bean.getBoard_desc();
+		String weather = bean.getWeather_custom();
+		if (artist == null || title == null || content == null || artist.equals("") || title.equals("") || content.equals("") || weather.equals(""))
+		{
+			map.put("fail", "blank");
+			reAttr.addFlashAttribute("data", map);
+			return "redirect:share/write";
+		}
+
 		YoutubeSearch youtubeSearch = YoutubeSearch.getInstance();
 
 		String id = (String) request.getSession().getAttribute("success");
-		bean.setBoard_title(so.toUpperCase(bean.getBoard_title(), 0));
-		bean.setBoard_artist(so.toUpperCase(bean.getBoard_artist(), 0));
+
 		try
 		{
 			String videoID = youtubeSearch.getYoutubeId(bean.getBoard_title(), bean.getBoard_artist());
@@ -127,8 +147,9 @@ public class ShareBoardController
 
 			if (videoID == null || albumcover == null)
 			{
-				request.setAttribute("fail", "fail");
-				return shareWrite(model, request);
+				map.put("fail", "fail");
+				reAttr.addFlashAttribute("data", map);
+				return "redirect:share/write";
 			}
 			else
 			{
@@ -142,48 +163,54 @@ public class ShareBoardController
 		}
 		catch (IOException | InterruptedException e)
 		{
-			e.printStackTrace();
-			request.setAttribute("fail", "error");
-			return shareWrite(model, request);
+			map.put("fail", "error");
+			reAttr.addFlashAttribute("data", map);
+			return "redirect:share/write";
 		}
 	}
 
-	@ResponseBody @RequestMapping(value = "/listdata", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String shareData(@RequestParam(value = "weather_custom") String weather_custom, @RequestParam(value = "page") Integer page)
+	@ResponseBody @RequestMapping(value = "/listdata.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String shareData(@RequestParam(value = "weather_custom") String weather_custom, @RequestParam(value = "search_select", required = false) String search_select, @RequestParam(value = "search_text", required = false) String search_text, @RequestParam(value = "page") Integer page)
 	{
-		StringBuffer sb = new StringBuffer();
-		List<String> weather_list = new ArrayList<String>();
+		weather_custom = weather_custom == null || weather_custom.equals("") ? "all" : weather_custom;
+		search_text = (search_text == null || search_text.equals("") ? null : "%" + search_text + "%");
+
+		Paging p = Paging.getInstance();
+		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
+		List<String> weather_list = getWeather(weather_custom);
 		map = new ListMap<String, Object>();
 		map.put("select_column", "*");
 		map.put("group_column", null);
 		map.put("table", "board_user");
-		map.put("column", null);
-		map.put("sign", null);
-		map.put("data", null);
+		map.put("column", search_select);
+		map.put("sign", "like");
+		map.put("data", search_text);
+		map.put("list_compare_column", "weather_custom");
+		map.put("list_value", weather_list);
 		int count_element = ((BigDecimal) shareboardDAO.count(map).get("cnt")).intValue();
-
 		int pres_page = page == null ? 1 : page.intValue();
-		int start_idx = (pres_page - 1) * max_element;
-		int max_page = ((int) count_element / max_element) + (count_element % max_element == 0 ? 0 : 1);
-		int begin_page = (pres_page <= 1 + page_div || 1 + page_div * 2 >= max_page ? 1 : (pres_page + page_div >= max_page ? max_page - page_div * 2 : pres_page - page_div));
-		int end_page = (pres_page >= max_page - page_div || 1 >= max_page - page_div * 2 ? max_page : (pres_page <= 1 + page_div ? 1 + page_div * 2 : pres_page + page_div));
+
+		Map<String, Integer> page_data = p.setData(count_element, pres_page, max_element, page_div, "begin&last", false);
 		boolean flag;
 
-		weather_list = getWeather(weather_custom);
-
+		map.clear();
 		map.put("select_column", "*");
 		map.put("get", "all");
 		map.put("weather_custom", weather_list);
+		map.put("compare_column", search_select);
+		map.put("value", search_text);
 
-		List<BoardUserDTO> list = shareboardDAO.select(map, start_idx, max_element);
+		List<BoardUserDTO> list = shareboardDAO.select(map, page_data.get("item_start"), max_element);
 		sb = sb.append("<div id=\"card\">");
-		for (BoardUserDTO bean : list)
+		if (list != null && list.size() > 0)
 		{
-			sb = sb.append("<div class=\"cardtotal\">")
+			for (BoardUserDTO bean : list)
+			{
+				sb = sb.append("<div class=\"cardtotal\"")
 							.append("<li>")
-								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : " + bean.getBoard_seq() + " })\">")
+								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : ").append(bean.getBoard_seq()).append(" })\">")
 									.append("<div class=\"cardimg\">")
-										.append("<img id=\"image\" src=\"" + bean.getAlbumcover() + "\" />")
+										.append("<img id=\"image\" src=\"").append(bean.getAlbumcover()).append("\" />")
 									.append("</div>")
 									.append("<div class=\"back\">")
 										.append("<table>")
@@ -207,39 +234,43 @@ public class ShareBoardController
 								.append("</a>")
 							.append("</li>")
 						.append("</div>");
+			}
+
+			int max_page = page_data.get("last");
+
+			if (max_page > 1)
+			{
+				if (search_text != null) search_text = search_text.replaceAll("%", "");
+				else search_text = "";
+
+				String temp = "\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : ";
+				String temp2 = ", 'weather_custom' : '" + weather_custom + "', 'search_select' : '" + search_select + "', 'search_text' : '" + search_text;
+
+				sb2 = sb2.append("<ul class=\"page-list\">")
+								.append("<div id=\"first\">")
+									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page".concat(temp).concat(Integer.toString(1)).concat(temp2).concat("' })")).append("\">start<").append(flag ? "" : "/a><").append("/li>")
+								.append("</div>")
+								.append("<div id=\"middle\">");
+				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp.concat(Integer.toString(i)).concat(temp2).concat("' })")).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+				sb2 = sb2.append("</div>")
+							.append("<div id=\"end\">")
+								.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-").append(temp).append(max_page).append(temp2).append("' })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
+							.append("</div>")
+						.append("</ul>");
+			}
+		}
+		else
+		{
+			sb = sb.append("<table>")
+							.append("<tr align=\"center\">")
+								.append("<td>검색 결과가 없습니다.</td>")
+							.append("</tr>")
+						.append("</table>");
 		}
 
-		sb = sb.append("</div>")
-					.append("<div class=\"searchboard\">")
-						.append("<div class=\"search\">")
-							.append("<select class=\"search-select\">")
-								.append("<option value=\"제목\">제목</option>")
-								.append("<option value=\"아티스트\">아티스트</option>")
-								.append("<option value=\"작성자\">작성자</option>")
-							.append("</select>")
-							.append("<input class=\"input-text\" type=\"text\" name=\"search\" placeholder=\"검색어를 입력해주세요\" /><input class=\"input-button search-button\" type=\"button\" value=\"Search\" onclick=\"\" />")
-							.append("<div class=\"write\">")
-								.append("<input type=\"button\" class=\"search-button\" id=\"share\" value=\"Write\" onclick=\"setLink(null, 'share', 'write')\" />")
-							.append("</div>")
-						.append("</div>")
-					.append("</div>")
-					.append("<div class=\"pager-container-share\">")
-						.append("<ul class=\"page-list\">")
-							.append("<div id=\"first\">")
-								.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
-							.append("</div>")
-							.append("<div id=\"middle\">");
+		sb = sb.append("</div>");
 
-			for (int i = begin_page; i <= end_page; i++) sb = sb.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
-
-			sb = sb.append("</div>")
-						.append("<div id=\"end\">")
-							.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
-						.append("</div>")
-					.append("</ul>")
-				.append("</div>");
-
-		return sb.toString();
+		return sb.append("|").append(sb2).toString();
 	}
 
 	public List<String> getWeather(CharSequence weather_custom)
@@ -280,5 +311,11 @@ public class ShareBoardController
 		}
 
 		return weather_list;
+	}
+
+	@ResponseBody @RequestMapping(value = "/replelist", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String repleList()
+	{
+		return "";
 	}
 }
