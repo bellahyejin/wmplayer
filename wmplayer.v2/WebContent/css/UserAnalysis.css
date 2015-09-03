@@ -20,9 +20,10 @@
 .useranal-header span{ font-size: 9pt;}
 
 /* section table */
+.useranal-section { width: 600px; height: 450px; margin-left: 50px;}
+.anal-left{ float: left;}
+.anal-right{ float: right;}
 .anal-left, .anal-right{width:280px; height: 400px; overflow-x:hidden; overflow-y: auto; }
-.anal-left { clear : both;}
-.anla-right{ float: left;}
 .anal-left table, .anal-right table	{ border-spacing:inherit;  width: 250px; height: auto;}
 .anal-right tr:HOVER td{background: #fafafa}
 
@@ -37,7 +38,7 @@
 #anal-th #anal-like{margin:0 10px 0 10px; font-size: 12pt; color: #f9a7b5;}
 #anal-th #anal-board{
    font-size: 12pt;
-   color: #81cfdf;
+   color: #81d4fa;
 } 
 
 .like-rank, .like-rank-object
@@ -52,7 +53,7 @@
 
 .anal-button{
 	clear: both;
-	padding-top: 40px;
+	padding-bottom: 40px;
 
 }
 
@@ -60,3 +61,26 @@
 .like-rank-object{ padding-left: 10px; }
 
 .like-rank a, a:LINK, a:VISITED, a:HOVER { text-decoration: none;  color: #757575;}
+
+
+/* info style*/
+.userinfo{ height: 160px; padding: 20px 0;}
+.average { border : 2px solid #81d4fa; width: 120px; height: 80px; border-radius : 50%; padding-top: 30px}
+.average span { font-family: bebas; font-size: 25pt; font-style: italic; color: #757575; margin-left: 10px	}
+.avgbpm { margin-left: 120px; margin-top: 5px;}
+.avgbpm .title { margin-left: 10px;}
+.avgbpm .average { margin-top: 10px;}
+.useranal-header { width: 350px ; margin-top: 40px}
+.useranal-header td { padding-right: 30px;}
+.useranal-header input[type=button]{
+		outline: 0;
+		border: 1px solid #eeeaea;
+		background-color: #fff;
+		font-size: 9pt ;
+		color: #757575;
+}
+
+.useranal-header input[type=button]:HOVER {
+	background-color: #81d4fa;
+	color: #fff;
+}

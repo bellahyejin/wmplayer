@@ -225,7 +225,7 @@ public class ShareBoardController
 											.append("</tr>")
 											.append("<tr>")
 												.append("<td class=\"writeinfo left\">").append(bean.getUserID()).append("</td>")
-												.append("<td id=\"writedate\">").append(bean.getRegi_day().replaceAll("-", "/").substring(0, bean.getRegi_day().lastIndexOf("."))).append("</td>")
+												.append("<td id=\"writedate\">").append(bean.getRegi_day().replaceAll("-", "/").substring(0,10)).append("</td>")
 											.append("</tr>")
 										.append("</table>")
 									.append("</div>")
