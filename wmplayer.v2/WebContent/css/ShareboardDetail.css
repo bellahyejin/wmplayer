@@ -30,6 +30,8 @@
 .share-detail-header #select-info{float: right; margin: 15px 10px 0 0;}
 .share-button{
 	padding-top: 10px;
+	width : 550px;
+	margin-left : 80px;
 	clear:both;
 }
 /* table */
@@ -99,6 +101,38 @@
 	border-top: 2px solid #dedede;
 	margin-top: 60px;
 }
+
+#reple_form { padding-left: 100px; margin-top: 20px; height: 50px;}
+
+#reple_form input[type=text]{
+	width : 430px;
+	height : 25px;
+	margin-left : 20px;
+	padding-left: 10px;
+	border-radius : 3px;
+	border : 1px solid #c2c2c2; 
+	font-size: 9pt;
+}
+#reple_form input[type=button]{
+	outline: 0;
+	border : 0;
+	background-color: #fff;
+	font-family: 나눔바른고딕;
+	font-size: 10pt;
+	color: #454545;
+}
+
+#reple_form input[type=button]:HOVER {
+	color : #81d4fa;
+}
+#reple_form input[type=button]:ACTIVE {
+	color:  rgba(116,191,226,1);
+}
+
+#reple_list{
+	padding-left: 80px;
+}
+
 #reply_title{
 	font-size: 10pt;
 	font-weight: bold;

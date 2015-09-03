@@ -7,7 +7,7 @@
 		<span>
 			<marquee scrollamount="5" behavior="scroll" width="300">${ data.board_title } - ${ data.board_artist }</marquee></span>
 		<div id="select-info">
-			<div id="col-date"><span class="column-infotitle">등록일</span><span id="column-date">${ data.regi_day }</span></div>
+			<div id="col-date"><span class="column-infotitle">등록일</span><span id="column-date">${ data.regi_day.replace('-','/').substring(0,10) }</span></div>
 			<div id="col-view"><span class="column-infotitle">조회수</span><span id="column-view">${ data.check_cnt }</span></div>
 		</div>
 	</div>

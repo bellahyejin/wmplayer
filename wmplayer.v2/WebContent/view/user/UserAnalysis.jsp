@@ -160,151 +160,148 @@
  }
 </script>
 <div class="useranalysis-form">
-	<div class="avgbpm">
-		<div class="title"> 
-			<span>선호 음악 평균</span>
-			<span class="sub-title">BPM</span>
+	<div class="userinfo">
+		<div class="avgbpm">
+			<div class="title">
+				<span>선호 음악 평균</span> <span class="sub-title">BPM</span>
+			</div>
+			<div class="average">
+				<span>${avgbpm }</span>
+			</div>
 		</div>
-		<div class="average">
-			<span>${avgbpm }</span>
-		</div>
-	</div>
-	<div class="useranal-header">
-		<table>
-			<%-- /////////////////////////////////////비밀번호///////////////////////////////////////////// --%>
-			<tr>
-				<td>비밀번호: </td>
-				<td id="editpasswd">
-				<c:forEach begin="1" end="${user.passwd.length()}">
+		<div class="useranal-header">
+			<table>
+				<%-- /////////////////////////////////////비밀번호///////////////////////////////////////////// --%>
+				<tr>
+					<td>비밀번호</td>
+					<td id="editpasswd"><c:forEach begin="1"
+							end="${user.passwd.length()}">
 				*
-				</c:forEach>
-				</td> <!-- DB에 저장되어있는 비밀번호 길이 만큼 *로 표시한다 -->
-				<td><a><i class="icon-pencil3"><input id="showpassbt" type="button" value="수정" > </i></a></td>
-			</tr>
-			<tr>
-			<td colspan="3" style="display: none" id="tdshowpass">
-			<input  id="passtext" type="password" name="passwd" value="${user.passwd }">
-			</td>
-			</tr>
-			
-			<%-- ////////////////////////////////////////이 름////////////////////////////////////////// --%>
-			<tr>
-				<td>이 름: </td>
-				<td id="editname">${user.name }</td>
-				<td><a><i class="icon-pencil3"><input id="shownamebt" type="button" value="수정" ></i></a></td> 
-			</tr>
-			<tr>
-			  <td colspan="3" style="display: none" id="tdshowname">
-			    <input id="nametext" type="text" name="name" value="${user.name }">
-			  </td>
-			</tr>
-			
-			<%-- ////////////////////////////////////////생년월일////////////////////////////////////////// --%>
-			
-			<c:set var="birth_dt" value="${fn:split(user.birth, '/') }" />
-			<c:set var="year" value="${birth_dt[0] eq 'null'?'':birth_dt[0] }"/>
-			<c:set var="month" value="${birth_dt[1] eq 'null'?'':birth_dt[1] }"/>
-			<c:set var="date" value="${birth_dt[2] eq 'null'?'':birth_dt[2] }"/>
-			<tr>
-				<td>생년월일: </td>
-				<td id="editbirth">${user.birth }</td> <!-- 버튼 클릭시 관련 select 창이 뜬다  -->
-				<td><a><i class="icon-pencil3"><input type="button" id="showbirthbt" value="수정" ></i></a></td>
-							<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
-			</tr>
-			<tr>
-			<td colspan="3" style="display: none" id="tdbirthedit">
-				<select class="birth" name="year">
-					<option value="">::년::</option>t
-				<c:forEach var="i" begin="1920" end="2015" step="1">
-					<option value="${i }" ${i eq year? 'selected' : '' }>${ i }</option>
-				</c:forEach>
-				</select> 
-				<select class="birth" name="month">
-					<option value="">::월::</option>
-				<c:forEach var="i" begin="1" end="12" step="1">
-					<option value="${i<10?'0':'' }${i}" ${i eq month? 'selected' : '' }>${i<10?'0':'' }${i}</option>
-				</c:forEach>
-				</select> 
-				<select class="birth" name="date">
-					<option value="">::일::</option>
-				<c:forEach var="i" begin="1" end="31" step="1">
-					<option value="${i<10?'0':'' }${i }" ${i eq date? 'selected' : '' }>${i<10?'0':'' }${i }</option>
-				</c:forEach>
-				</select> 
-			</td>
-			</tr>
-			<tr>
-			
-			<%-- ///////////////////////////////////////이메일/////////////////////////////////////////// --%>
-				<td>이메일: </td>
-				<td id="editemail">${user.email }</td> <!-- 수정버튼 클릭시 관련 emailid 부분은  input text, 뒷부분은 select   -->
-				<td><a><i class="icon-pencil3"><input id="showemailbt" type="button" value="수정" ></i></a></td>
-								<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
-			</tr>
-			<tr>
-			<td colspan="3" style="display: none" id="tdemailedit">
-			<input type="text" name="email_id" value="${fn:split(user.email, '@')[0] }">
-			@
-			<select class="sel_email" name="email_addr">
-					<option>naver.com</option>
-					<option>freechal.com</option>
-					<option>dreamwiz.com</option>
-					<option>korea.com</option>
-					<option>lycos.co.kr</option>
-					<option>yahoo.co.kr</option>
-					<option>hanmail.net</option>
-					<option>gmail.com</option>
-					<option>paran.com</option>
-					<option>hotmail.com</option>
-					<option>nate.com</option>
-					<option>직접입력</option>
-				</select>
-				</td>
-			</tr>
-		</table>
+				</c:forEach></td>
+					<!-- DB에 저장되어있는 비밀번호 길이 만큼 *로 표시한다 -->
+					<td><input id="showpassbt"
+								type="button" value="수정"></td>
+				</tr>
+				<tr>
+					<td colspan="3" style="display: none" id="tdshowpass">
+					<input id="passtext" type="password" name="passwd"
+						value="${user.passwd }"></td>
+				</tr>
+
+				<%-- ////////////////////////////////////////이 름////////////////////////////////////////// --%>
+				<tr>
+					<td>이 름</td>
+					<td id="editname">${user.name }</td>
+					<td><input id="shownamebt" type="button" value="수정"></td>
+				</tr>
+				<tr>
+					<td colspan="3" style="display: none" id="tdshowname">
+						<input id="nametext" type="text" name="name" value="${user.name }">
+					</td>
+				</tr>
+
+				<%-- ////////////////////////////////////////생년월일////////////////////////////////////////// --%>
+
+				<c:set var="birth_dt" value="${fn:split(user.birth, '/') }" />
+				<c:set var="year" value="${birth_dt[0] eq 'null'?'':birth_dt[0] }" />
+				<c:set var="month" value="${birth_dt[1] eq 'null'?'':birth_dt[1] }" />
+				<c:set var="date" value="${birth_dt[2] eq 'null'?'':birth_dt[2] }" />
+				<tr>
+					<td>생년월일</td>
+					<td id="editbirth">${user.birth }</td>
+					<!-- 버튼 클릭시 관련 select 창이 뜬다  -->
+					<td>
+					<input type="button" id="showbirthbt" value="수정"></td>
+					<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
+				</tr>
+				<tr>
+					<td colspan="3" style="display: none" id="tdbirthedit"><select
+						class="birth" name="year">
+							<option value="">::년::</option>t
+							<c:forEach var="i" begin="1920" end="2015" step="1">
+								<option value="${i }" ${i eq year? 'selected' : '' }>${ i }</option>
+							</c:forEach>
+					</select> <select class="birth" name="month">
+							<option value="">::월::</option>
+							<c:forEach var="i" begin="1" end="12" step="1">
+								<option value="${i<10?'0':'' }${i}"
+									${i eq month? 'selected' : '' }>${i<10?'0':'' }${i}</option>
+							</c:forEach>
+					</select> <select class="birth" name="date">
+							<option value="">::일::</option>
+							<c:forEach var="i" begin="1" end="31" step="1">
+								<option value="${i<10?'0':'' }${i }"
+									${i eq date? 'selected' : '' }>${i<10?'0':'' }${i }</option>
+							</c:forEach>
+					</select></td>
+				</tr>
+				<tr>
+
+					<%-- ///////////////////////////////////////이메일/////////////////////////////////////////// --%>
+					<td>이메일</td>
+					<td id="editemail">${user.email }</td>
+					<!-- 수정버튼 클릭시 관련 emailid 부분은  input text, 뒷부분은 select   -->
+					<td><input id="showemailbt"
+								type="button" value="수정"></td>
+					<!-- introform.jsp 에 join 폼에 있는 형식을 참고 -->
+				</tr>
+				<tr>
+					<td colspan="3" style="display: none" id="tdemailedit"><input
+						type="text" name="email_id"
+						value="${fn:split(user.email, '@')[0] }"> @ <select
+						class="sel_email" name="email_addr">
+							<option>naver.com</option>
+							<option>freechal.com</option>
+							<option>dreamwiz.com</option>
+							<option>korea.com</option>
+							<option>lycos.co.kr</option>
+							<option>yahoo.co.kr</option>
+							<option>hanmail.net</option>
+							<option>gmail.com</option>
+							<option>paran.com</option>
+							<option>hotmail.com</option>
+							<option>nate.com</option>
+							<option>직접입력</option>
+					</select></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div class="useranal-section">
 		<div class="anal-left">
 			<table>
 				<tr>
-					<td colspan="2" id="anal-th">
-						<span>당신의 </span>
-						<span id="anal-like">좋아요</span>
-						<span>곡 목록</span>
-						<span id="anal-cnt">${musicsize }</span>
-						<span>건</span>
-					</td>
+					<td colspan="2" id="anal-th"><span>당신의 </span> <span
+						id="anal-like">좋아요</span> <span>곡 목록</span> <span id="anal-cnt">${musicsize }</span>
+						<span>건</span></td>
 				</tr>
 				<c:forEach items="${music }" var="list" varStatus="status">
-				<tr>
-					<td class="like-rank">${status.count }</td>
-					<td class="like-rank-object">${list.title }-${list.artist }</td>
-				</tr>
-			</c:forEach>
+					<tr>
+						<td class="like-rank">${status.count }</td>
+						<td class="like-rank-object">${list.title }-${list.artist }</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 		<div class="anal-right">
-		<table>
-			<tr>
-				<td colspan="3" id="anal-th">
-						<span>당신이 올린 </span>
-						<span id="anal-board">MusicVideo</span>
-						<span id="anal-cnt">${listsize } </span>
-						<span>건</span>
-				</td>
-			</tr>
-			<c:forEach items="${share }" var="list" varStatus="status">
+			<table>
 				<tr>
-					<td class="like-rank">${status.count }</td>
-					<td class="like-rank-object"><a href="#" onclick="setLink(null, 'share', 'content', { 'board_seq' : ${list.board_seq}})">${list.board_title }-${list.board_artist }</a></td>
+					<td colspan="3" id="anal-th"><span>당신이 올린 </span> <span
+						id="anal-board">MusicVideo</span> <span id="anal-cnt">${listsize }
+					</span> <span>건</span></td>
 				</tr>
-			</c:forEach>
-		</table>
-	</div>
+				<c:forEach items="${share }" var="list" varStatus="status">
+					<tr>
+						<td class="like-rank">${status.count }</td>
+						<td class="like-rank-object"><a href="#"
+							onclick="setLink(null, 'share', 'content', { 'board_seq' : ${list.board_seq}})">${list.board_title }-${list.board_artist }</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 	<div class="anal-button">
-		<input type="button" class="styled-button-login" id="edit" value="회원 수정" onclick="location.href='${initParam.root}/wmplayer/update/edit.do?action=select&id=${success }'"/>
-		&nbsp;<input type="button" class="styled-button-login" id="drop" value="회원 탈퇴" onclick="location.href='dropform'"/>
+		<input type="button" class="styled-button-login" id="drop"
+			value="회원 탈퇴" onclick="location.href='dropform'" />
 	</div>
 </div>
-			
