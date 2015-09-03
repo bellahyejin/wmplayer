@@ -32,8 +32,11 @@
 	padding-top: 10px;
 	width : 550px;
 	margin-left : 80px;
+	margin-top: 15px;
 	clear:both;
 }
+
+.share-button #list { float: right; }
 /* table */
 .share-detail-info table{ margin-left: 20px; font-size: 9pt; }
 .share-detail-info #desc{ padding-top: 10px;}
@@ -88,8 +91,7 @@
 	width: 450px;
 
 }
-.share-button{ margin-top: 15px;}
-.share-button #list { float: right;}
+
 #reply-plus .page-list{
 	padding-left: 20px;
 }
@@ -110,7 +112,7 @@
 	margin-left : 20px;
 	padding-left: 10px;
 	border-radius : 3px;
-	border : 1px solid #c2c2c2; 
+	border : 1px solid #c2c2c2;
 	font-size: 9pt;
 }
 #reple_form input[type=button]{
@@ -130,7 +132,9 @@
 }
 
 #reple_list{
-	padding-left: 80px;
+	width : 550px;
+	padding-left: 50px;
+	padding-bottom : 50px;
 }
 
 #reply_title{
@@ -141,10 +145,19 @@
 #reply_write{
 	margin-top: 5px;
 }
-.column-redetail{
+.share-redetail{
 	font-size: 9pt;
 	text-align: right;
 	width: 485px;
 	height: 20px;
 	padding: 5px 10px 0 0 ;
+}
+
+.call_click  {
+	font-family: 나눔바른고딕;
+	font-size: 10pt;
+	margin-left : 20px;
+	padding-left: 10px;
+	border-top : 1px solid #FAFAFA;
+	border-bottom: 1px solid #FAFAFA;
 }

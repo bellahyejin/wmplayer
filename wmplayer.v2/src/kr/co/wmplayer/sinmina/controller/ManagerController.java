@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import kr.co.wmplayer.sinmina.dao.manager.ManagerDAO;
+import kr.co.wmplayer.sinmina.dao.user.UserInfoDAO;
 import kr.co.wmplayer.sinmina.model.dto.user.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import util.Time;
 public class ManagerController
 {
 	@Autowired ManagerDAO managerDAO;
+	@Autowired UserInfoDAO userinfoDAO;
 
 	JSONOperate jsonOperate = JSONOperate.getInstance();
 	ListAndMapOperate lamOperate = ListAndMapOperate.getInstance();
@@ -267,8 +269,8 @@ public class ManagerController
 								.append("<td>").append(data.getGender()).append(("</td>"))
 								.append("<td>").append(data.getEmail()).append(("</td>"))
 								.append("<td>")
-									.append("<input type=\"button\" class=\"button\" name=").append((status.equals("b") ? "current" : "block")).append(("-")).append((data.getUserID())).append((" style=\"font: 9pt\" value=")).append((status.equals("b") ? "활성" : "차단") + ">")
-									.append("<input type=\"button\" class=\"button\" name=\"drop-").append((data.getUserID())).append(("\" style=\"font: 9pt\" value=\"탈퇴\">"))
+									.append("<input type=\"button\" class=\"button block\" name=").append((status.equals("b") ? "current" : "block")).append(("-")).append((data.getUserID())).append((" style=\"font: 9pt\" value=")).append((status.equals("b") ? "활성" : "차단") + ">")
+									.append("<input type=\"button\" class=\"button drop\" name=\"drop-").append((data.getUserID())).append(("\" style=\"font: 9pt\" value=\"탈퇴\">"))
 							.append("</tr>");
 			}
 
@@ -302,5 +304,30 @@ public class ManagerController
 		}
 
 		return sb.append("|").append(sb2).toString();
+	}
+
+	@ResponseBody @RequestMapping(value = "/userstatus.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String setUserStatus(@RequestParam(value = "action") String action, @RequestParam(value = "id") String id)
+	{
+		map.clear();
+
+		switch (action)
+		{
+			case "block" :
+				map.put("status", "b");
+				break;
+			case "current" :
+				map.put("status", "c");
+				break;
+			case "drop" :
+				userinfoDAO.dropupdate(5);
+				userinfoDAO.dropReason("운영자에 의한 탈퇴");
+				map.put("status", "d");
+				break;
+			default :
+		}
+
+		map.put("userid", id);
+		return userinfoDAO.statusupdate(map) ? "success" : "failed";
 	}
 }

@@ -11,9 +11,15 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${initParam.root }/css/intro.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script> 
-${alertMsg }
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script>
+<script type="text/javascript">
+if ("${ success }" == "join_success") alert("가입이 되었습니다. 로그인을 해주세요");
+
+if ("${ fail }" == "login_fail") alert("아이디 또는 비밀번호가 틀렸습니다");
+else if ("${ fail }" == "login_blank") alert("아이디 또는 비밀번호를 입력해주세요");
+else if ("${ fail }" == "join_fail") alert("가입에 실패했습니다");
+else if ("${ fail }" == "join_blank") alert("회원 정보를 입력해주세요");
+
 $(document).ready(function(){
 	$('#loginforom').css("display","none");
 
@@ -34,7 +40,7 @@ $(document).ready(function(){
 	function getPosJoin(){
 		return $obj1.position();
 	}
-  
+
 	  /* login */
 	var lastPos=getPosLogin();
 	function update(){
@@ -43,11 +49,11 @@ $(document).ready(function(){
 	    var dx=Math.min(limit,Math.abs(pos.left-lastPos.left)*0.5);
 	    var dy=Math.min(limit,Math.abs(pos.top-lastPos.top)*0.5);
 	    setBlur(dx+","+dy);
-	    
+
 	    lastPos=pos;
 	    requestAnimationFrame(update);
 	}
-	  
+
 	var lastPos1 = getPosJoin();
 	function update1(){
 	    var pos=getPosJoin();
@@ -55,22 +61,22 @@ $(document).ready(function(){
 	    var dx=Math.min(limit,Math.abs(pos.left-lastPos1.left)*0.5);
 	    var dy=Math.min(limit,Math.abs(pos.top-lastPos1.top)*0.5);
 	    setBlur(dx+","+dy);
-	    
+
 	    lastPos1=pos;
 	    requestAnimationFrame(update1);
 	}
-	
+
 	//update
 	update();
 	update1();
-	  
+
 	var isOpen=false;
 	function openModalLogin(){
 	    $overlay.css({
 	      display:"block"
 	    });
 	    TweenMax.to($overlay,0.1,{autoAlpha:1});
-	    
+
 	    TweenMax.fromTo($obj,0.6,{y:-($(window).height()+$obj.height())},{delay:0.2,y:"0%",ease:Elastic.easeOut,easeParams:[1.1,0.7],force3D:true});
 	}
 	function openModalJoin(){
@@ -78,7 +84,7 @@ $(document).ready(function(){
 	      display:"block"
 	    });
 	    TweenMax.to($overlay1,0.1,{autoAlpha:1});
-	    
+
 	    TweenMax.fromTo($obj1,0.6,{y:-($(window).height()+$obj1.height())},{delay:0.2,y:"0%",ease:Elastic.easeOut,easeParams:[1.1,0.7],force3D:true});
 	}
 	function closeModalLogin(){
@@ -89,7 +95,7 @@ $(document).ready(function(){
 	  TweenMax.to($overlay1,0.1,{delay:0.55,autoAlpha:0});
 	  TweenMax.to($obj1,0.55,{y:$(window).height()+$obj1.height(),ease:Back.easeIn,force3D:true});
 	}
-	
+
 	$(".login").click(function(){
 		openModalLogin();
 	    $("#loginform").css("display","block");
@@ -97,50 +103,50 @@ $(document).ready(function(){
 	$(".join").click(function(){
 	    openModalJoin();
 	});
-	  
+
 	$(".close-modal,.modal-login-o, .modal-join-o").click(function(){
 	   	closeModalLogin();
 	   	closeModalJoin()
 	   	$("#findid").css("display","none");
 	   	$("#findpass").css("display","none");
 	});
-	
+
 	buttonclick();
 	$(document).ajaxSuccess(
 		buttonclick()
 	);
-	
+
 	$("#passwd, #passwdcheck").keyup(function(){
 			var pass = $("#passwd").val();
 			var passcheck = $("#passwdcheck").val();
 			var message = checkPass(pass);
 			var message2 = checkPassRe(pass, passcheck)
-			
+
 			if(message != false) $('#passwd').css({'border-bottom-color':'#2ECC71'});
 			else $('#passwd').css({'border-bottom-color':'#E74C3C'});
-				
+
 			if(message2 != false) $('#passwdcheck').css({'border-bottom-color':'#2ECC71'});
 			else $('#passwdcheck').css({'border-bottom-color':'#E74C3C'});
 	});
-	
+
 	$('#userid').hover(function(){
 		$('.toolid').fadeIn();
 	},function(){
 		$('.toolid').fadeOut();
 	});
-	
+
 	$('#passwd').hover(function(){
 		$('.toolpass').fadeIn();
 	},function(){
 		$('.toolpass').fadeOut();
 	});
-	
+
 	$('#userid').keyup(function(){
 		if(perfectID()){
 			duplicationid();
 		}else
 			$('.modal-join #userid').css({'border-bottom-color' : '#E74C3C'});
-		
+
 	});
 });
 
@@ -152,32 +158,32 @@ function buttonclick(){
 			url:'findId',
 			type:'post',
 			data: {
-				name : $("#findid #name").val(), 
+				name : $("#findid #name").val(),
 				email : $("#findid #email").val()
 			},
 			success:function(data){
 				$('#findid .finddata').html(data);
-			}			
+			}
 		});
 	});
-	//비밀번호 찾기 
+	//비밀번호 찾기
 	$('#submit-pass').click(function(){
 		$.ajax({
 			url:'findPass',
 			type:'post',
 			data: {
-				userID : $("#findpass #userID").val(), 
-				name : $("#findpass #name").val(), 
+				userID : $("#findpass #userID").val(),
+				name : $("#findpass #name").val(),
 				email : $("#findpass #email").val()
 			},
 			success:function(data){
 				$('#findpass .finddata').html(data);
-			}			
+			}
 		});
 	});
 }
 
-//중복확인 
+//중복확인
 function duplicationid(){
 	$.ajax({
 		url: 'duplicationid',
@@ -196,11 +202,11 @@ function duplicationid(){
 }
 
 
-//id 유효성 검사 
+//id 유효성 검사
 function perfectID(){
 	var userID = $('.modal-join #userid').val();
 	var idRegx =/^[A-za-z0-9]{6,16}$/g;
-	
+
 	if (idRegx.test(userID)) {
 		return true;
 	} else {
@@ -239,14 +245,14 @@ function checkPassRe(pass, passcheck){
 function findid(){
 	var loginform = document.getElementById("loginform");
 	var idform = document.getElementById("findid")
-	
+
 	idform.style.display = 'block';
 	loginform.style.display = 'none';
 }
 function findpass(){
 	var loginform = document.getElementById("loginform");
 	var passform = document.getElementById("findpass")
-	
+
 	passform.style.display = 'block';
 	loginform.style.display = 'none';
 }
@@ -255,7 +261,7 @@ function moveback(){
 	var loginform = document.getElementById("loginform");
 	var idform = document.getElementById("findid");
 	var passform = document.getElementById("findpass");
-	
+
 	passform.style.display = 'none';
 	idform.style.display = 'none';
 	loginform.style.display = 'block';
@@ -300,7 +306,7 @@ function moveback(){
 				<i class="fa fa-info-circle"></i>
 			</div>
 			<h2>아이디 찾기</h2>
-			<input class="input-text" type="text" id="name" name="name" placeholder="Name" /> 
+			<input class="input-text" type="text" id="name" name="name" placeholder="Name" />
 			<input class="input-text" type="text" id="email" name="email" placeholder="Email은 @와 함께 써주세요" />
 			<div class="finddata">
 				<input class="input-submit" type="button" id="submit-id" value="아이디 찾기" />
@@ -330,17 +336,17 @@ function moveback(){
 			<h1>JOIN</h1>
 			<input class="input-text-join" name="userID" type="text" id="userid"  placeholder="ID" />
 			<div class="tooltip toolid">아이디는 영문, 숫자 및 8자이상<br>16자이하만 입력가능합니다</div>
-			<input class="input-text-join" name="passwd" type="password" id="passwd" placeholder="Password" /> 
+			<input class="input-text-join" name="passwd" type="password" id="passwd" placeholder="Password" />
 			<div class="tooltip toolpass">비밀번호는 영문 대소문자와 숫자,<br>특수문자를포함 10자 이상이여야 합니다.</div>
 			<input class="input-text-join" name="passwdcheck" type="password" id="passwdcheck" placeholder="Password Check" />
 			<input class="input-text-join" name="name" type="text" placeholder="Name" />
 			<div class="birth-div">
-				<span>생년월일</span><br> 
+				<span>생년월일</span><br>
 				<select class="birth" name="year">
 				<c:forEach var="i" begin="20" end="115" step="1">
 					<option value="${i+1900 }">${ i+1900 }</option>
 				</c:forEach>
-				</select> 
+				</select>
 				<select class="birth" name="month">
 				<c:forEach var="i" begin="1" end="12" step="1">
 					<c:choose>
@@ -352,7 +358,7 @@ function moveback(){
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				</select> 
+				</select>
 				<select class="birth" name="date">
 				<c:forEach var="i" begin="1" end="31" step="1">
 					<c:choose>
@@ -364,15 +370,15 @@ function moveback(){
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				</select> 
+				</select>
 			</div>
 			<div class="gender-div">
-				<span>성 별</span><br> 
+				<span>성 별</span><br>
 				<input type="radio" name="gender" value="남"><span>남</span>
 				<input type="radio" name="gender" value="여"><span>여</span>
 			</div>
 			<div class="email-div">
-				<span>이메일</span><br> 
+				<span>이메일</span><br>
 				<input class="input-text" type="text" name="email_id"><span>@</span>
 				<select class="sel_email" name="email_addr">
 					<option>naver.com</option>
@@ -393,11 +399,11 @@ function moveback(){
 		</div>
 	</form>
 	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="filters">
-	<defs> 
-	<filter id="blur"> 
-		<feGaussianBlur id="blur-filter" in="SourceGraphic" stdDeviation="15,15" /> 
-	</filter> 
-	</defs> 
+	<defs>
+	<filter id="blur">
+		<feGaussianBlur id="blur-filter" in="SourceGraphic" stdDeviation="15,15" />
+	</filter>
+	</defs>
 	</svg>
 </body>
 </html>

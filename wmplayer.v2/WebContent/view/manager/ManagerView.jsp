@@ -47,15 +47,17 @@
 <script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script type="text/javascript">
 	this.pres_page = ${ pres_page };
+	this.temp = 0;
 
-	function member()
+	function member(num)
 	{
 		this.data = {
 				status : $("#query-status-select option:selected").attr("value"),
 				gender : $(".query-radio:checked").attr("value"),
 				search : $("#query-search-select option:selected").attr("value"),
 				value : $("#query-text").val(),
-				page : this.pres_page
+				page : this.pres_page,
+				temp : num
 			};
 
 		if (!JSONDataCompare(this.prev_data, this.data))
@@ -83,7 +85,7 @@
 	function ajaxStart()
 	{
 		this.pres_page = 1;
-		member();
+		member(++(this.temp));
 	}
 
 	$(document).ready(function()
@@ -104,11 +106,28 @@
 					$(".button").on("click", function()
 						{
 							var data = $(this).attr("name").split("-");
-							var action = "manager_" + data[0], id = data[1], href, page = ${ pres_page };
-							if (data[0].equals("drop")) href = "drop/retire";
-							else href = "manager/block";
+							var action = data[0], id = data[1];
 
-							if (confirm("이 회원을 " + $(this).attr("value") + (data[0].equals("drop") ? ""  : (data[0].equals("current") ? "화" : "하") + "시겠습니까?"))) location.href = "${ initParam.root }/wmplayer/" + href + ".do?id=" + id + "&action=" + action + "&page=" + page;
+							if (confirm("이 회원을 " + $(this).attr("value") + (data[0].equals("drop") ? "시키" : (data[0].equals("current") ? "화" : "하") + "시") + "겠습니까?"))
+							{
+								$.ajax({
+									type : "post",
+									url : "${ initParam.root }/manager/userstatus.ajax",
+									data : {
+										action : data[0],
+										id : data[1]
+									},
+									success : function(data)
+									{
+										if (data == "success") alert("잘 처리되었습니다");
+										else alert("나중에 다시 처리해주세요");
+										member(++(this.temp));
+									},
+									error : function()
+									{
+										alert("나중에 다시 처리해주세요");
+									}});
+							}
 						});
 
 					$("#query-status-select").on("change", function()
@@ -135,7 +154,8 @@
 					$("#member_table tr").hover(function()
 						{
 							$(this).find(".button").css("background-color", "#f6f6f6");
-						}, function()
+						},
+						function()
 						{
 							$(this).find(".button").css("background-color", "#ffffff");
 						});

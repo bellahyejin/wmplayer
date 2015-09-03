@@ -43,7 +43,7 @@
 	<input type="text" id="reple_txt" size="68" />
 	<input type="button" value="확인" id="reple_input" />
 </div>
-<div id="reple_list" style="size : 800px;"></div>
+<div id="reple_list" width="550px"></div>
 <script type="text/javascript" src="${ initParam.root }/js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
 <script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
@@ -171,7 +171,7 @@
 
 		$(".delete").click(function()
 			{
-				deleteReple($(this).parent().parent().attr("data-seq"));
+				if (confirm("진짜로 삭제하시겠습니까?")) deleteReple($(this).parent().parent().attr("data-seq"));
 			});
 
 		$(".reple-update").click(function()

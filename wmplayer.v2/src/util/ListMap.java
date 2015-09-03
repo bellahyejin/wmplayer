@@ -158,23 +158,18 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 	{
 		StringBuffer sb = new StringBuffer();
 
+		sb = sb.append("{");
 		if (table != null && size > 0)
 		{
 			LinkedNode<K, V> l = table;
-
-			sb = sb.append("{");
-
 			do
 			{
 				sb = sb.append(l.toString() + ((l.idx == size - 1) ? "" : ", "));
 			} while ((l = l.next) != null);
-
-			sb = sb.append("}");
-
-			return sb.toString();
 		}
+		sb = sb.append("}");
 
-		return "{}";
+		return sb.toString();
 	}
 
 	public String linkRelation()
@@ -273,9 +268,10 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 
 		if ((tab = table) == null)
 		{
-			table = newLinkedNode(key, value, 0);
-			putLink(null, table, null);
+			tab = newLinkedNode(key, value, 0);
+			putLink(null, tab, null);
 			++size;
+			table = tab;
 		}
 		else
 		{
@@ -304,8 +300,6 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 						putLink(ap, newln, an);
 					}
 				}
-
-				return value;
 			}
 			else
 			{

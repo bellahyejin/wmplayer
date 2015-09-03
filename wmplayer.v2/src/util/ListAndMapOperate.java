@@ -25,32 +25,43 @@ public class ListAndMapOperate
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E> List<List<E>> wrappingObject(List<E> obj)
 	{
 		List<List<E>> list = new ArrayList<List<E>>();
-		for (E e : obj)
-		{
-			List<E> temp = new ArrayList<E>();
-			temp.add(e);
-			list.add(temp);
-		}
-		return list;
-	}
-
-	public <K, V> List<Map<K, V>> wrappingObject(List<V> obj, K default_column_name)
-	{
-		List<Map<K, V>> list = new ArrayList<Map<K, V>>();
-		for (V v : obj)
-		{
-			Map<K, V> map = new ListMap<K, V>();
-			map.put(default_column_name, v);
-			list.add(map);
-		}
+		for (E e : obj) list.add((List<E>) wrappingObject(e, null));
 		return list;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <K, V extends Object> List<Map<K, V>> addKeyName(List<Map<K, V>> list, List<K> key_column, List<V> default_value, boolean index, boolean count, int increment, int multiple, boolean multiple_where)
+	public <K, V> List<Map<K, V>> wrappingObject(List<V> obj, K default_column_name)
+	{
+		List<Map<K, V>> list = new ArrayList<Map<K, V>>();
+		for (V v : obj) list.add((Map<K, V>) wrappingObject(v, default_column_name));
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <E, K> Object wrappingObject(E obj, K key)
+	{
+		Object temp;
+
+		if (key == null)
+		{
+			temp = new ArrayList<E>();
+			((List<E>) temp).add(obj);
+		}
+		else
+		{
+			temp = new HashMap<K, E>();
+			((Map<K, E>) temp).put(key, obj);
+		}
+
+		return temp;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <K, V extends Object> List<Map<K, V>> addKeyName(List<Map<K, V>> list, List<K> key_column, List<V> default_value, boolean addIndex, boolean addCount, int increment, int multiple, boolean multiple_where)
 	{
 		if (key_column != null && default_value != null && key_column.size() == default_value.size())
 		{
@@ -69,7 +80,7 @@ public class ListAndMapOperate
 					if (value instanceof CharSequence)
 					{
 						Map<String, String> insert = new ListMap<String, String>();
-						String temp =  (value.toString() + (index ? ((i + (count ? 1 : 0) * (multiple_where ? multiple : 1)) + increment) * (multiple_where ? 1 : multiple) : ""));
+						String temp =  (value.toString() + (addIndex ? ((i + (addCount ? 1 : 0) * (multiple_where ? multiple : 1)) + increment) * (multiple_where ? 1 : multiple) : ""));
 						insert.put("temp", temp);
 						map.put(key, (V) instance.newInstance(value.getClass(), insert));
 					}

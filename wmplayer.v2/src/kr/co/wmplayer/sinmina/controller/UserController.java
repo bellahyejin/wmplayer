@@ -20,11 +20,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController
 {
-
 	@Autowired
 	private UserInfoDAO dao;
 	@Autowired
@@ -39,19 +39,23 @@ public class UserController
 	}
 
 	@RequestMapping("/login")
-	public String login(UserInfoDTO bean, HttpSession session)
+	public String login(UserInfoDTO bean, HttpSession session, RedirectAttributes reAttr)
 	{
-		if (bean.getUserID() != null && bean.getPasswd() != null)
+		String id = bean.getUserID();
+		String pass = bean.getPasswd();
+
+		if (!(id == null || pass == null || id.equals("") || pass.equals("")))
 		{
 			if (dao.loginproccess(bean) != 0)
 			{
-				String id = bean.getUserID();
-
 				session.setAttribute("success", id);
 				dao.loginLogInsert(id);
 				return "redirect:main";
 			}
+			reAttr.addFlashAttribute("fail", "login_fail");
 		}
+		else reAttr.addFlashAttribute("fail", "login_blank");
+
 		return "redirect:intro";
 	}
 
@@ -101,7 +105,6 @@ public class UserController
 				}
 
 				result = "고객님의 패스워드는 <span id='userid'>" + responsepass + "</span> 입니다" + "<input class='input-submit' type='button' id='submit-back' value='뒤로가기' onclick='moveback()'/>";
-				;
 				return result;
 			}
 			else // 해당정보가 없을 경우
@@ -114,7 +117,6 @@ public class UserController
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)
 	{
-
 		session.invalidate();
 		return "redirect:intro";
 	}
@@ -130,7 +132,7 @@ public class UserController
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
 
 		DecimalFormat format = new DecimalFormat(pattern);
-		
+
 		String avgbpm = format.format(musicdao.avgBpm(userid));
 
 		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
@@ -166,7 +168,7 @@ public class UserController
 	}
 
 	@RequestMapping("/join")
-	public String userjoin(@RequestParam(value = "userID", required = false) String userID, @RequestParam(value = "passwd", required = false) String passwd, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month, @RequestParam(value = "date", required = false) String date, @RequestParam(value = "gender", required = false) String gender, @RequestParam(value = "email_id", required = false) String email_id, @RequestParam(value = "email_addr", required = false) String addr, Model model)
+	public String userjoin(RedirectAttributes reAttr, @RequestParam(value = "userID", required = false) String userID, @RequestParam(value = "passwd", required = false) String passwd, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month, @RequestParam(value = "date", required = false) String date, @RequestParam(value = "gender", required = false) String gender, @RequestParam(value = "email_id", required = false) String email_id, @RequestParam(value = "email_addr", required = false) String addr, Model model)
 	{
 		if (userID != null && passwd != null && gender != null && email_id != null && year != null && month != null && date != null)
 		{
@@ -176,29 +178,20 @@ public class UserController
 			UserInfoDTO user = new UserInfoDTO(userID, passwd, name, birth, gender, email);
 			if (dao.infoInsert(user))
 			{
+				reAttr.addFlashAttribute("success", "join_success");
 				return "redirect:intro";
 			}
-			else
-			{
-				model.addAttribute("alertMsg", "<script>alert('가입에 실패 하였습니다. 다시 시도 해주세요')</script>");
-				return "redirect:intro";
-			}
+			else reAttr.addFlashAttribute("fail", "join_fail");
 		}
-		else
-		{
-			model.addAttribute("alertMsg", "<script>alert('회원 정보를 입력해주세요')</script>");
-			return "redirect:intro";
-		}
+		else reAttr.addFlashAttribute("fail", "join_blank");
+		return "redirect:intro";
 	}
 
 	// 유효성 검사 중복확인과 pass워드
 	@ResponseBody @RequestMapping("/duplicationid")
 	public String duplicationid(String userID)
 	{
-		System.out.println("userID: " + userID);
-		int result = dao.selectcheck(userID);
-		if (result == 1) return "unable";
-		else return "able";
+		return dao.selectcheck(userID) > 0 ? "unable" : "able";
 	}
 
 	// drop
@@ -212,10 +205,10 @@ public class UserController
 	public String userdrop(@RequestParam(value = "dropreason", required = false) Integer dropreason, @RequestParam(value = "etctext") String etctext, HttpSession session)
 	{
 		String user = (String) session.getAttribute("success");
-		session.invalidate();
 		dao.dropupdate(dropreason);
 		if (dropreason == 5) dao.dropReason(etctext);
 		dao.delete(user);
+		session.invalidate();
 
 		return "redirect:intro";
 	}
