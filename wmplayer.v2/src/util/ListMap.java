@@ -5,8 +5,6 @@ import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -21,7 +19,7 @@ import java.util.function.BiFunction;
 
 public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable, Serializable, Map<K, V>
 {
-	private static final long serialVersionUID = -4213104337910808865L;
+	private static final long serialVersionUID = -3454782691764515277L;
 
 	static class LinkedNode<K, V> implements Entry<K, V>
 	{
@@ -113,27 +111,6 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 		}
 	}
 
-	static Class<?> comparableClassFor(Object x)
-	{
-		if (x instanceof Comparable)
-		{
-			Class<?> c;
-			Type[] ts, as;
-			Type t;
-			ParameterizedType p;
-
-			if ((c = x.getClass()) == String.class) return c;
-			if ((ts = c.getGenericInterfaces()) != null) for (int i = 0; i < ts.length; ++i) if (((t = ts[i]) instanceof ParameterizedType) && ((p = (ParameterizedType) t).getRawType() == Comparable.class) && (as = p.getActualTypeArguments()) != null && as.length == 1 && as[0] == c) return c;
-		}
-
-		return null;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	static int compareComparables(Class<?> kc, Object k, Object x)
-	{
-		return (x == null || x.getClass() != kc ? 0 : ((Comparable) k).compareTo(x));
-	}
 	transient LinkedNode<K, V> table;
 	transient Set<K> keySet;
 	transient Collection<V> values;
@@ -143,6 +120,11 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 	public ListMap() { }
 
 	public ListMap(Map<? extends K, ? extends V> m)
+	{
+		putMapEntries(m);
+	}
+
+	public void putAll(Map<? extends K, ? extends V> m)
 	{
 		putMapEntries(m);
 	}
@@ -348,11 +330,6 @@ public final class ListMap<K, V> extends AbstractMap<K, V> implements Cloneable,
 		}
 
 		return value;
-	}
-
-	public void putAll(Map<? extends K, ? extends V> m)
-	{
-		putMapEntries(m);
 	}
 
 	public V remove(Object key)
