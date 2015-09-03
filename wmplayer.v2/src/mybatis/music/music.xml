@@ -12,6 +12,11 @@
  		WHERE A.BPM BETWEEN B.MIN_BPM AND B.MAX_BPM-01 AND #{temperature} BETWEEN B.MIN_TEMP AND B.MAX_TEMP-0.001			   
 	</select>
 	
+	<select id="todaybpm" parameterType="Double" resultType="kr.co.wmplayer.sinmina.model.dto.BpmInfoDTO"> 
+	    select * from bpminfo
+	    where #{temperature} between min_temp and max_temp-0.001
+	</select>
+	
 	<insert id="addmusic" parameterType="kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO">
 		insert into musicinfo values(#{musicID},#{title},#{artist},#{image},#{bpm},#{location})	    
 	</insert>

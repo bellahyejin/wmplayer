@@ -2,6 +2,7 @@ package kr.co.wmplayer.sinmina.dao.music;
 
 import java.util.List;
 
+import kr.co.wmplayer.sinmina.model.dto.BpmInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.FavorDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.LikeMusicDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.MusicInfoDTO;
@@ -68,5 +69,9 @@ public class MusicDAO {
 	
 	public double avgBpm(String userID){
 		return session.selectOne("like.avgBpm",userID);
+	}
+	
+	public BpmInfoDTO todaybpm(double temperature){
+		return session.selectOne("music.todaybpm", temperature);
 	}
 }
