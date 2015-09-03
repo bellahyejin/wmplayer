@@ -1,7 +1,9 @@
 package kr.co.wmplayer.sinmina.controller;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -143,18 +145,18 @@ public class UserController {
 	}
 	
 	@RequestMapping("/update")
-	public String userupdate(@RequestParam(value="passwd", required=false) String passwd,
-			                 @RequestParam(value="name", required=false) String name,
-			                 @RequestParam(value="year", required=false) String year,
-							 @RequestParam(value="month", required=false) String month,
-							 @RequestParam(value="date", required=false) String date,
-							 @RequestParam(value="email_id", required=false) String email_id,
-							 @RequestParam(value="email_addr", required=false) String addr,
+	@ResponseBody
+	public String userupdate(String passwd, String name, String year, String month,
+							 Date birth, String email,
 							 HttpSession session,Model model){
 		String userid = (String)session.getAttribute("success");
+		String birth_dt = new SimpleDateFormat("yyyy/MM/dd").format(birth);
 		
-		String birth = year + "/"+month+"/"+date;
-		String email = email_id+"@"+addr;
+		UserInfoDTO user = new UserInfoDTO(passwd, name, birth_dt, email);
+		user.setUserID(userid);
+		if(dao.update(user)){
+			return "userinfo";
+		}
 		
 		return "userinfo";       
 	}
