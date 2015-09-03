@@ -24,6 +24,6 @@
 	</select>
 	
 	<select id="avgBpm" parameterType="String" resultType="double">
-	    select avg(bpm) from like_music where userID = #{userID}
+	    select nvl(avg(bpm),0) from like_music where userID = #{userID}
 	</select>
 </mapper>

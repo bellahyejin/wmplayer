@@ -130,7 +130,7 @@ public class UserController
 		List<LikeMusicDTO> list = musicdao.selectLikeMusic(userid);
 
 		DecimalFormat format = new DecimalFormat(pattern);
-
+		
 		String avgbpm = format.format(musicdao.avgBpm(userid));
 
 		List<MusicInfoDTO> musiclist = new ArrayList<MusicInfoDTO>();
