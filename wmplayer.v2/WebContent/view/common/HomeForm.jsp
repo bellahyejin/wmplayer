@@ -16,7 +16,12 @@
 <script src="${initParam.root }/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript">
 	var titleLength = 0;
-	
+
+	$(document).ready(function()
+		{
+			parent.getLocation_cord();
+		});
+
 	function loaded(doc) {
 
 		var today_title = doc.getElementsByTagName('title');
@@ -24,10 +29,10 @@
 		var today_image = doc.getElementsByTagName('image');
 		var min_bpm = doc.getElementsByTagName('currentMinBpm');
 		var max_bpm = doc.getElementsByTagName('currentMaxBpm');
-		
+
 		var cur_min = min_bpm.item(0).firstChild.nodeValue;
 		var cur_max = max_bpm.item(0).firstChild.nodeValue;
-		
+
 		var title = document.getElementById('todaymusic_title');
 		var artist = document.getElementById('todaymusic_artist');
 		var min = document.getElementById('min');
@@ -61,16 +66,16 @@
 			imgDt.setAttribute("id", "image");
 			titleDd.setAttribute("id", "title");
 			artistDd.setAttribute("id", "artist");
-			//divAll 속성 
+			//divAll 속성
 			//divScroll 속성
-			//dl, dt 
+			//dl, dt
 			dlDiv.appendChild(imgDt);
 			dlDiv.appendChild(titleDd);
 			dlDiv.appendChild(artistDd);
 
 			imgDt.appendChild(img_cover[i]);
 
-			//데이터 입력 
+			//데이터 입력
 			img_cover[i].src = imgArr[i];
 			titleDd.innerHTML = titleArr[i].length > 10 ? titleArr[i]
 					.substring(0, 10)
@@ -85,7 +90,7 @@
 		todaylist_home.style.width = imgArr.length * 120;
 		min.innerHTML = cur_min;
 		max.innerHTML = cur_max;
-		
+
 	}
 
 </script>
@@ -142,6 +147,6 @@
 			<td class="board-rank-writer">${list.userID }
 			</td>
 		</tr>
-		</c:forEach>		
+		</c:forEach>
 	</table>
 </div>

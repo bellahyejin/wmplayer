@@ -18,41 +18,6 @@
       google.load("swfobject", "2.1");
     </script>
 <script type="text/javascript">
-//data send
-var params = '';
-window.onload=function (){
-	getLocation_cord();	   
-}
-/*현재 위치 찾기 */
-function getLocation_cord()
-{
-	if (navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-    else
-    {
-        $("#location").html("Geolocation is not supported by this browser.");
-    }
-}
-function showPosition(position)
-{
-	var cur_Latitude = Math.floor(position.coords.latitude*100)/100; //위도
-   	var cur_Longitude = Math.floor(position.coords.longitude*100)/100; //경도
-	params  += 'cur_Latitude='+cur_Latitude+'&cur_Longitude='+cur_Longitude;
-	$.ajax({
-		url: 'ajax/receiveData',
-   		type: 'POST',
-   		data : params,
-   		cache: false,
-   		success : function(doc){
-   			printData(doc);
-   			parent.section.loaded(doc);
-   		}
-	});
-   	
-}
-
 	//index
     var curIdx = 13;
     var nexIdx = 0;
@@ -65,7 +30,7 @@ function showPosition(position)
     // 객체 생성
 	 //콜백함수
 	//결과 출력 과정
-	
+
 	function printData(doc) {
 		/* var doc = xhr.responseXML; */
 
@@ -85,7 +50,7 @@ function showPosition(position)
 		var doc_weathericon = document.getElementById('weathericon');
 
 		var weathertxt_value = weather_text.item(0).firstChild.nodeValue;
-	
+
 		//날씨 표현
 		if (weathertxt_value.includes('맑음')) {
 			doc_weathericon.className = "icon-sun icon-weather";
@@ -98,7 +63,7 @@ function showPosition(position)
 		} else if (weathertxt_value.includes('구름')) {
 			doc_weathericon.className = "icon-cloudy icon-weather";
 		}
-	
+
 		//xml 파싱 결과 담기
 		for (var i = 0; i < musicID.length; i++) {
 			playlist[i] = musicID.item(i).firstChild.nodeValue;
@@ -110,7 +75,7 @@ function showPosition(position)
 		doc_location.innerHTML = location.item(0).firstChild.nodeValue;
 		doc_weathertxt.innerHTML = weathertxt_value;
 		doc_temper.innerHTML = temper.item(0).firstChild.nodeValue;
-		
+
 		//음악 정보
 		listLength = playlist.length - 1;
 		curIdx = Math.floor(Math.random() * listLength + 1);
@@ -299,8 +264,8 @@ function showPosition(position)
 			cnt = 0;
 		}
 	}
-	
-var flag = false; 
+
+var flag = false;
 $(document).ready(function(){
 	$('.like').click(function(){
 		if(flag != true){
@@ -313,7 +278,7 @@ $(document).ready(function(){
 	});
 });
 
-//like select 
+//like select
 function selectuserlike(musicID){
 	$.ajax({
 		url: 'MusicLikeData',
@@ -335,7 +300,7 @@ function selectuserlike(musicID){
 	});
 }
 
-//like add 
+//like add
 function likeAction(musicID, action){
 	$.ajax({
 		url : 'MusicLikeData',
