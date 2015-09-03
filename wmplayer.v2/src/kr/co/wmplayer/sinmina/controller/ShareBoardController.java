@@ -10,7 +10,9 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import kr.co.wmplayer.sinmina.dao.board.ShareboardDAO;
+import kr.co.wmplayer.sinmina.dao.reply.ShareReplyDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO;
+import kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ import youtube.YoutubeSearch;
 public class ShareBoardController
 {
 	@Autowired ShareboardDAO shareboardDAO;
+	@Autowired ShareReplyDAO sharereplyDAO;
 
 	BoardUserDTO bean;
 
@@ -39,14 +42,8 @@ public class ShareBoardController
 
 	int max_element = 9, page_div = 4;
 
-	@RequestMapping(value = "/temp", method = RequestMethod.GET)
-	public String temp(Model model, HttpServletRequest request, HttpSession session)
-	{
-		return main(model, request, session, null, null);
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String main(Model model, HttpServletRequest request, HttpSession session, RedirectAttributes reAttr, BoardUserDTO bean)
+	@RequestMapping(value = "", method = { RequestMethod.GET, RequestMethod.POST })
+	public String main(Model model, HttpServletRequest request, HttpSession session, RedirectAttributes reAttr, BoardUserDTO bean, @RequestParam(value = "action", required = false) String action)
 	{
 		Object userid = session.getAttribute("success");
 		map = new HashMap<String, Object>();
@@ -54,7 +51,6 @@ public class ShareBoardController
 		if (userid != null)
 		{
 			this.bean = bean;
-			String action = request.getParameter("action");
 
 			if (action == null || action.equals("list")) return shareList(model, request);
 			else if (action.equals("content")) return shareContent(model, request, bean);
@@ -125,16 +121,20 @@ public class ShareBoardController
 		map.clear();
 		map.put("bean", bean);
 
-		String artist = so.toUpperCase(bean.getBoard_artist(), 0);
-		String title = so.toUpperCase(bean.getBoard_title(), 0);
+		String artist = bean.getBoard_artist();
+		String title = bean.getBoard_title();
 		String content = bean.getBoard_desc();
 		String weather = bean.getWeather_custom();
+		System.out.println(artist + " " + title + " " + content + " " + weather);
 		if (artist == null || title == null || content == null || artist.equals("") || title.equals("") || content.equals("") || weather.equals(""))
 		{
 			map.put("fail", "blank");
 			reAttr.addFlashAttribute("data", map);
 			return "redirect:share/write";
 		}
+
+		artist = so.toUpperCase(bean.getBoard_artist(), 0);
+		title = so.toUpperCase(bean.getBoard_title(), 0);
 
 		YoutubeSearch youtubeSearch = YoutubeSearch.getInstance();
 
@@ -144,6 +144,8 @@ public class ShareBoardController
 		{
 			String videoID = youtubeSearch.getYoutubeId(bean.getBoard_title(), bean.getBoard_artist());
 			String albumcover = youtubeSearch.getThumnailAddr(bean.getBoard_title(), bean.getBoard_artist());
+
+			System.out.println(videoID + " " + albumcover);
 
 			if (videoID == null || albumcover == null)
 			{
@@ -157,8 +159,8 @@ public class ShareBoardController
 				bean.setVideoID(videoID);
 				bean.setAlbumcover(albumcover);
 
-				if (shareboardDAO.insert(bean)) return shareList(model, request);
-				else return shareWrite(model, request);
+				if (shareboardDAO.insert(bean)) return "redirect:share";
+				else return "redirect:share/write";
 			}
 		}
 		catch (IOException | InterruptedException e)
@@ -206,7 +208,7 @@ public class ShareBoardController
 		{
 			for (BoardUserDTO bean : list)
 			{
-				sb = sb.append("<div class=\"cardtotal\"")
+				sb = sb.append("<div class=\"cardtotal\">")
 							.append("<li>")
 								.append("<a href=\"#\" onclick=\"setLink(null, 'share', 'content', { 'board_seq' : ").append(bean.getBoard_seq()).append(" })\">")
 									.append("<div class=\"cardimg\">")
@@ -240,21 +242,20 @@ public class ShareBoardController
 
 			if (max_page > 1)
 			{
-				if (search_text != null) search_text = search_text.replaceAll("%", "");
-				else search_text = "";
+				search_text = search_text == null ? "" : search_text.replaceAll("%", "");
 
 				String temp = "\"><a href=\"#\" onclick=\"setLink(null, 'share', 'list', { 'page' : ";
-				String temp2 = ", 'weather_custom' : '" + weather_custom + "', 'search_select' : '" + search_select + "', 'search_text' : '" + search_text;
+				String temp2 = ", 'weather_custom' : '" + weather_custom + "', 'search_select' : '" + search_select + "', 'search_text' : '" + search_text + "' })";
 
 				sb2 = sb2.append("<ul class=\"page-list\">")
 								.append("<div id=\"first\">")
-									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page".concat(temp).concat(Integer.toString(1)).concat(temp2).concat("' })")).append("\">start<").append(flag ? "" : "/a><").append("/li>")
+									.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page".concat(temp).concat(Integer.toString(1)).concat(temp2)).append("\">start<").append(flag ? "" : "/a><").append("/li>")
 								.append("</div>")
 								.append("<div id=\"middle\">");
-				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp.concat(Integer.toString(i)).concat(temp2).concat("' })")).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp.concat(Integer.toString(i)).concat(temp2)).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
 				sb2 = sb2.append("</div>")
 							.append("<div id=\"end\">")
-								.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-").append(temp).append(max_page).append(temp2).append("' })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
+								.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-").append(temp).append(max_page).append(temp2).append("\">end<").append(flag ? "" : "/a><").append("/li>")
 							.append("</div>")
 						.append("</ul>");
 			}
@@ -313,9 +314,60 @@ public class ShareBoardController
 		return weather_list;
 	}
 
-	@ResponseBody @RequestMapping(value = "/replelist", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String repleList()
+	@ResponseBody @RequestMapping(value = "/reple/list.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+	public String repleList(ShareReplyDTO bean, HttpSession session, @RequestParam(value = "pageNo") Integer page)
 	{
-		return "";
+		String id = (String) session.getAttribute("success");
+		Paging p = Paging.getInstance();
+		page = page == null || page <= 0 ? 1 : page;
+		int max_element = 10, page_div = 4;
+		StringBuffer sb = new StringBuffer();
+		sb = sb.append("<table width=\"540px\" class=\"call_click\">");
+
+		int total_size = sharereplyDAO.selectAll(bean.getBoard_seq(), -1).size();
+		Map<String, Integer> page_data = p.setData(total_size, page, max_element, page_div, "begin&last", false);
+		List<ShareReplyDTO> list = sharereplyDAO.selectAll(bean.getBoard_seq(), page_data.get("item_start"));
+
+		if (list == null || list.size() > 0)
+		{
+			sb = sb.append("<tr>")
+							//.append("<th width=\"10%\">번호</th>")
+							.append("<th width=\"50%\">내용</th>")
+							.append("<th width=\"15%\">작성자</th>")
+							.append("<th width=\"25%\">작성일</th>")
+							.append("<th width=\"10%\"></th>")
+						.append("</tr>");
+
+			for (ShareReplyDTO temp : list)
+			{
+				sb = sb.append("<tr align=\"center\" data-seq=\"".concat(Integer.toString(temp.getSharereple_seq())).concat("\">"))
+								//.append("<td>").append(total_size - max_element * (page - 1) - i).append("</td>")
+								.append("<td align=\"left\" id=\"reple-content\">").append(temp.getContents()).append("<br><input type=\"text\" size=\"30\" id=\"update-reple\"><input id=\"updatebutton\" type=\"button\" value=\"수정\"></td>")
+								.append("<td>").append(temp.getuserID()).append("</td>")
+								.append("<td style=\"font-size : small; align : center;\">").append(temp.getSubmit_date().replaceAll("-", "/").substring(0, temp.getSubmit_date().lastIndexOf("."))).append("</td>")
+								.append("<td id=\"upDel\" style=\"font-size : small\">").append(temp.getuserID().equals(id) ? "<a class=\"update\" id=\"update\" href=\"#\" title=\"".concat(Integer.toString(temp.getSharereple_seq()).concat("\">수정</a><br><a class=\"delete\" id=\"delete\" href=\"#\" title=\"").concat(Integer.toString(temp.getSharereple_seq()).concat("\">삭제</a>"))) : "").append("</td>")
+							.append("</tr>");
+			}
+		}
+		sb = sb.append("</table>");
+		return sb.toString();
+	}
+
+	@ResponseBody @RequestMapping(value = "/reple/insert.ajax", method = RequestMethod.POST)
+	public void repleInsert(ShareReplyDTO bean, HttpSession session)
+	{
+		bean.setuserID((String) session.getAttribute("success"));
+	}
+
+	@ResponseBody @RequestMapping(value = "/reple/update.ajax", method = RequestMethod.POST)
+	public void repleUpdate(ShareReplyDTO bean)
+	{
+		//
+	}
+
+	@ResponseBody @RequestMapping(value = "/reple/delete.ajax", method = RequestMethod.POST)
+	public void repleDelete(ShareReplyDTO bean)
+	{
+		//
 	}
 }

@@ -62,7 +62,7 @@ public class WeatherModel
 		top_key_name.put("/value", false);
 
 		jfp.setUrl("http://www.kma.go.kr/DFSROOT/POINT/DATA/top.json.txt");
-		List<HashMap<String, Object>> top_list = jfp.parser(null, top_key_name);
+		List<Map<String, Object>> top_list = jfp.parser(null, top_key_name);
 
 		int top_code = 0;
 		String top = st.nextToken();
@@ -73,10 +73,10 @@ public class WeatherModel
 		mid_key_name.put("/value", false);
 
 		jfp.setUrl("http://www.kma.go.kr/DFSROOT/POINT/DATA/mdl." + top_code + ".json.txt");
-		List<HashMap<String, Object>> mid_list = jfp.parser(null, mid_key_name);
+		List<Map<String, Object>> mid_list = jfp.parser(null, mid_key_name);
 
 		int mid_code = 0;
-		List<HashMap<String, Object>> leaf_list;
+		List<Map<String, Object>> leaf_list;
 		Map<String, Boolean> leaf_key_name = new HashMap<String, Boolean>();
 		leaf_key_name.put("/x", false);
 		leaf_key_name.put("/y", false);

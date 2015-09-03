@@ -50,10 +50,10 @@
 <script type="text/javascript">
 	this.sequence = ${ data.board_seq };
 
-	function getData(page)
+	function getReple(page)
 	{
 		this.data = {
-				column_seq : this.sequence,
+				board_seq : this.sequence,
 				pageNo : page
 			};
 
@@ -63,7 +63,7 @@
 
 			$.ajax({
 				type : "post",
-				url : "${ initParam.root }/share/replelist",
+				url : "${ initParam.root }/share/reple/list.ajax",
 				dataType : "html",
 				data : this.data,
 				success : function(data, status, xhr)
@@ -77,11 +77,11 @@
 		}
 	}
 
-	function insertData()
+	function insertReple()
 	{
 		$.ajax({
 			type : "post",
-			url : "${ initParam.root }/view/ajax/share/InsertReple.jsp",
+			url : "${ initParam.root }/share/reple/insert.ajax",
 			dataType : "html",
 			data : {
 				column_seq : this.sequence,
@@ -90,6 +90,7 @@
 			success : function(data, status, xhr)
 			{
 				$("#reple_content").val("");
+				getReple(1);
 			},
 			error : function(xhr, status, error)
 			{
@@ -97,21 +98,87 @@
 			}});
 	}
 
-	function updateData()
+	function updateReple(sequence, content)
 	{
-		//
+		$.ajax({
+			type : "post",
+			url : "${ initParam.root }/share/reple/update.ajax",
+			dataType : "html",
+			data : {
+				sharereply_seq : 0,
+				board_seq : this.sequence,
+				repleContent : $("#reple_content").val()
+			},
+			success : function(data, status, xhr)
+			{
+				$("#reple_content").val("");
+				getReple(1);
+			},
+			error : function(xhr, status, error)
+			{
+				alert("reple update error");
+			}});
 	}
 
-	function deleteData()
+	function deleteReple(sequence)
 	{
-		//
+		$.ajax({
+			type : "post",
+			url : "${ initParam.root }/share/reple/delete.ajax",
+			dataType : "html",
+			data : {
+				sharereply_seq : 0
+			},
+			success : function(data, status, xhr)
+			{
+				getReple(1);
+			},
+			error : function(xhr, status, error)
+			{
+				alert("reple delete error");
+			}});
 	}
 
 	$(document).ready(function()
 		{
-			$("#reple_input").click(function()
+			page = "${ param.page }" == "" ? 1 : "${ param.page }";
+			getReple(page);
+
+			$(document).ajaxSuccess(function()
 				{
-					insertData();
+					event();
 				});
 		});
+
+	function event()
+	{
+		$("#reple_input").unbind();
+		$(".update").unbind();
+		$(".delete").unbind();
+		$("#updatebutton").unbind();
+
+		$("#reple-content input").hide();
+
+		$("#reple_input").click(function()
+			{
+				insertReple();
+			});
+
+		$(".update").click(function()
+			{
+				tr = $(this).parent().parent();
+				tr.find("input").toggle(300);
+				tr.find("input:text").val(tr.find("input:hidden").val());
+			});
+
+		$(".delete").click(function()
+			{
+				deleteReple();
+			});
+
+		$("#updatebutton").click(function()
+			{
+				updateReple("", "");
+			});
+	}
 </script>

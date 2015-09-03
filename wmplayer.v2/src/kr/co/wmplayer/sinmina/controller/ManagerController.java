@@ -1,5 +1,6 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,8 @@ import util.JSONOperate;
 import util.ListAndMapOperate;
 import util.ListMap;
 import util.Paging;
+import util.StringOperate;
+import util.Time;
 
 @Controller
 @RequestMapping(value = "/manager")
@@ -29,7 +32,10 @@ public class ManagerController
 
 	JSONOperate jsonOperate = JSONOperate.getInstance();
 	ListAndMapOperate lamOperate = ListAndMapOperate.getInstance();
+	Paging p = Paging.getInstance();
+	StringOperate so = StringOperate.getInstance();
 	Map<String, Object> column_name_y, map;
+	SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
 
 	int max_element = 15, page_div = 4, pres_page = 1;
 	String compare_data, output_data;
@@ -96,8 +102,11 @@ public class ManagerController
 		List<Map<String, Object>> hour_login_list = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < 24; i++)
 		{
-			compare_data = (i < 10 ? "0" : "").concat(Integer.toString(i));
-			output_data = compare_data.concat("시");
+			SimpleDateFormat input_date = new SimpleDateFormat("HH");
+			SimpleDateFormat output_date = new SimpleDateFormat("HH시");
+			long time = (i - 9) * Time.getTime(Time.Field.Minute);
+			compare_data = input_date.format(time);
+			output_data = output_date.format(time);
 			map.put("compare_data", compare_data);
 			map.put("output_data", output_data);
 			Map<String, Object> hour_login = managerDAO.statcount(map);
@@ -139,19 +148,18 @@ public class ManagerController
 		List<Map<String, Object>> age_join_list = new ArrayList<Map<String, Object>>();
 		for (int i = 1; i < 6; i++)
 		{
+			compare_data = Integer.toString(i * 10);
+			output_data = compare_data.concat("대");
+
 			switch(i)
 			{
 				case 1 :
-					compare_data = "10";
-					output_data = compare_data.concat("대 이하");
+					output_data = output_data.concat(" 이하");
 					break;
 				case 5 :
-					compare_data = "50";
-					output_data = compare_data.concat("대 이상");
+					output_data = output_data.concat(" 이상");
 					break;
 				default :
-					compare_data = Integer.toString(i * 10);
-					output_data = compare_data.concat("대");
 			}
 
 			map.put("compare_data", compare_data);
@@ -204,9 +212,10 @@ public class ManagerController
 	@ResponseBody @RequestMapping(value = "/userinfo.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
 	public String userInfo(@RequestParam(value = "status") String status, @RequestParam(value = "gender") String gender, @RequestParam(value = "search") String search, @RequestParam(value = "value") String value, @RequestParam(value = "page") Integer page)
 	{
-		Paging p = Paging.getInstance();
-		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
 		value = value == null || value.equals("") ? null : value;
+
+		StringBuffer sb = new StringBuffer(), sb2 = new StringBuffer();
+
 		List<String> status_list = new ArrayList<String>();
 		if (status.equals("all") || status.equals("block")) status_list.add("b");
 		if (status.equals("all") || status.equals("current")) status_list.add("c");
@@ -238,8 +247,7 @@ public class ManagerController
 						.append("<th width=\"4%\">성별</th>")
 						.append("<th width=\"28%\">이메일</th>")
 						.append("<th width=\"10%\"></th>")
-					.append("</tr>")
-					.append("<tr align=\"center\">");
+					.append("</tr>");
 
 		if (list != null && list.size() > 0)
 		{
@@ -247,38 +255,51 @@ public class ManagerController
 			{
 				UserInfoDTO data = list.get(i);
 				status = data.getStatus();
+				String[] birth = data.getBirth().split("/");
+				Timestamp time = Timestamp.valueOf(birth[0] + "-" + birth[1] + "-" + birth[2] + " 00:00:00");
+				String birth_date = date.format(time.clone());
 
-				sb = sb.append("<td>".concat(Integer.toString((member_num - (start_idx + i)))).concat("</td>"))
-							.append("<td>".concat(data.getUserID()).concat("</td>"))
-							.append("<td>".concat(data.getName()).concat("</td>"))
-							.append("<td>".concat(data.getBirth()).concat("</td>"))
-							.append("<td>".concat(data.getGender()).concat("</td>"))
-							.append("<td>".concat(data.getEmail()).concat("</td>"))
-							.append("<td>")
-								.append("<input type=\"button\" class=\"button\" name=".concat(status.equals("b") ? "current" : "block").concat("-").concat(data.getUserID()).concat(" style=\"font: 9pt\" value=").concat(status.equals("b") ? "활성" : "차단") + ">")
-								.append("<input type=\"button\" class=\"button\" name=\"drop-".concat(data.getUserID()).concat("\" style=\"font: 9pt\" value=\"탈퇴\">"));
+				sb = sb.append("<tr align=\"center\">")
+								.append("<td>").append(Integer.toString((member_num - (start_idx + i)))).append(("</td>"))
+								.append("<td>").append(data.getUserID()).append(("</td>"))
+								.append("<td>").append(so.substring(data.getName(), 0, 8, false, true)).append(("</td>"))
+								.append("<td>").append(birth_date).append(("</td>"))
+								.append("<td>").append(data.getGender()).append(("</td>"))
+								.append("<td>").append(data.getEmail()).append(("</td>"))
+								.append("<td>")
+									.append("<input type=\"button\" class=\"button\" name=").append((status.equals("b") ? "current" : "block")).append(("-")).append((data.getUserID())).append((" style=\"font: 9pt\" value=")).append((status.equals("b") ? "활성" : "차단") + ">")
+									.append("<input type=\"button\" class=\"button\" name=\"drop-").append((data.getUserID())).append(("\" style=\"font: 9pt\" value=\"탈퇴\">"))
+							.append("</tr>");
 			}
 
 			int max_page = page_data.get("last");
 
 			if (max_page > 1)
 			{
+				value = value == null ? "" : value;
+
+				String temp = "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : ";
+				String temp2 = ", 'status' : '" + status + "', 'gender' : '" + gender + "', 'search' : '" + search + "', 'value' : '" + value + "' })";
+
 				sb2 = sb2.append("<ul class=\"page-list\">")
 									.append("<div id=\"first\">")
-										.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : 1})").append("\">start<").append(flag ? "" : "/a><").append("/li>")
+										.append("<li class=\"").append((flag = pres_page == 1) ? "none_a" : "page\" id=\"first-" + temp + "1" + temp2).append("\">start<").append(flag ? "" : "/a><").append("/li>")
 									.append("</div>")
 								.append("<div id=\"middle\">");
-				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : "page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + i + " })").append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
+				for (int i = page_data.get("start"); i <= page_data.get("end"); i++) sb2 = sb2.append("<li class=\"").append((flag = pres_page == i) ? "none_a" : temp + i + temp2).append("\">").append(i).append("<").append(flag ? "" : "/a><").append("/li>");
 				sb2 = sb2.append("</div>")
 									.append("<div id=\"end\">")
-										.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-page\"><a href=\"#\" onclick=\"setLink(null, 'manager', 'userinfo', { 'page' : " + max_page + " })").append("\">end<").append(flag ? "" : "/a><").append("/li>")
+										.append("<li class=\"").append((flag = pres_page == max_page) ? "none_a" : "page\" id=\"end-" + temp + max_page + temp2).append("\">end<").append(flag ? "" : "/a><").append("/li>")
 									.append("</div>")
 								.append("</ul>");
 			}
 		}
-		else sb = sb.append("<td colspan=\"7\">검색 결과가 없습니다.</td>");
-
-		sb = sb.append("</tr>");
+		else
+		{
+			sb = sb.append("<tr align=\"center\">")
+							.append("<td colspan=\"7\">검색 결과가 없습니다.</td>")
+						.append("</tr>");
+		}
 
 		return sb.append("|").append(sb2).toString();
 	}

@@ -3,12 +3,12 @@ package kr.co.wmplayer.sinmina.model.dto.reply;
 import kr.co.wmplayer.sinmina.interfaces.WMPlayerDTO;
 
 public class ShareReplyDTO implements WMPlayerDTO{
-	private int sharereply_seq;
+	private int sharereple_seq;
 	private int board_seq;
 	private String userID;
 	private String contents;
 	private String submit_date;
-	
+
 	public ShareReplyDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -20,22 +20,22 @@ public class ShareReplyDTO implements WMPlayerDTO{
 		this.contents = contents;
 	}
 
-	public ShareReplyDTO(int sharereply_seq, int board_seq, String userID,
+	public ShareReplyDTO(int sharereple_seq, int board_seq, String userID,
 			String contents, String submit_date) {
 		super();
-		this.sharereply_seq = sharereply_seq;
+		this.sharereple_seq = sharereple_seq;
 		this.board_seq = board_seq;
 		this.userID = userID;
 		this.contents = contents;
 		this.submit_date = submit_date;
 	}
 
-	public int getSharereply_seq() {
-		return sharereply_seq;
+	public int getSharereple_seq() {
+		return sharereple_seq;
 	}
 
-	public void setSharereply_seq(int sharereply_seq) {
-		this.sharereply_seq = sharereply_seq;
+	public void setSharereple_seq(int sharereple_seq) {
+		this.sharereple_seq = sharereple_seq;
 	}
 
 	public int getBoard_seq() {
@@ -69,6 +69,6 @@ public class ShareReplyDTO implements WMPlayerDTO{
 	public void setSubmit_date(String submit_date) {
 		this.submit_date = submit_date;
 	}
-	
-	
+
+
 }

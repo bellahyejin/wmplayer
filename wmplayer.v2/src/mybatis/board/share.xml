@@ -79,12 +79,12 @@
 		where shareReple_seq=#{delNum}
 	</delete>
 
-	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		insert into shareReple
 		values (shareReple_seq.nextval, #{share_seq}, #{contents}, #{userID}, SYSDATE)
 	</insert>
 
-	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO">
+	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		select *
 		from shareReple
 		where share_seq=#{share_seq}
