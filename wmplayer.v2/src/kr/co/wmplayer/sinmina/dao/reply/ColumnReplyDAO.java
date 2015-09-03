@@ -2,6 +2,7 @@ package kr.co.wmplayer.sinmina.dao.reply;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -42,9 +43,10 @@ public class ColumnReplyDAO implements ColumnRelyInterface{
 	}
 
 	@Override
-	public boolean delete(int delNum) {
+	public boolean delete(Map<String, Object> map) {
 		
-		int t =	session.delete("column.deleteReple", delNum);
+		int t =	session.delete("column.deleteReple", map);
+		System.out.println(";;;;;"+t);
 		if(t == 1) return true;
 		else return false;
 	}

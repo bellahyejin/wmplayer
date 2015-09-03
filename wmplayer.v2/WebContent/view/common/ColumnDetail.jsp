@@ -18,7 +18,7 @@ var pageNum
 $(document).ready(function(){
 	
 	$.ajax({
-		url : 'CallReply',
+		url : 'CallReple',
 		type : 'post',
 		data : {
 			column_seq : column_seq,
@@ -33,7 +33,7 @@ $(document).ready(function(){
 		pageNum = $(this).attr("value");
 		
 		$.ajax({
-			url : 'CallReply',
+			url : 'CallReple',
 			type : 'post',
 			data : {
 				column_seq : column_seq,
@@ -56,7 +56,7 @@ $(document).ready(function(){
 				repleContent:txt
 			}, function(data){	
 				
-				$.post("CallReply",
+				$.post("CallReple",
 						{column_seq:column_seq,
 					pageNo:1}, function(data){
 						
