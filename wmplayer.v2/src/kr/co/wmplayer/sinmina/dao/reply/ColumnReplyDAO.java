@@ -33,7 +33,7 @@ public class ColumnReplyDAO implements ColumnRelyInterface{
 	@Override
 	public boolean insert(int column_seq, String content, String id) {
 		
-		ColumnReplyDTO repleDTO = new ColumnReplyDTO(column_seq,content,id);
+		ColumnReplyDTO repleDTO = new ColumnReplyDTO(column_seq,id,content);
 			
 		int	t = session.insert("column.inReple", repleDTO);
 		if(t == 1) return true;

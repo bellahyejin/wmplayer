@@ -5,21 +5,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import kr.co.wmplayer.sinmina.dao.board.ColumnboardDAO;
+import kr.co.wmplayer.sinmina.dao.reply.ColumnReplyDAO;
 import kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO;
 import kr.co.wmplayer.sinmina.model.dto.board.NoticeBoardDTO;
+import kr.co.wmplayer.sinmina.model.dto.reply.ColumnReplyDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ColumnBoardController {
 	
 	@Autowired
 	ColumnboardDAO columndao ;
+	@Autowired
+	ColumnReplyDAO replydao ;
 	
 	@RequestMapping("/columnform")
 	public String columnform(){
@@ -134,5 +141,46 @@ public class ColumnBoardController {
 	    	model.addAttribute("alertMsg", alertMsg);
 	    	return "redirect:columndetail";
 	    }
+	}
+	
+	@RequestMapping("/CallReply")
+	public String columnreply(@RequestParam(value="column_seq")int column_seq, @RequestParam(value="pageNo")int pageNo, Model model){
+		
+		List<ColumnReplyDTO> list =  replydao.selectAll(column_seq, pageNo);
+		
+		for(ColumnReplyDTO reple : list){
+			String date = reple.getSubmit_date();
+			reple.setSubmit_date(date.replace("-", "/").substring(0, 10));
+		}
+		
+		model.addAttribute("reples", list);
+		
+		return "ajax/column/CallReple";
+	}
+	
+	@RequestMapping("/DeleteReply")
+	public String deletereply(@RequestParam(value="delNum")int delNum){
+		
+		replydao.delete(delNum);
+		
+		return "ajax/column/CallReple";
+	}
+	
+	@RequestMapping("/UpdateReple")
+	public String updatereply(@RequestParam(value="upNum")int upNum, @RequestParam(value="updatedContents")String updatedContents){
+		
+		replydao.update(upNum, updatedContents);
+		
+		return "ajax/column/CallReple";
+	}
+	
+	@RequestMapping("/InsertReple")
+	public String insertreply(@RequestParam(value="repleContent")String repleContent, @RequestParam(value="column_seq") int column_seq, HttpSession session){
+		
+		String id = (String) session.getAttribute("success");
+		
+		replydao.insert(column_seq, repleContent, id);
+		
+		return "ajax/column/CallReple";
 	}
 }

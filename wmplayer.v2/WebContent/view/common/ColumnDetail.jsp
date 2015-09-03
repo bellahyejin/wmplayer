@@ -16,36 +16,52 @@ ${varTotalPage }
 <script>
 var pageNum
 $(document).ready(function(){
-	$.post("../ajax/column/CallReple.jsp",
-			{column_seq:column_seq,
-			pageNo:1}, function(data){$('#AppendReple').append(data);			
-			});	
+	
+	$.ajax({
+		url : 'CallReply',
+		type : 'post',
+		data : {
+			column_seq : column_seq,
+			pageNo : 1
+		},
+		success : function(data){
+			$('#AppendReple').html(data);
+		}
+	});
+	
 	$(".pageNum").click(function(){
 		pageNum = $(this).attr("value");
 		
-		$.post("../ajax/column/CallReple.jsp",
-				{column_seq:column_seq,
-			pageNo:pageNum}, function(data){
-				
+		$.ajax({
+			url : 'CallReply',
+			type : 'post',
+			data : {
+				column_seq : column_seq,
+				pageNo : pageNum
+			},
+			success : function(data){
 				$('#AppendReple').empty();			
-				$('#AppendReple').append(data);	
+				$('#AppendReple').html(data);	
 				$("#repleTxt").val("");
-			});	
+			}
+		});
 	});
 	      
 	$("#repleInput").click(function(){
 	var txt = $("#repleTxt").val();
 	
-	$.post("../ajax/column/InsertReple.jsp",
-			{repleContent:txt,
-			column_seq:column_seq}, function(data){	
+	$.post("InsertReple",
+			{
+				column_seq:column_seq,
+				repleContent:txt
+			}, function(data){	
 				
-				$.post("../ajax/column/CallReple.jsp",
+				$.post("CallReply",
 						{column_seq:column_seq,
 					pageNo:1}, function(data){
 						
 						$('#AppendReple').empty();			
-						$('#AppendReple').append(data);	
+						$('#AppendReple').html(data);	
 						$("#repleTxt").val("");
 					});	
 			}
@@ -112,10 +128,10 @@ ${column.contents }
 		</div>
 		<br>
 
-		<div>
+		<div class="columnreply">
 			<!-- 리플시작 -->
-			<input type="text" size="65" id="repleTxt"> <input
-				type="button" value="확인" id="repleInput">
+			<input type="text" size="65" id="repleTxt" placeholder="댓글을 입력해주세요"> 
+			<input type="button" value="댓글입력" id="repleInput">
 		</div>
 		<div id="AppendReple" style="size: 800px;"></div>
 		<div id="replePage">

@@ -27,6 +27,14 @@ public class UserInfoDTO implements WMPlayerDTO {
 		this.gender = gender;
 
 	}
+	
+	public UserInfoDTO(String passwd, String name, String birth, String email){
+		super();
+		this.passwd = passwd;
+		this.name = name;
+		this.birth = birth;
+		this.email = email;
+	}
 
 	public UserInfoDTO(String userID, String passwd, String name, String birth,
 			String gender, String email) {

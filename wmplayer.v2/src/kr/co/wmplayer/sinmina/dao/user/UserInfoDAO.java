@@ -33,6 +33,7 @@ public class UserInfoDAO {
 	}// insert
 
 	public boolean update(UserInfoDTO user) {
+		System.out.println(user.getUserID());
 		int t = session.update("user.userinfoupdate", user);
 		if (t == 1)
 			return true;
