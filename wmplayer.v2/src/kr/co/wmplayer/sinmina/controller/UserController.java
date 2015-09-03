@@ -209,7 +209,7 @@ public class UserController
 	}
 
 	@RequestMapping("/userdrop")
-	public String userdrop(@RequestParam(value = "dropreason", required = false, defaultValue = "5") int dropreason, @RequestParam(value = "etctext") String etctext, HttpSession session)
+	public String userdrop(@RequestParam(value = "dropreason", required = false) Integer dropreason, @RequestParam(value = "etctext") String etctext, HttpSession session)
 	{
 		String user = (String) session.getAttribute("success");
 		session.invalidate();
