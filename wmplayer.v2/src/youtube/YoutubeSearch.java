@@ -20,10 +20,10 @@ public class YoutubeSearch
 		return youtubeSearch == null ? youtubeSearch = new YoutubeSearch() : youtubeSearch;
 	}
 
-	public ArrayList<HashMap<String, Object>> findYoutubeId(String music_title, String music_artist) throws MalformedURLException, IOException, InterruptedException
+	public List<Map<String, Object>> findYoutubeId(String music_title, String music_artist) throws MalformedURLException, IOException, InterruptedException
 	{
-		ArrayList<HashMap<String, Object>> temp = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> data_list;
+		List<Map<String, Object>> temp = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> data_list;
 		JSONFileParser jfp = new JSONFileParser();
 		String youtube_music_url_root_key = "/items";
 
@@ -61,27 +61,27 @@ public class YoutubeSearch
 		return temp;
 	}
 
-	ArrayList<HashMap<String, Object>> videoinfo;
+	List<Map<String, Object>> videoinfo;
 
 	public String getTitle(String title, String artist) throws MalformedURLException, IOException, InterruptedException
 	{
-		videoinfo = videoinfo == null ? videoinfo = findYoutubeId(title, artist) : videoinfo;
+		videoinfo = findYoutubeId(title, artist);
 		return getData(videoinfo, "/id/title");
 	}
 
 	public String getYoutubeId(String title, String artist) throws MalformedURLException, IOException, InterruptedException
 	{
-		videoinfo = videoinfo == null ? videoinfo = findYoutubeId(title, artist) : videoinfo;
+		videoinfo = findYoutubeId(title, artist);
 		return getData(videoinfo, "/id/videoId");
 	}
 
 	public String getThumnailAddr(String title, String artist) throws MalformedURLException, IOException, InterruptedException
 	{
-		videoinfo = videoinfo == null ? videoinfo = findYoutubeId(title, artist) : videoinfo;
+		videoinfo = findYoutubeId(title, artist);
 		return getData(videoinfo, "/snippet/thumbnails/high/url");
 	}
 
-	public String getData(List<HashMap<String, Object>> data, String key)
+	public String getData(List<Map<String, Object>> data, String key)
 	{
 		return data == null ? null : (String) data.get(0).get(key);
 	}

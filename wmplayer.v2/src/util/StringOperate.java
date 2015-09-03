@@ -61,8 +61,9 @@ public class StringOperate
 	public String substring(String str, int start_idx, int byte_length, boolean isNoTag, boolean isAddDot)
 	{
 		if (str == null) throw new NullPointerException("str");
-		if (start_idx <= 0 || start_idx > str.length())  throw new StringIndexOutOfBoundsException(start_idx);
-		if (byte_length <= 0 || byte_length > str.length())  throw new StringIndexOutOfBoundsException(byte_length);
+
+		if (start_idx < 0 || start_idx > str.length())  throw new StringIndexOutOfBoundsException(start_idx);
+		if (byte_length <= 0)  throw new StringIndexOutOfBoundsException(byte_length);
 
 		String value = str.substring(start_idx);
 		Pattern p = Pattern.compile("<(/?)([^<>]*)?>", Pattern.CASE_INSENSITIVE);
@@ -72,34 +73,37 @@ public class StringOperate
 
 		try
 		{
-			byte[] bytes = value.getBytes("utf-8");
+			byte[]  bytes = value.getBytes("utf-8");
+			int real_length = calcByte(bytes, byte_length);
 
-			int i = 0, original_length = 0, real_length = 0;
-
-			while (i < bytes.length)
-			{
-				if ((bytes[i] & 0x80) != 0)
-				{
-					if (original_length + 2 > byte_length) break;
-					original_length += 2;
-					real_length += 3;
-					i += 3;
-				}
-				else
-				{
-					if (original_length + 1 > byte_length) break;
-					original_length++;
-					real_length++;
-					i++;
-				}
-			}
-
-			return new String(bytes, 0, real_length, "utf-8").concat(isAddDot ? "..." : "");
+			return new String(bytes, 0, real_length, "utf-8").concat(isAddDot && real_length < bytes.length ? "..." : "");
 		}
 		catch (UnsupportedEncodingException e)
 		{
 			e.printStackTrace();
 			return str;
 		}
+	}
+
+	private int calcByte(byte[] bytes, int byte_length)
+	{
+		int original_length = 0, real_length = 0, original_incre = 0, real_incre = 0;
+
+		loop : while (real_length < bytes.length)
+		{
+			if ((bytes[real_length] & 0x80) != 0)
+			{
+				original_incre = 2;
+				real_incre = 3;
+			}
+			else original_incre = real_incre = 1;
+
+			original_length += original_incre;
+			if (original_length > byte_length) break loop;
+			real_length += real_incre;
+			if (original_length > bytes.length) break loop;
+		}
+
+		return real_length;
 	}
 }

@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +129,7 @@ public class JSONFileParser
 		}
 	}
 
-	public List<HashMap<String, Object>> parser(String root_key, Map<String, Boolean> key_name)
+	public List<Map<String, Object>> parser(String root_key, Map<String, Boolean> key_name)
 	{
 		return processNode(Json.createParser(is), "/root" + (root_key == null ? "" : root_key), key_name);
 	}
@@ -191,11 +189,11 @@ public class JSONFileParser
 		return child_data;
 	}
 
-	public List<HashMap<String, Object>> processNode(JsonParser node, String root_key, Map<String, Boolean> key_name)
+	public List<Map<String, Object>> processNode(JsonParser node, String root_key, Map<String, Boolean> key_name)
 	{
 		List<String> array_key = new ArrayList<String>(1);
 		Map<String, Object> child_data = new HashMap<String, Object>(1);
-		List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>(1);
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>(1);
 
 		Event event;
 		String key_location = "/root";

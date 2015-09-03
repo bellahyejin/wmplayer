@@ -86,7 +86,7 @@ public class AddressChangeModel
 		key_name.put("/point/x", false);
 		key_name.put("/point/y", false);
 
-		List<HashMap<String, Object>> data_list = jfp.parser(root_key, key_name);
+		List<Map<String, Object>> data_list = jfp.parser(root_key, key_name);
 
 		data = data_list.get(0);
 
@@ -103,7 +103,7 @@ public class AddressChangeModel
 		key_name.put("/addrdetail/dongmyun", false);
 		key_name.put("/addrdetail/rest", false);
 
-		List<HashMap<String, Object>> data_list = jfp.parser(root_key, key_name);
+		List<Map<String, Object>> data_list = jfp.parser(root_key, key_name);
 
 		addr = new String();
 

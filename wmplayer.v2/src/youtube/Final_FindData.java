@@ -10,10 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import paser.JSONFileParser;
-
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
 public class Final_FindData {
 	private static final String echonest_key = "LDM4TYRGIZQNP6QOD";
@@ -66,7 +63,7 @@ public class Final_FindData {
 
 		JSONFileParser jfp = new JSONFileParser();
 		String url;
-		List<HashMap<String, Object>> data_list = new ArrayList<HashMap<String, Object>>();
+		List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
 
 		List<Integer> start_index_list = new ArrayList<Integer>();
 		for (int i = 0; i < 1; i++)
@@ -76,7 +73,7 @@ public class Final_FindData {
 		year_list.add(year);
 
 		// echonest get artist_list
-		List<HashMap<String, Object>> echonest_artist_list = new ArrayList<HashMap<String, Object>>();
+		List<Map<String, Object>> echonest_artist_list = new ArrayList<Map<String, Object>>();
 
 		String echonest_artist_root_key = "/root/response/artists";
 

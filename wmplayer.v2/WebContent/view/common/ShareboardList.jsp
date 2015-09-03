@@ -28,7 +28,7 @@
 					<option id="userid" value="userid">작성자</option>
 				</select>
 				<input type="text" name="search" class="input-text" id="input-text" placeholder="검색어를 입력해주세요" />
-				<input type="button" value="Search" class="input-button" />
+				<input type="button" value="Search" class="search-button" />
 				<div class="write">
 					<input type="button" value="Write" class="search-button" id="share" onclick="setLink(null, 'share', 'write')" />
 				</div>
@@ -82,11 +82,11 @@
 		{
 			weather = "${ param.weather_custom }" == "" ? "all" : "${ param.weather_custom }";
 			search = "${ param.search_select }" == "" ? "board_title" : "${ param.search_select }";
-			text = "${ param.search_text }" == "" ? "" : "${ param.search_text }";
+			text = "${ param.search_text }";
 
 			var weather_temp = weather.split(",");
 			for (var i = 0; i < weather_temp.length; i++) $(".sort-checkbox :checkbox#"+ weather_temp[i]).attr("checked", "checked");
-			$(".search-select option#" + search).attr("selected", "selected");
+			$(".search-select option#" + search).prop("selected", true);
 			$("#input-text").val(text);
 
 			listData(weather, search, text);
@@ -102,20 +102,10 @@
 							startAjax(getWeather());
 						});
 
-					$("#input-text").keypress(function(e)
+					$("#input-text").keyup(function(e)
 						{
 							var key = e.keyCode || e.which;
-							if (key == 13) startAjax(getWeather());
-						});
-
-					$("#input-text").focus(function()
-						{
-							if ($(this).val() == "") startAjax(getWeather());
-						});
-
-					$("#input-text").change(function()
-						{
-							if ($(this).val() == "") startAjax(getWeather());
+							if (key == 13 || key == 8 && $(this).val() == "") startAjax(getWeather());
 						});
 
 					$(".sort-checkbox :checkbox[id != 'all']").click(function()
