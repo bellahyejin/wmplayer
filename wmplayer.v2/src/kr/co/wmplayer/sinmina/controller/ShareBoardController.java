@@ -33,8 +33,6 @@ public class ShareBoardController
 	@Autowired ShareboardDAO shareboardDAO;
 	@Autowired ShareReplyDAO sharereplyDAO;
 
-	BoardUserDTO bean;
-
 	List<String> seq_list;
 	StringOperate so = StringOperate.getInstance();
 	Map<String, Object> map;
@@ -50,8 +48,6 @@ public class ShareBoardController
 
 		if (userid != null)
 		{
-			this.bean = bean;
-
 			if (action == null || action.equals("list")) return shareList(model, request);
 			else if (action.equals("content")) return shareContent(model, request, bean);
 			else if (action.equals("write")) return shareWrite(model, request);
