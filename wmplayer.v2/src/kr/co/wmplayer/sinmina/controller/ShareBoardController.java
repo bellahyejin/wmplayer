@@ -217,7 +217,7 @@ public class ShareBoardController
 									.append("<div class=\"back\">")
 										.append("<table>")
 											.append("<tr>")
-												.append("<td id=\"title\" colspan=\"2\">").append(bean.getBoard_title()).append("</td>")
+												.append("<td id=\"title\" colspan=\"2\">").append(so.substring(bean.getBoard_title(), 0, 10, false, true)).append("</td>")
 											.append("</tr>")
 											.append("<tr>")
 												.append("<td class=\"info_title left up\">Artist</td>")
@@ -229,7 +229,7 @@ public class ShareBoardController
 											.append("</tr>")
 											.append("<tr>")
 												.append("<td class=\"writeinfo left\">").append(bean.getUserID()).append("</td>")
-												.append("<td id=\"writedate\">").append(bean.getRegi_day()).append("</td>")
+												.append("<td id=\"writedate\">").append(bean.getRegi_day().replaceAll("-", "/").substring(0, bean.getRegi_day().lastIndexOf("."))).append("</td>")
 											.append("</tr>")
 										.append("</table>")
 									.append("</div>")
@@ -315,37 +315,37 @@ public class ShareBoardController
 	}
 
 	@ResponseBody @RequestMapping(value = "/reple/list.ajax", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
-	public String repleList(ShareReplyDTO bean, HttpSession session, @RequestParam(value = "pageNo") Integer page)
+	public String repleList(ShareReplyDTO bean, HttpSession session)//, @RequestParam(value = "pageNo") Integer page)
 	{
 		String id = (String) session.getAttribute("success");
-		Paging p = Paging.getInstance();
+		/*Paging p = Paging.getInstance();
 		page = page == null || page <= 0 ? 1 : page;
-		int max_element = 10, page_div = 4;
+		int max_element = 10, page_div = 4;*/
 		StringBuffer sb = new StringBuffer();
 		sb = sb.append("<table width=\"540px\" class=\"call_click\">");
 
-		int total_size = sharereplyDAO.selectAll(bean.getBoard_seq(), -1).size();
-		Map<String, Integer> page_data = p.setData(total_size, page, max_element, page_div, "begin&last", false);
-		List<ShareReplyDTO> list = sharereplyDAO.selectAll(bean.getBoard_seq(), page_data.get("item_start"));
+		/*int total_size = sharereplyDAO.selectAll(bean.getBoard_seq(), -1).size();
+		Map<String, Integer> page_data = p.setData(total_size, page, max_element, page_div, "begin&last", false);*/
+		List<ShareReplyDTO> list = sharereplyDAO.select(bean.getBoard_seq(), -1);//page_data.get("item_start"));
 
 		if (list == null || list.size() > 0)
 		{
 			sb = sb.append("<tr>")
 							//.append("<th width=\"10%\">번호</th>")
-							.append("<th width=\"50%\">내용</th>")
+							.append("<th width=\"45%\">내용</th>")
 							.append("<th width=\"15%\">작성자</th>")
 							.append("<th width=\"25%\">작성일</th>")
-							.append("<th width=\"10%\"></th>")
+							.append("<th width=\"15%\"></th>")
 						.append("</tr>");
 
 			for (ShareReplyDTO temp : list)
 			{
 				sb = sb.append("<tr align=\"center\" data-seq=\"".concat(Integer.toString(temp.getSharereple_seq())).concat("\">"))
 								//.append("<td>").append(total_size - max_element * (page - 1) - i).append("</td>")
-								.append("<td align=\"left\" id=\"reple-content\">").append(temp.getContents()).append("<br><input type=\"text\" size=\"30\" id=\"update-reple\"><input id=\"updatebutton\" type=\"button\" value=\"수정\"></td>")
+								.append("<td align=\"left\" id=\"reple-content\">").append(temp.getContents()).append("<br><input type=\"text\" size=\"30\" id=\"update-reple\" value=\"").append(temp.getContents()).append("\"><input class=\"reple-update\" id=\"updatebutton\" type=\"button\" value=\"수정\"></td>")
 								.append("<td>").append(temp.getuserID()).append("</td>")
 								.append("<td style=\"font-size : small; align : center;\">").append(temp.getSubmit_date().replaceAll("-", "/").substring(0, temp.getSubmit_date().lastIndexOf("."))).append("</td>")
-								.append("<td id=\"upDel\" style=\"font-size : small\">").append(temp.getuserID().equals(id) ? "<a class=\"update\" id=\"update\" href=\"#\" title=\"".concat(Integer.toString(temp.getSharereple_seq()).concat("\">수정</a><br><a class=\"delete\" id=\"delete\" href=\"#\" title=\"").concat(Integer.toString(temp.getSharereple_seq()).concat("\">삭제</a>"))) : "").append("</td>")
+								.append("<td id=\"upDel\" style=\"font-size : small\">").append(temp.getuserID().equals(id) ? "<a class=\"update\" id=\"update\" href=\"#\">수정</a> <a class=\"delete\" id=\"delete\" href=\"#\" title=\"".concat(Integer.toString(temp.getSharereple_seq()).concat("\">삭제</a>")) : "").append("</td>")
 							.append("</tr>");
 			}
 		}
@@ -354,20 +354,25 @@ public class ShareBoardController
 	}
 
 	@ResponseBody @RequestMapping(value = "/reple/insert.ajax", method = RequestMethod.POST)
-	public void repleInsert(ShareReplyDTO bean, HttpSession session)
+	public String repleInsert(ShareReplyDTO bean, HttpSession session)
 	{
+		String content = bean.getContents();
+		if (content == null || content.equals("")) return "rewrite";
 		bean.setuserID((String) session.getAttribute("success"));
+		return sharereplyDAO.insert(bean) ? "success" : "failed";
 	}
 
 	@ResponseBody @RequestMapping(value = "/reple/update.ajax", method = RequestMethod.POST)
-	public void repleUpdate(ShareReplyDTO bean)
+	public String repleUpdate(ShareReplyDTO bean)
 	{
-		//
+		String content = bean.getContents();
+		if (content == null || content.equals("")) return "rewrite";
+		return sharereplyDAO.update(bean) ? "success" : "failed";
 	}
 
 	@ResponseBody @RequestMapping(value = "/reple/delete.ajax", method = RequestMethod.POST)
-	public void repleDelete(ShareReplyDTO bean)
+	public String repleDelete(ShareReplyDTO bean)
 	{
-		//
+		return sharereplyDAO.delete(bean) ? "success" : "failed";
 	}
 }

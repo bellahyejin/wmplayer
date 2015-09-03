@@ -62,32 +62,32 @@
 	</select>
 
 	<!-- 리플관련 -->
-	<select id="countReple" parameterType="int" resultType="String">
+	<select id="replecount" parameterType="int" resultType="int">
 		select count(*)
 		from shareReple
-		where share_seq=#{share_seq}
+		where share_seq=#{board_seq}
 	</select>
 
-	<update id="updateReple" parameterType="java.util.HashMap">
+	<update id="repleupdate" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		update shareReple
-		set contents=#{updatedContents}
-		where shareReple_seq=#{upNum}
+		set contents=#{contents}
+		where shareReple_seq=#{sharereple_seq}
 	</update>
 
-	<delete id="deleteReple" parameterType="int">
+	<delete id="repledelete" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		delete from shareReple
-		where shareReple_seq=#{delNum}
+		where shareReple_seq=#{sharereple_seq}
 	</delete>
 
-	<insert id="inReple" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
+	<insert id="repleinsert" parameterType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		insert into shareReple
-		values (shareReple_seq.nextval, #{share_seq}, #{contents}, #{userID}, SYSDATE)
+		values (shareReple_seq.nextval, #{board_seq}, #{contents}, #{userID}, SYSDATE)
 	</insert>
 
-	<select id="repleSelectAll" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
+	<select id="repleselect" parameterType="int" resultType="kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO">
 		select *
 		from shareReple
-		where share_seq=#{share_seq}
+		where share_seq=#{board_seq}
 		order by submit_date desc
 	</select>
 </mapper>

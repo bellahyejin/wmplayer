@@ -7,7 +7,7 @@
 		<span>
 			<marquee scrollamount="5" behavior="scroll" width="300">${ data.board_title } - ${ data.board_artist }</marquee></span>
 		<div id="select-info">
-			<div id="col-date"><span class="column-infotitle">등록일</span><span id="column-date">${ regi_day }</span></div>
+			<div id="col-date"><span class="column-infotitle">등록일</span><span id="column-date">${ data.regi_day }</span></div>
 			<div id="col-view"><span class="column-infotitle">조회수</span><span id="column-view">${ data.check_cnt }</span></div>
 		</div>
 	</div>
@@ -19,7 +19,7 @@
 	<div class="share-detail-info">
 		<table class="share-table">
 			<tr>
-				<td class="title"><pre>날   짜</pre></td>
+				<td class="title"><pre>날   씨</pre></td>
 				<td>${ data.weather_custom }</td>
 			</tr>
 			<tr>
@@ -49,12 +49,13 @@
 <script type="text/javascript" src="${ initParam.root }/js/JSONDataCompare.js"></script>
 <script type="text/javascript">
 	this.sequence = ${ data.board_seq };
+	this.temp = 0;
 
-	function getReple(page)
+	function getReple(temp)
 	{
 		this.data = {
 				board_seq : this.sequence,
-				pageNo : page
+				blank : temp
 			};
 
 		if (!JSONDataCompare(this.prev_data, this.data))
@@ -84,13 +85,13 @@
 			url : "${ initParam.root }/share/reple/insert.ajax",
 			dataType : "html",
 			data : {
-				column_seq : this.sequence,
-				repleContent : $("#reple_content").val()
+				board_seq : this.sequence,
+				contents : $("#reple_txt").val()
 			},
 			success : function(data, status, xhr)
 			{
-				$("#reple_content").val("");
-				getReple(1);
+				alert_message(data, "추가");
+				if (data != "rewrite") $("#reple_txt").val("");
 			},
 			error : function(xhr, status, error)
 			{
@@ -105,14 +106,13 @@
 			url : "${ initParam.root }/share/reple/update.ajax",
 			dataType : "html",
 			data : {
-				sharereply_seq : 0,
+				sharereple_seq : sequence,
 				board_seq : this.sequence,
-				repleContent : $("#reple_content").val()
+				contents : content
 			},
 			success : function(data, status, xhr)
 			{
-				$("#reple_content").val("");
-				getReple(1);
+				alert_message(data, "수정");
 			},
 			error : function(xhr, status, error)
 			{
@@ -127,11 +127,11 @@
 			url : "${ initParam.root }/share/reple/delete.ajax",
 			dataType : "html",
 			data : {
-				sharereply_seq : 0
+				sharereple_seq : sequence
 			},
 			success : function(data, status, xhr)
 			{
-				getReple(1);
+				alert_message(data, "삭제");
 			},
 			error : function(xhr, status, error)
 			{
@@ -141,8 +141,7 @@
 
 	$(document).ready(function()
 		{
-			page = "${ param.page }" == "" ? 1 : "${ param.page }";
-			getReple(page);
+			getReple(this.temp);
 
 			$(document).ajaxSuccess(function()
 				{
@@ -168,17 +167,28 @@
 			{
 				tr = $(this).parent().parent();
 				tr.find("input").toggle(300);
-				tr.find("input:text").val(tr.find("input:hidden").val());
 			});
 
 		$(".delete").click(function()
 			{
-				deleteReple();
+				deleteReple($(this).parent().parent().attr("data-seq"));
 			});
 
-		$("#updatebutton").click(function()
+		$(".reple-update").click(function()
 			{
-				updateReple("", "");
+				tr = $(this).parent().parent();
+				updateReple(tr.attr("data-seq"), tr.find("#update-reple").val());
 			});
+	}
+
+	function alert_message(data, action)
+	{
+		if (data == "success")
+		{
+			alert(action + "했습니다.");
+			getReple(++(this.temp));
+		}
+		else if (data == "failed") alert("오류가 발생했습니다. 나중에 해주세요.");
+		else if (data == "rewrite") alert("다시 입력해주세요");
 	}
 </script>

@@ -1,6 +1,5 @@
 package kr.co.wmplayer.sinmina.dao.reply;
 
-import java.util.HashMap;
 import java.util.List;
 import kr.co.wmplayer.sinmina.model.dto.reply.ShareReplyDTO;
 import org.apache.ibatis.session.RowBounds;
@@ -12,35 +11,24 @@ public class ShareReplyDAO
 	@Autowired
 	private SqlSession session;
 
-	public List<ShareReplyDTO> selectAll(int board_seq, int idx)
+	public List<ShareReplyDTO> select(int board_seq, int idx)
 	{
-		if (idx >= 0) return session.selectList("share.repleSelectAll", board_seq, new RowBounds(idx, 10));
-		else return session.selectList("share.repleSelectAll", board_seq);
+		if (idx >= 0) return session.selectList("share.repleselect", board_seq, new RowBounds(idx, 10));
+		else return session.selectList("share.repleselect", board_seq);
 	}
 
-	public boolean insert(int board_seq, String content, String id)
+	public boolean insert(ShareReplyDTO bean)
 	{
-		ShareReplyDTO repleDTO = new ShareReplyDTO(board_seq, content, id);
-		int t = session.insert("share.inReple", repleDTO);
-		if (t == 1) return true;
-		return false;
+		return session.insert("share.repleinsert", bean) > 0;
 	}
 
-	public boolean delete(int delNum)
+	public boolean delete(ShareReplyDTO bean)
 	{
-		int t = session.delete("share.deleteReple", delNum);
-		if (t == 1) return true;
-		else return false;
+		return session.delete("share.repledelete", bean) > 0;
 	}
 
-	public boolean update(int upNum, String updatedContents)
+	public boolean update(ShareReplyDTO bean)
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("upNum", upNum);
-		map.put("updatedContents", updatedContents);
-
-		int t = session.update("share.updateColumn", map);
-		if (t == 1) return true;
-		else return false;
+		return session.update("share.repleupdate", bean) > 0;
 	}
 }
