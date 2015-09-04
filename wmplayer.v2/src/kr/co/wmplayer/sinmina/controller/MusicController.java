@@ -47,7 +47,8 @@ public class MusicController {
 	@RequestMapping("/ajax/receiveData")
 	public String receiveData(@RequestParam(value="cur_Latitude") double current_latitude,
 			@RequestParam(value="cur_Longitude") double current_longitude ,
-			Model model) throws MalformedURLException, IOException, InterruptedException{
+			Model model, HttpSession session) throws MalformedURLException, IOException, InterruptedException{
+		
 		AddressChangeModel addr = new AddressChangeModel();
 		addr.setGrid(current_longitude, current_latitude, false, true, 2);
 
@@ -57,14 +58,27 @@ public class MusicController {
 		wm.setWeatherData(current_addr);
 
 		double current_temper = wm.getWeatherData().getTemp();
-		List<MusicInfoDTO> lists = musicdao.selectTodayList(current_temper);
-
-		BpmInfoDTO bpm = musicdao.todaybpm(current_temper);
+		
+		String weather = wm.getWeatherData().getWeather();
+		double avgweather = 0;
+		double avgtemper = musicdao.avgtemper(current_temper);
+		double avglike =  musicdao.avgBpm((String) session.getAttribute("success"));
+		
+		if(weather.contains("구름")){
+			avgweather = musicdao.avgWeather("구름");
+		}else{
+			avgweather = musicdao.avgWeather(weather);
+		}
+		
+		double resultavg = (avgweather + avgtemper + avglike) / 3;
+		double format = Math.floor(resultavg*100)/100;
+		
+		List<MusicInfoDTO> lists = musicdao.selectTodayList(resultavg);
 
 		model.addAttribute("lists", lists);
 		model.addAttribute("wm", wm);
 		model.addAttribute("current_addr", current_addr);
-		model.addAttribute("bpm",bpm);
+		model.addAttribute("bpm",format);
 
 	    return "ajax/receiveData";
 	}

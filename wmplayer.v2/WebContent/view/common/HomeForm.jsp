@@ -105,10 +105,6 @@
 				</span>
 				<br><br>
 			</c:forEach>
-			<span class="notice-subject">
-			<span class="attribute">알림</span>
-			<a href='noticedetail?title=${notice}'>${ notice}</a>
-			</span>
 		</div>
 	</div>
 	<div class="subject must-list-subject">오늘의 추천 리스트<div id="bpm">현재 추천 BPM | <span id="min"></span> ~ <span id="max"></span></div></div>

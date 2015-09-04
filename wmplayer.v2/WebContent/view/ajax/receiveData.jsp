@@ -35,8 +35,8 @@
 <currentLocation>${current_addr}</currentLocation>
 <currentTemper>${wm.weatherData.temp }</currentTemper>
 <currentWeather>${wm.weatherData.weather}</currentWeather>
-<currentMinBpm>${bpm.min_bpm }</currentMinBpm>
-<currentMaxBpm>${bpm.max_bpm }</currentMaxBpm>
+<currentMinBpm>${bpm-2 }</currentMinBpm>
+<currentMaxBpm>${bpm+2 }</currentMaxBpm>
 <c:forEach items="${lists }" var="todaylist" >
 	<music>
 		<musicID><![CDATA[${todaylist.musicID}]]></musicID>

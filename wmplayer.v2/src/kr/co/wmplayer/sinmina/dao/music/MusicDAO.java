@@ -1,6 +1,7 @@
 package kr.co.wmplayer.sinmina.dao.music;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.wmplayer.sinmina.model.dto.BpmInfoDTO;
 import kr.co.wmplayer.sinmina.model.dto.music.FavorDTO;
@@ -15,8 +16,8 @@ public class MusicDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public List<MusicInfoDTO> selectTodayList(double temperature){
-		List<MusicInfoDTO> list = session.selectList("music.todaylist", temperature);
+	public List<MusicInfoDTO> selectTodayList(double avgbpm){
+		List<MusicInfoDTO> list = session.selectList("music.todaylist", avgbpm);
 		return list;
 	}
 	
@@ -73,5 +74,13 @@ public class MusicDAO {
 	
 	public BpmInfoDTO todaybpm(double temperature){
 		return session.selectOne("music.todaybpm", temperature);
+	}
+	
+	public double avgWeather(String todayweather){
+		return session.selectOne("music.avgweather", todayweather);
+	}
+	
+	public double avgtemper(double todaytemper){
+		return session.selectOne("music.avgtemper", todaytemper);
 	}
 }
