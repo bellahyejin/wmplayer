@@ -69,6 +69,7 @@ label:BEFORE{
   	font-size: 8pt;
   	height: 5px;
 }
+.search { width: 480px;}
 .search-select{ color: #a9a9a9; font-size: 9pt; width:80px; height:22px; padding-left: 5px; padding-right: 0;}
 .searchboard{float:left; width: 480px ; height: 30px; padding: 0 30px;}
 .write{ float:right; margin-right: 5px; text-align: right;}
