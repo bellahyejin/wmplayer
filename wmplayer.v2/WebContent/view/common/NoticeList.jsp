@@ -39,16 +39,16 @@
 		<ul class="page-list">
 			<div id="first">
 				<c:choose>
-					<c:when test="${ i == 0 }">
+					<c:when test="${ i == 1 }">
 						<li class="none_a">start</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page" id="first-page"><a href="?i=0">start</a></li>
+						<li class="page" id="first-page"><a href="?i=1">start</a></li>
 					</c:otherwise>
 				</c:choose>
 			</div>
 			<div id="middle">
-				<c:forEach begin="1" end="${endPage }" var="page">
+				<c:forEach begin="${ startPage }" end="${endPage }" var="page">
 					<c:choose>
 						<c:when test="${ i != page }">
 							<li class="page"><a href="?i=${ page }">${ page }</a></li>
