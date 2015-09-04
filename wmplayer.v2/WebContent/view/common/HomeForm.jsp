@@ -101,7 +101,7 @@
 			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
 				<span class="attribute">알림</span>
-					<a href='noticedetail?title=${list}'>${ list }</a>
+					<a href='noticedetail?notice_seq=${ list.notice_seq }'>${ list.title }</a>
 				</span>
 				<br><br>
 			</c:forEach>
