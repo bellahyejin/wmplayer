@@ -62,6 +62,11 @@
 				params = "";
 			}});
 		}
+
+		function intro()
+		{
+			location.href = "${ initParam.root }/intro";
+		}
 	</script>
 </body>
 </html>

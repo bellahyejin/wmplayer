@@ -1,5 +1,8 @@
 package kr.co.wmplayer.sinmina.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -60,9 +64,9 @@ public class UserController
 	}
 
 	@RequestMapping(value = "/main")
-	public String main()
+	public String main(HttpSession session)
 	{
-		return "common/MainForm";
+		return session.getAttribute("success") == null ? "redirect:intro" : "common/MainForm";
 	}
 
 	@ResponseBody @RequestMapping("/findId")
@@ -201,15 +205,19 @@ public class UserController
 		return "drop";
 	}
 
-	@RequestMapping("/userdrop")
+	@ResponseBody @RequestMapping(value = "/userdrop.ajax", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
 	public String userdrop(@RequestParam(value = "dropreason", required = false) Integer dropreason, @RequestParam(value = "etctext") String etctext, HttpSession session)
 	{
 		String user = (String) session.getAttribute("success");
-		dao.dropupdate(dropreason);
-		if (dropreason == 5) dao.dropReason(etctext);
-		dao.delete(user);
+
+		boolean isSuccess = true;
+
+		isSuccess &= dao.dropupdate(dropreason);
+		if (dropreason == 5) isSuccess &= dao.dropReason(etctext);
+		isSuccess &= dao.delete(user);
+
 		session.invalidate();
 
-		return "redirect:intro";
+		return isSuccess ? "success" : "error";
 	}
 }

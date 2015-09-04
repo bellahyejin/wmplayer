@@ -3,30 +3,70 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link type="text/css" href="${initParam.root}/css/global.css" rel="stylesheet" />
 <link type="text/css" href="${initParam.root}/css/UserDrop.css" rel="stylesheet" />
-<script type="text/javascript" src="${initParam.root }/js/ajax.js"></script>
+<script type="text/javascript" src="${ initParam.root }/js/common.js"></script>
+<script src="${initParam.root }/js/jquery-2.1.4.js"></script>
 <script type="text/javascript">
-    function DropUser(){
-    		  alert(document.frm.dropreason.value);
+    /* function DropUser(){
     	  if(document.frm.dropreason.value=='5'){
     	  document.frm.etctext.disabled=false;
     	  }else{
     		  document.frm.etctext.disabled='disabled';
     	  }
     }
-	
+
     function CheckReason(){
     	var dd = document.frm.dropreason.value;
     	var text = document.frm.etctext.value;
 		var id = document.frm.id.value;
+
+		if(dd==''){
+	    	alert("회원님의 탈퇴할 이유를 선택해주세요.");
+
     	alert(id+'님이 탈퇴되었습니다.');
-    	parent.location.href="userdrop?dropreason="+dd+'&etctext='+text;
-		
-    	if(dd==''){
-    	alert("회원님의 탈퇴할 이유를 선택해주세요.");
+    	setLink("frm", "userdrop");
     	}
-    }
+    } */
 
+    $(document).ready(function()
+    	{
+    		$("#drop-radio :radio").change(function()
+    			{
+    				$("#etctext").prop("disabled", !$("#drop-radio :radio[value='5']").is(":checked"));
+    			});
 
+    		$(".drop").click(function()
+    			{
+    				if (confirm("정말로 탈퇴하시겠습니까?"))
+    				{
+    					$.ajax({
+    							type : "post",
+    							url : "${ initParam.root }/userdrop.ajax",
+    							data : {
+    								dropreason : $("#drop-radio :radio:checked").attr("value"),
+    								etctext : $("#etctext").val()
+    							},
+    							success : function(data)
+    							{
+    								if (data == "success")
+    								{
+    									alert("정상적으로 탈퇴되었습니다");
+    									parent.intro();
+    								}
+    								else alert("나중에 다시 해주시기 바랍니다");
+    							},
+    							error : function()
+    							{
+    								alert("error");
+    							}
+    						});
+    				}
+    			});
+
+    		$(".undrop").click(function()
+    			{
+    				setLink(null, "userinfo");
+    			});
+    	});
 </script>
 <form name="frm" method="POST">
 <div id="drop-form">
@@ -47,12 +87,12 @@
 			<input type="radio" name="dropreason" value="3"> 추천 곡이 마음에 안들어서<br>
 			<input type="radio" name="dropreason" value="4"> 자주 다운되서<br>
 			<input type="radio" name="dropreason" value="5" onclick="DropUser()"> 기타<br>
-			<textarea rows="5" cols="66" disabled="disabled" maxlength="140" name="etctext"></textarea>
+			<textarea id="etctext" rows="5" cols="66" disabled="disabled" maxlength="140" name="etctext"></textarea>
 		</div>
 	</div>
 	<div class="drop-button">
-				<input type="button" class="styled-button-login" id="drop" value="확인" onclick="CheckReason()" />
-				<input type="button" class="styled-button-login" id="drop" value="취소" onclick="location.href='${initParam.root}/wmplayer/userinfo.do'"/>
+				<input type="button" class="styled-button-login drop" id="drop" value="확인" />
+				<input type="button" class="styled-button-login undrop" id="drop" value="취소" />
 	</div>
 </div>
 </form>
