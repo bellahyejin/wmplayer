@@ -32,6 +32,11 @@ public class UserController
 	@Autowired
 	private MusicDAO musicdao;
 
+	@RequestMapping("/")
+	public String index()
+	{
+		return "redirect:intro";
+	}
 	@RequestMapping("/intro")
 	public String intro(HttpSession session)
 	{
