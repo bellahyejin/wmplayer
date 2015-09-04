@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import util.Paging;
 
 @Controller
 public class NoticeBoardController {
@@ -51,12 +52,14 @@ public class NoticeBoardController {
 	public String listform(
 			@RequestParam(value = "i", defaultValue = "1") int i, Model model) {
 
-		int totalNumber = dao.dataSize();
-		int endPage = totalNumber / 10;
+		Paging p = Paging.getInstance();
+		int totalNumber = dao.dataSize(), max_element = 10, page_div = 4;
+		Map<String, Integer> map = p.setData(totalNumber, i, max_element, page_div, "begin&last", false);
 
-		model.addAttribute("endPage", endPage);
+		model.addAttribute("startPage", map.get("start"));
+		model.addAttribute("endPage", map.get("end"));
 
-		List<NoticeBoardDTO> list = dao.selectAll((10) * i-1, 10);
+		List<NoticeBoardDTO> list = dao.selectAll(map.get("item_start"), max_element);
 		for (int idx = 0; idx < list.size(); idx++) {
 			NoticeBoardDTO board = list.get(idx);
 			String date = board.getUpdate_day().substring(0, 10).replace("-", "/");

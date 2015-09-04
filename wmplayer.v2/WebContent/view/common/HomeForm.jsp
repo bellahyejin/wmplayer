@@ -1,9 +1,3 @@
-<%@page import="kr.co.wmplayer.sinmina.dao.board.ShareboardDAO"%>
-<%@page import="kr.co.wmplayer.sinmina.dao.board.ColumnboardDAO"%>
-<%@page import="kr.co.wmplayer.sinmina.dao.board.NoticeboardDAO"%>
-<%@page import="kr.co.wmplayer.sinmina.model.dto.board.BoardUserDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="kr.co.wmplayer.sinmina.model.dto.board.ColumnBoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
      pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -101,7 +95,7 @@
 			<c:forEach items="${ notice }" var="list">
 				<span class="notice-subject">
 				<span class="attribute">알림</span>
-					<a href='noticedetail?notice_seq=${ list.notice_seq }'>${ list.title }</a>
+					<a href='noticedetail?title=${list}'>${ list }</a>
 				</span>
 				<br><br>
 			</c:forEach>
